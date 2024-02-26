@@ -13,7 +13,6 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:id="@+id/textNazwaProjektu"
-          android:fontFamily="@font/alegreyablack"
           android:textSize="40px"
           android:textColor="@color/white"
           tools:layout_editor_absoluteY="20dp"
