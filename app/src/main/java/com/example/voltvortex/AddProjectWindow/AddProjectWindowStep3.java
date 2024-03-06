@@ -1,7 +1,8 @@
-package com.example.voltvortex;
+package com.example.voltvortex.AddProjectWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.voltvortex.R;
 
 public class AddProjectWindowStep3 extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.voltvortex;
+package com.example.voltvortex.AddProjectWindow;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.Switch;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.voltvortex.MainActivity;
+import com.example.voltvortex.Project;
+import com.example.voltvortex.R;
 
 public class AddProjectWindowStep1 extends AppCompatActivity {
 
@@ -16,7 +19,7 @@ public class AddProjectWindowStep1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addproject_window_step1);
 
-        Button addProjectButton = findViewById(R.id.buttonZatwierdzProjekt);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button addProjectButton = findViewById(R.id.buttonEndStep1);
 
         @SuppressLint("UseSwitchCompatOrMaterialCode") Switch swichIsManyCities = findViewById(R.id.switchDodajProjektPytanie1);
         @SuppressLint("UseSwitchCompatOrMaterialCode") Switch switchIsManyContactPerson = findViewById(R.id.switchDodajProjektPytanie2);
@@ -31,8 +34,16 @@ public class AddProjectWindowStep1 extends AppCompatActivity {
 
                     Project project = new Project(textProjectName, isManyCities, isManyContactPerson);
 
-                    if(project.isManyCities()) {
+                    if(!project.isManyCities()) {
                         Intent intent = new Intent(AddProjectWindowStep1.this, AddProjectWindowStep2.class);
+                        startActivity(intent);
+                    }
+                    else if(!project.isManyContactPerson()) {
+                        Intent intent = new Intent(AddProjectWindowStep1.this, AddProjectWindowStep3.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        Intent intent = new Intent(AddProjectWindowStep1.this, MainActivity.class);
                         startActivity(intent);
                     }
                 }
