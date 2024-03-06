@@ -13,6 +13,9 @@
             android:theme="@style/Theme.VoltVortex"
             tools:targetApi="31">
         <activity
+                android:name=".AddProjectWindowStep3"
+                android:exported="false"/>
+        <activity
                 android:name=".AddProjectWindowStep2"
                 android:exported="false"/>
         <activity
