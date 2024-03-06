@@ -9,13 +9,15 @@ import com.example.voltvortex.AddProjectWindow.AddProjectWindowStep1;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button addProjectButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        Button addProjectButton = findViewById(R.id.addProjectButton);
+        addProjectButton = findViewById(R.id.addProjectButton);
         addProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

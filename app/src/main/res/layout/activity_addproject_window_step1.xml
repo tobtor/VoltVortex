@@ -126,6 +126,16 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent">
     <Button
+            android:text="Dodaj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/buttonNormalColor"
+            android:id="@+id/buttonAddToDataBase"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="12dp"/>
+    <Button
             android:text="Dalej"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,7 +143,9 @@
             android:id="@+id/buttonEndStep1"
             android:layout_weight="1"
             android:textSize="20sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"/>
   </LinearLayout>
 
 
