@@ -26,12 +26,12 @@ public class AddProjectWindowStep1 extends AppCompatActivity {
 
                     EditText editTextProjectName = findViewById(R.id.editTextNazwaProjektu);
                     String textProjectName = editTextProjectName.getText().toString();
-                    boolean isSingleCity = swichIsManyCities.isChecked();
-                    boolean isSingleContactPerson = switchIsManyContactPerson.isChecked();
+                    boolean isManyCities = swichIsManyCities.isChecked();
+                    boolean isManyContactPerson = switchIsManyContactPerson.isChecked();
 
-                    Project project = new Project(textProjectName, isSingleCity, isSingleContactPerson);
+                    Project project = new Project(textProjectName, isManyCities, isManyContactPerson);
 
-                    if(project.isSingleCity()) {
+                    if(project.isManyCities()) {
                         Intent intent = new Intent(AddProjectWindowStep1.this, AddProjectWindowStep2.class);
                         startActivity(intent);
                     }

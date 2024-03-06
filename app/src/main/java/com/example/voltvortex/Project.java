@@ -3,16 +3,16 @@ package com.example.voltvortex;
 public class Project {
 
     private String projectName;
-    private boolean isSingleCity;
-    private boolean isSingleContactPerson;
+    private boolean isManyCities;
+    private boolean isManyContactPerson;
 
-    public Project(String projectName, boolean isSingleCity, boolean isSingleContactPerson) {
+    public Project(String projectName, boolean isSingleCity, boolean isManyContactPerson) {
         this.projectName = projectName;
-        this.isSingleCity = isSingleCity;
-        this.isSingleContactPerson = isSingleContactPerson;
+        this.isManyCities = isManyCities;
+        this.isManyContactPerson = isManyContactPerson;
     }
 
-    public boolean isSingleCity() {
-        return isSingleCity;
+    public boolean isManyCities() {
+        return isManyCities;
     }
 }
