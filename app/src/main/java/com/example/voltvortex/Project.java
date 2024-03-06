@@ -6,7 +6,7 @@ public class Project {
     private boolean isManyCities;
     private boolean isManyContactPerson;
 
-    public Project(String projectName, boolean isSingleCity, boolean isManyContactPerson) {
+    public Project(String projectName, boolean isManyCities, boolean isManyContactPerson) {
         this.projectName = projectName;
         this.isManyCities = isManyCities;
         this.isManyContactPerson = isManyContactPerson;
@@ -14,5 +14,9 @@ public class Project {
 
     public boolean isManyCities() {
         return isManyCities;
+    }
+
+    public boolean isManyContactPerson() {
+        return isManyContactPerson;
     }
 }
