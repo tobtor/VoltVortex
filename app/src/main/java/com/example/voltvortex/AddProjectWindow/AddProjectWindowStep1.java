@@ -6,10 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.voltvortex.MainActivity;
 import com.example.voltvortex.MyDatabaseHelper;
+import com.example.voltvortex.ProjectModel;
 import com.example.voltvortex.R;
 
 public class AddProjectWindowStep1 extends AppCompatActivity {
@@ -34,10 +36,19 @@ public class AddProjectWindowStep1 extends AppCompatActivity {
         buttonAddToDataBase.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                MyDatabaseHelper myDB = new MyDatabaseHelper(AddProjectWindowStep1.this);
-                myDB.addProject(projectName.getText().toString().trim(),
-                        Boolean.parseBoolean(swichIsManyCities.getText().toString().trim()),
-                        Boolean.parseBoolean(switchIsManyContactPerson.getText().toString().trim()));
+                try {
+                    ProjectModel projectModel = new ProjectModel(-1, projectName.getText().toString(),
+                            swichIsManyCities.isChecked(), switchIsManyContactPerson.isChecked());
+                    Toast.makeText(AddProjectWindowStep1.this, projectModel.toString(), Toast.LENGTH_SHORT).show();
+                }
+                catch (Exception e){
+                    Toast.makeText(AddProjectWindowStep1.this, "Błąd przy dodawaniu!", Toast.LENGTH_SHORT).show();
+                }
+
+//                MyDatabaseHelper myDB = new MyDatabaseHelper(AddProjectWindowStep1.this);
+//                    myDB.addProject(projectName.getText().toString().trim(),
+//                            String.valueOf(swichIsManyCities.isChecked()).trim(),
+//                            String.valueOf(switchIsManyContactPerson.isChecked()).trim());
             }
         });
 

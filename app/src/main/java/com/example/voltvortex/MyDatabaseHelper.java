@@ -17,11 +17,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
     private static final String TABLE_NAME = "projekt";
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_PROJECT_NAME = "project_name";
-    private static final String COLUMN_IS_MANY_CITIES = "";
-    private static final String COLUMN_IS_MANY_CONTACT_PERSONS = "";
+    private static final String COLUMN_IS_MANY_CITIES = "is_many_cities";
+    private static final String COLUMN_IS_MANY_CONTACT_PERSONS = "is_many_contact_persons";
 
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -40,7 +41,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public void addProject(String projectName, boolean isManyCities, boolean isManyContactPerson){
+    public void addProject(String projectName, String isManyCities, String isManyContactPerson){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
