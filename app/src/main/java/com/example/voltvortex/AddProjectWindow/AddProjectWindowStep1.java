@@ -36,19 +36,24 @@ public class AddProjectWindowStep1 extends AppCompatActivity {
         buttonAddToDataBase.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                ProjectModel projectModel;
+
                 try {
-                    ProjectModel projectModel = new ProjectModel(-1, projectName.getText().toString(),
+                    projectModel = new ProjectModel(-1, projectName.getText().toString(),
                             swichIsManyCities.isChecked(), switchIsManyContactPerson.isChecked());
                     Toast.makeText(AddProjectWindowStep1.this, projectModel.toString(), Toast.LENGTH_SHORT).show();
                 }
                 catch (Exception e){
                     Toast.makeText(AddProjectWindowStep1.this, "Błąd przy dodawaniu!", Toast.LENGTH_SHORT).show();
+                    projectModel = new ProjectModel(-1, "error",
+                            swichIsManyCities.isChecked(), switchIsManyContactPerson.isChecked());
                 }
 
-//                MyDatabaseHelper myDB = new MyDatabaseHelper(AddProjectWindowStep1.this);
-//                    myDB.addProject(projectName.getText().toString().trim(),
-//                            String.valueOf(swichIsManyCities.isChecked()).trim(),
-//                            String.valueOf(switchIsManyContactPerson.isChecked()).trim());
+                MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(AddProjectWindowStep1.this);
+
+                boolean success = myDatabaseHelper.addProject(projectModel);
+
+                Toast.makeText(AddProjectWindowStep1.this, "Success " + success, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 
 public class MyDatabaseHelper extends SQLiteOpenHelper{
@@ -30,8 +31,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         String query = "CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PROJECT_NAME + " TEXT, " +
-                COLUMN_IS_MANY_CITIES + " TEXT, " +
-                COLUMN_IS_MANY_CONTACT_PERSONS + " TEXT);";
+                COLUMN_IS_MANY_CITIES + " BOOL, " +
+                COLUMN_IS_MANY_CONTACT_PERSONS + " BOOL);";
         db.execSQL(query);
     }
 
@@ -41,18 +42,23 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public void addProject(String projectName, String isManyCities, String isManyContactPerson){
+
+    public boolean addProject(ProjectModel projectModel){
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(COLUMN_PROJECT_NAME, projectName);
-        cv.put(COLUMN_IS_MANY_CITIES, isManyCities);
-        cv.put(COLUMN_IS_MANY_CONTACT_PERSONS, isManyContactPerson);
-        long result = db.insert(TABLE_NAME, null, cv);
-        if (result == -1){
+        cv.put(COLUMN_PROJECT_NAME, projectModel.getProjectName());
+        cv.put(COLUMN_IS_MANY_CITIES, projectModel.isManyCities());
+        cv.put(COLUMN_IS_MANY_CONTACT_PERSONS, projectModel.isManyContactPerson());
+
+        long insert = db.insert(TABLE_NAME, null, cv);
+        if (insert == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            return false;
         } else {
             Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show();
+            return true;
         }
     }
 
