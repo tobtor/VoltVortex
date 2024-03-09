@@ -29,39 +29,32 @@ public class AddProjectWindowStep1 extends AppCompatActivity {
 
         projectName = findViewById(R.id.editTextNazwaProjektu);
         buttonEndStep1 = findViewById(R.id.buttonEndStep1);
-        buttonAddToDataBase = findViewById(R.id.buttonAddToDataBase);
         swichIsManyCities = findViewById(R.id.switchDodajProjektPytanie1);
         switchIsManyContactPerson = findViewById(R.id.switchDodajProjektPytanie2);
-
-        buttonAddToDataBase.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                ProjectModel projectModel;
-
-                try {
-                    projectModel = new ProjectModel(-1, projectName.getText().toString(),
-                            swichIsManyCities.isChecked(), switchIsManyContactPerson.isChecked());
-                    Toast.makeText(AddProjectWindowStep1.this, projectModel.toString(), Toast.LENGTH_SHORT).show();
-                }
-                catch (Exception e){
-                    Toast.makeText(AddProjectWindowStep1.this, "Błąd przy dodawaniu!", Toast.LENGTH_SHORT).show();
-                    projectModel = new ProjectModel(-1, "error",
-                            swichIsManyCities.isChecked(), switchIsManyContactPerson.isChecked());
-                }
-
-                MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(AddProjectWindowStep1.this);
-
-                boolean success = myDatabaseHelper.addProject(projectModel);
-
-                Toast.makeText(AddProjectWindowStep1.this, "Success " + success, Toast.LENGTH_SHORT).show();
-            }
-        });
 
             buttonEndStep1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
                     boolean isManyCities = swichIsManyCities.isChecked();
                     boolean isManyContactPerson = switchIsManyContactPerson.isChecked();
+                    ProjectModel projectModel;
+
+                    try {
+                        projectModel = new ProjectModel(-1, projectName.getText().toString(),
+                                swichIsManyCities.isChecked(), switchIsManyContactPerson.isChecked());
+                        Toast.makeText(AddProjectWindowStep1.this, projectModel.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                    catch (Exception e){
+                        Toast.makeText(AddProjectWindowStep1.this, "Błąd przy dodawaniu!", Toast.LENGTH_SHORT).show();
+                        projectModel = new ProjectModel(-1, "error",
+                                swichIsManyCities.isChecked(), switchIsManyContactPerson.isChecked());
+                    }
+
+                    MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(AddProjectWindowStep1.this);
+
+                    boolean success = myDatabaseHelper.addProject(projectModel);
+
+                    Toast.makeText(AddProjectWindowStep1.this, "Success " + success, Toast.LENGTH_SHORT).show();
 
                     if(!isManyCities) {
                         Intent intent = new Intent(AddProjectWindowStep1.this, AddProjectWindowStep2.class);
