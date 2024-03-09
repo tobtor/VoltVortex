@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
         MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
         List<String> allInMemoryProjects = myDatabaseHelper.viewProjectList();
 
-        ArrayAdapter projectArrayAdapter = new ArrayAdapter<String>
-                (MainActivity.this, android.R.layout.simple_list_item_1, allInMemoryProjects);
+        ArrayAdapter<String> projectArrayAdapter = new ArrayAdapter<String>
+                (MainActivity.this, R.layout.activity_listview_layout, R.id.ListviewText, allInMemoryProjects);
 
         listOfProjects.setAdapter(projectArrayAdapter);
 

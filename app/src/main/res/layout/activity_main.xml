@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/addProjectButton"
             android:backgroundTint="@color/buttonNormalColor"
-            android:textSize="20sp"
+            android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
