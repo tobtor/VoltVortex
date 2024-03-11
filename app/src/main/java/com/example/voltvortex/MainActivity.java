@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.voltvortex.AddProjectWindow.AddProjectWindowStep1;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddProjectWindowStep1.class);
+                Intent intent = new Intent(MainActivity.this, AddProjectWindow.class);
                 startActivity(intent);
             }
         });

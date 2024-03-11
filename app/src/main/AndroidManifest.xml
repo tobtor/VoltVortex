@@ -19,7 +19,7 @@
             android:name=".AddProjectWindow.AddProjectWindowStep2"
             android:exported="false" />
         <activity
-            android:name=".AddProjectWindow.AddProjectWindowStep1"
+            android:name=".AddProjectWindow"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
