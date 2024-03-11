@@ -3,18 +3,18 @@ package com.example.voltvortex;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     Button addProjectButton;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    Switch usuwanie;
     ListView listOfProjects;
+    MyDatabaseHelper myDatabaseHelper;
+    ArrayAdapter<ProjectModel> projectArrayAdapter;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -24,14 +24,30 @@ public class MainActivity extends AppCompatActivity {
 
         addProjectButton = findViewById(R.id.addProjectButton);
         listOfProjects = findViewById(R.id.listOfProjects);
+        usuwanie = findViewById(R.id.usuwanie);
 
-        MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
-        List<String> allInMemoryProjects = myDatabaseHelper.viewProjectList();
+        myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
 
-        ArrayAdapter<String> projectArrayAdapter = new ArrayAdapter<String>
-                (MainActivity.this, R.layout.activity_listview_layout, R.id.ListviewText, allInMemoryProjects);
+        getProjectList(myDatabaseHelper);
 
-        listOfProjects.setAdapter(projectArrayAdapter);
+        usuwanie.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked){
+                listOfProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ProjectModel clickedProject = (ProjectModel) parent.getItemAtPosition(position);
+                        myDatabaseHelper.deleteProject(clickedProject);
+                        getProjectList(myDatabaseHelper);
+                        Toast.makeText(MainActivity.this, "Deleted " + clickedProject.toString() , Toast.LENGTH_SHORT).show();
+                    }
+                });} else {
+                    ///
+                }
+            }
+        });
 
         addProjectButton.setOnClickListener(new View.OnClickListener() {
 
@@ -42,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getProjectList(MyDatabaseHelper myDatabaseHelper) {
+        projectArrayAdapter = new ArrayAdapter<ProjectModel>
+                (MainActivity.this, R.layout.activity_listview_layout, R.id.ListviewText, myDatabaseHelper.viewProjectList());
+        listOfProjects.setAdapter(projectArrayAdapter);
     }
 
 }

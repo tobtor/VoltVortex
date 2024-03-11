@@ -1,5 +1,6 @@
 package com.example.voltvortex;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,22 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-    public List<String> viewProjectList(){
+    public boolean deleteProject(ProjectModel projectModel){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = " + projectModel.getId();
+
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public List<String> viewProjectNameList(){
 
         List<String> returnList = new ArrayList<>();
 
@@ -85,6 +100,40 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
 
                 returnList.add(projectName);
+
+            } while (cursor.moveToNext());
+
+        } else {
+            //failure. do not add anything to the list
+        }
+
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    public List<ProjectModel> viewProjectList(){
+
+        List<ProjectModel> returnList = new ArrayList<>();
+
+        String queryString = "SELECT * FROM " + TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do {
+
+                int projectID = cursor.getInt(0);
+                String projectName = cursor.getString(1);
+                boolean projectIsManyCities = cursor.getInt(2) == 1;
+                boolean projectIsManyContactPersons = cursor.getInt(3) == 1;
+
+                ProjectModel newProjectModel = new ProjectModel
+                        (projectID, projectName, projectIsManyCities, projectIsManyContactPersons);
+
+                returnList.add(newProjectModel);
 
             } while (cursor.moveToNext());
 
