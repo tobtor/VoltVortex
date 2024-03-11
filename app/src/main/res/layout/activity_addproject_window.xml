@@ -9,93 +9,27 @@
     tools:context=".AddProjectWindow">
 
 
-  <LinearLayout
-          android:orientation="vertical"
+  <ScrollView
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          app:layout_constraintTop_toTopOf="parent"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          android:layout_marginStart="16dp"
-          app:layout_constraintEnd_toEndOf="parent"
-          android:layout_marginEnd="16dp">
-    <TextView
-            android:text="Nazwa Projektu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textNazwaProjektu"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            tools:ignore="MissingConstraints"/>
-
-    <FrameLayout
+          android:layout_height="0dp"
+          app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+          app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/radius"
-            android:layout_marginTop="12dp">
-
-      <EditText
-              android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+      <TextView
+              android:text="Nazwa Projektu"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:inputType="textLongMessage"
+              android:id="@+id/textNazwaProjektu"
+              android:textSize="16sp"
+              android:textColor="@color/white"
               tools:ignore="MissingConstraints"
-              android:text="np. Enermitel"
-              android:id="@+id/editTextNazwaProjektu"
-              android:textSize="16sp"
-              android:textColor="@color/white"
-              android:fontFamily="@font/truenolight"
-              android:alpha="0.65"/>
-    </FrameLayout>
+              android:layout_marginTop="20dp"/>
 
-    <TextView
-            android:text="W ilu miastach będzie realizowany projekt?"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textDodajProjektPytanie1"
-            android:layout_marginTop="24dp"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            tools:ignore="MissingConstraints"/>
-
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center_horizontal">
-      <TextView
-              android:text="Jednym"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/textDodajProjektPytanie1Opcja1"
-              android:textColor="@color/white"
-              android:layout_marginRight="12dp"/>
-      <Switch
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/switchDodajProjektPytanie1"
-              tools:ignore="UseSwitchCompatOrMaterialXml"/>
-      <TextView
-              android:text="Wielu"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/textDodajProjektPytanie1Opcja2"
-              android:textColor="@color/white"
-              android:layout_marginLeft="12dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/LinearLayoutProjectCity">
-      <TextView
-              android:text="Miasto"
-              android:textSize="16sp"
-              android:textColor="@color/white"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/textMiasto"/>
       <FrameLayout
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -107,152 +41,223 @@
                 android:layout_height="wrap_content"
                 android:inputType="textLongMessage"
                 tools:ignore="MissingConstraints"
-                android:text="np. Warszawa"
-                android:id="@+id/editTextMiasto"
+                android:text="np. Enermitel"
+                android:id="@+id/editTextNazwaProjektu"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/truenolight"
                 android:alpha="0.65"/>
       </FrameLayout>
+
       <TextView
-              android:text="Miasto"
+              android:text="W ilu miastach będzie realizowany projekt?"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/textDodajProjektPytanie1"
+              android:layout_marginTop="24dp"
               android:textSize="16sp"
               android:textColor="@color/white"
-              android:layout_width="wrap_content"
+              tools:ignore="MissingConstraints"/>
+
+      <LinearLayout
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:id="@+id/textKodPocztowy"
-              android:layout_marginTop="24dp"/>
-      <FrameLayout
+              android:layout_marginTop="12dp"
+              android:gravity="center_horizontal">
+        <TextView
+                android:text="Jednym"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textDodajProjektPytanie1Opcja1"
+                android:textColor="@color/white"
+                android:layout_marginRight="12dp"/>
+        <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switchDodajProjektPytanie1"
+                tools:ignore="UseSwitchCompatOrMaterialXml"/>
+        <TextView
+                android:text="Wielu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textDodajProjektPytanie1Opcja2"
+                android:textColor="@color/white"
+                android:layout_marginLeft="12dp"/>
+      </LinearLayout>
+
+      <LinearLayout
+              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/radius"
-              android:layout_marginTop="12dp">
-
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textLongMessage"
-                tools:ignore="MissingConstraints"
-                android:text="np. 03-216"
-                android:id="@+id/editTextKodPocztowy"
+              android:id="@+id/LinearLayoutProjectCity">
+        <TextView
+                android:text="Miasto"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:fontFamily="@font/truenolight"
-                android:alpha="0.65"/>
-      </FrameLayout>
-    </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textMiasto"/>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/radius"
+                android:layout_marginTop="12dp">
 
-    <TextView
-            android:text="Ile będzie osób kontaktowych?"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textDodajProjektPytanie2"
-            android:layout_marginTop="24dp"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            tools:ignore="MissingConstraints"/>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center_horizontal">
-      <TextView
-              android:text="Jedna"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/textDodajProjektPytanie2Opcja1"
-              android:textColor="@color/white"
-              android:layout_marginRight="12dp"/>
-      <Switch
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/switchDodajProjektPytanie2"
-              tools:ignore="UseSwitchCompatOrMaterialXml"/>
-      <TextView
-              android:text="Wiele"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/textDodajProjektPytanie2Opcja2"
-              android:textColor="@color/white"
-              android:layout_marginLeft="12dp"/>
-    </LinearLayout>
+          <EditText
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:inputType="textLongMessage"
+                  tools:ignore="MissingConstraints"
+                  android:text="np. Warszawa"
+                  android:id="@+id/editTextMiasto"
+                  android:textSize="16sp"
+                  android:textColor="@color/white"
+                  android:fontFamily="@font/truenolight"
+                  android:alpha="0.65"/>
+        </FrameLayout>
+        <TextView
+                android:text="Miasto"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textKodPocztowy"
+                android:layout_marginTop="24dp"/>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/radius"
+                android:layout_marginTop="12dp">
 
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/LinearLayoutProjectContactPerson">
+          <EditText
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:inputType="textLongMessage"
+                  tools:ignore="MissingConstraints"
+                  android:text="np. 03-216"
+                  android:id="@+id/editTextKodPocztowy"
+                  android:textSize="16sp"
+                  android:textColor="@color/white"
+                  android:fontFamily="@font/truenolight"
+                  android:alpha="0.65"/>
+        </FrameLayout>
+      </LinearLayout>
+
       <TextView
-              android:text="Osoba kontaktowa"
+              android:text="Ile będzie osób kontaktowych?"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/textDodajProjektPytanie2"
+              android:layout_marginTop="24dp"
               android:textSize="16sp"
               android:textColor="@color/white"
-              android:layout_width="wrap_content"
+              tools:ignore="MissingConstraints"/>
+      <LinearLayout
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:id="@+id/textOsobaKontaktowa"/>
-      <FrameLayout
+              android:layout_marginTop="12dp"
+              android:gravity="center_horizontal">
+        <TextView
+                android:text="Jedna"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textDodajProjektPytanie2Opcja1"
+                android:textColor="@color/white"
+                android:layout_marginRight="12dp"/>
+        <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switchDodajProjektPytanie2"
+                tools:ignore="UseSwitchCompatOrMaterialXml"/>
+        <TextView
+                android:text="Wiele"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textDodajProjektPytanie2Opcja2"
+                android:textColor="@color/white"
+                android:layout_marginLeft="12dp"/>
+      </LinearLayout>
+
+      <LinearLayout
+              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/radius"
-              android:layout_marginTop="12dp">
-
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textLongMessage"
-                tools:ignore="MissingConstraints"
-                android:text="np. P.Paweł"
-                android:id="@+id/editTextOsobaKontaktowa"
+              android:id="@+id/LinearLayoutProjectContactPerson">
+        <TextView
+                android:text="Osoba kontaktowa"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:fontFamily="@font/truenolight"
-                android:alpha="0.65"/>
-      </FrameLayout>
-      <TextView
-              android:text="Numer telefonu"
-              android:textSize="16sp"
-              android:textColor="@color/white"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/textNumerTelefonu"
-              android:layout_marginTop="24dp"/>
-      <FrameLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/radius"
-              android:layout_marginTop="12dp">
-
-        <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textLongMessage"
-                tools:ignore="MissingConstraints"
-                android:text="np. 123-456-789"
-                android:id="@+id/editTextNumerTelefonu"
+                android:id="@+id/textOsobaKontaktowa"/>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/radius"
+                android:layout_marginTop="12dp">
+
+          <EditText
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:inputType="textLongMessage"
+                  tools:ignore="MissingConstraints"
+                  android:text="np. P.Paweł"
+                  android:id="@+id/editTextOsobaKontaktowa"
+                  android:textSize="16sp"
+                  android:textColor="@color/white"
+                  android:fontFamily="@font/truenolight"
+                  android:alpha="0.65"/>
+        </FrameLayout>
+        <TextView
+                android:text="Numer telefonu"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:fontFamily="@font/truenolight"
-                android:alpha="0.65"/>
-      </FrameLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textNumerTelefonu"
+                android:layout_marginTop="24dp"/>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/radius"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="40dp">
+
+          <EditText
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:inputType="textLongMessage"
+                  tools:ignore="MissingConstraints"
+                  android:text="np. 123-456-789"
+                  android:id="@+id/editTextNumerTelefonu"
+                  android:textSize="16sp"
+                  android:textColor="@color/white"
+                  android:fontFamily="@font/truenolight"
+                  android:alpha="0.65"/>
+        </FrameLayout>
+      </LinearLayout>
+
+
     </LinearLayout>
-
-
-  </LinearLayout>
+  </ScrollView>
   <LinearLayout
           android:orientation="horizontal"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent">
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/linearLayout">
     <Button
             android:text="Dalej"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/buttonNormalColor"
             android:id="@+id/buttonEndStep1"
-            android:layout_weight="1"
             android:textSize="20sp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"/>
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
   </LinearLayout>
 
 
