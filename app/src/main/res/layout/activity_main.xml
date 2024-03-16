@@ -15,7 +15,9 @@
             app:layout_constraintBottom_toTopOf="@+id/mainActivityLinearLayoutButtons"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/listOfProjects" app:layout_constraintHorizontal_bias="0.0"
+            android:id="@+id/listOfProjects"
+            tools:listitem="@layout/activity_listview_layout"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintVertical_bias="0.0"/>
 
     <LinearLayout
@@ -24,7 +26,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/mainActivityLinearLayoutButtons"
             tools:ignore="MissingConstraints"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listItem="activity_listview_layout">
         <Button
                 android:text="Dodaj Projekt"
                 android:layout_width="wrap_content"
@@ -43,7 +46,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/usuwanie"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                tools:ignore="UseSwitchCompatOrMaterialXml"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

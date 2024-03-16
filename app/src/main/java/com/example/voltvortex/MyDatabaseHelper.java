@@ -81,37 +81,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
     }
 
-    public List<String> viewProjectNameList(){
-
-        List<String> returnList = new ArrayList<>();
-
-        String queryString = "SELECT * FROM " + TABLE_NAME;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(queryString, null);
-
-        if(cursor.moveToFirst()){
-            do {
-
-                String projectName = cursor.getString(1);
-
-
-
-
-                returnList.add(projectName);
-
-            } while (cursor.moveToNext());
-
-        } else {
-            //failure. do not add anything to the list
-        }
-
-        cursor.close();
-        db.close();
-        return returnList;
-    }
-
     public List<ProjectModel> viewProjectList(){
 
         List<ProjectModel> returnList = new ArrayList<>();

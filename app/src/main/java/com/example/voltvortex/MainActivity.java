@@ -3,9 +3,15 @@ package com.example.voltvortex;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.voltvortex.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     ListView listOfProjects;
     MyDatabaseHelper myDatabaseHelper;
     ArrayAdapter<ProjectModel> projectArrayAdapter;
+    TextView textViewName, textViewId;
+    ProjectModel projectModel;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -62,7 +70,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void getProjectList(MyDatabaseHelper myDatabaseHelper) {
         projectArrayAdapter = new ArrayAdapter<ProjectModel>
-                (MainActivity.this, R.layout.activity_listview_layout, R.id.ListviewText, myDatabaseHelper.viewProjectList());
+                (MainActivity.this, R.layout.activity_listview_layout, R.id.listViewText, myDatabaseHelper.viewProjectList()) {
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+
+                textViewName = view.findViewById(R.id.listViewText);
+                textViewId = view.findViewById(R.id.textAddingDate);
+
+                projectModel = getItem(position);
+
+                if (projectModel != null) {
+                    textViewName.setText(projectModel.getProjectName());
+                    textViewId.setText(String.valueOf(projectModel.getId()));
+                }
+
+                return view;
+            }
+        };
+
         listOfProjects.setAdapter(projectArrayAdapter);
     }
 

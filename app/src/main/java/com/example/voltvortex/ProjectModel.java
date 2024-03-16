@@ -58,4 +58,6 @@ public class ProjectModel {
     public void setManyContactPerson(boolean manyContactPerson) {
         isManyContactPerson = manyContactPerson;
     }
+
+
 }
