@@ -6,14 +6,12 @@ public class ProjectModel {
 
     private int id;
     private String projectName;
-    private boolean isManyCities;
-    private boolean isManyContactPerson;
+    private boolean isSingleContactPerson;
 
     public ProjectModel(int id, String projectName, boolean isManyCities, boolean isManyContactPerson) {
         this.id = id;
         this.projectName = projectName;
-        this.isManyCities = isManyCities;
-        this.isManyContactPerson = isManyContactPerson;
+        this.isSingleContactPerson = isManyContactPerson;
     }
 
     @NotNull
@@ -22,8 +20,7 @@ public class ProjectModel {
         return "ProjectModel{" +
                 "id=" + id +
                 ", projectName='" + projectName + '\'' +
-                ", isManyCities=" + isManyCities +
-                ", isManyContactPerson=" + isManyContactPerson +
+                ", isManyContactPerson=" + isSingleContactPerson +
                 '}';
     }
 
@@ -43,20 +40,13 @@ public class ProjectModel {
         this.projectName = projectName;
     }
 
-    public boolean isManyCities() {
-        return isManyCities;
+
+    public boolean isSingleContactPerson() {
+        return isSingleContactPerson;
     }
 
-    public void setManyCities(boolean manyCities) {
-        isManyCities = manyCities;
-    }
-
-    public boolean isManyContactPerson() {
-        return isManyContactPerson;
-    }
-
-    public void setManyContactPerson(boolean manyContactPerson) {
-        isManyContactPerson = manyContactPerson;
+    public void setSingleContactPerson(boolean singleContactPerson) {
+        isSingleContactPerson = singleContactPerson;
     }
 
 

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 
 public class AddProjectWindow extends AppCompatActivity {
 

@@ -9,9 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.voltvortex.databinding.ActivityMainBinding;
-
-import java.util.ArrayList;
+import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
 
