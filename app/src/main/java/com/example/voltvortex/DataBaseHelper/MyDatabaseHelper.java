@@ -13,7 +13,8 @@ import com.example.voltvortex.ProjectModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.voltvortex.DataBaseHelper.ProjectTableHelper.*;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTableHelper.*;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.BuildingTableHelper.*;
 
 
 public class MyDatabaseHelper extends SQLiteOpenHelper{
@@ -40,7 +41,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
                 COLUMN_PROJECT_NAME + " TEXT, " +
                 COLUMN_IS_MANY_CITIES + " BOOL, " +
                 COLUMN_IS_MANY_CONTACT_PERSONS + " BOOL);";*/
-        String createProjectTable = createProjectTable();
+        String createProjectTable = createProjectTable() + createBuildingTable();
         db.execSQL(createProjectTable);
     }
 
@@ -72,7 +73,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
     public boolean deleteProject(ProjectModel projectModel){
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + getTableName_PROJECT() + " WHERE " + getColumnId() + " = " + projectModel.getId();
+        String queryString = "DELETE FROM " + getTableName_PROJECT() + " WHERE " + getColumnId() + " = " + projectModel.getProjectID();
 
         @SuppressLint("Recycle") Cursor cursor = db.rawQuery(queryString, null);
 
@@ -99,11 +100,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
                 int projectID = cursor.getInt(0);
                 String projectName = cursor.getString(1);
-                boolean projectIsManyCities = cursor.getInt(2) == 1;
-                boolean projectIsManyContactPersons = cursor.getInt(3) == 1;
+                String projectFirm = cursor.getString(2);
+                String projectDescription = cursor.getString(3);
+                int contactPersonID = cursor.getInt(4);
+                boolean projectIsSingleContactPerson = cursor.getInt(5) == 1;
 
                 ProjectModel newProjectModel = new ProjectModel
-                        (projectID, projectName, projectIsManyCities, projectIsManyContactPersons);
+                        (projectID, projectName, projectFirm, projectDescription, contactPersonID, projectIsSingleContactPerson);
 
                 returnList.add(newProjectModel);
 

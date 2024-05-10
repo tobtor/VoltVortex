@@ -20,16 +20,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp">
+
       <TextView
               android:text="Nazwa Projektu"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:id="@+id/textNazwaProjektu"
+              android:id="@+id/textProjectName"
               android:textSize="16sp"
               android:textColor="@color/white"
               tools:ignore="MissingConstraints"
               android:layout_marginTop="20dp"/>
-
       <FrameLayout
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -42,7 +42,7 @@
                 android:inputType="textLongMessage"
                 tools:ignore="MissingConstraints"
                 android:text="np. Enermitel"
-                android:id="@+id/editTextNazwaProjektu"
+                android:id="@+id/editTextProjectName"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/truenolight"
@@ -50,10 +50,63 @@
       </FrameLayout>
 
       <TextView
+              android:text="Firma"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/textFirm"
+              android:textSize="16sp"
+              android:textColor="@color/white"
+              tools:ignore="MissingConstraints"
+              android:layout_marginTop="20dp"/>
+      <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/radius"
+              android:layout_marginTop="12dp">
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textLongMessage"
+                tools:ignore="MissingConstraints"
+                android:text="np. IBS Budownictwo"
+                android:id="@+id/editTextFirm"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/truenolight"
+                android:alpha="0.65"/>
+      </FrameLayout>
+      <TextView
+              android:text="Opis Projektu"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/textDescription"
+              android:textSize="16sp"
+              android:textColor="@color/white"
+              tools:ignore="MissingConstraints"
+              android:layout_marginTop="20dp"/>
+      <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/radius"
+              android:layout_marginTop="12dp">
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints"
+                android:text="np. Przegląd 5-letni budynku urzędu gminy o powierzchni ok. 2500m2"
+                android:id="@+id/editTextDescription"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/truenolight"
+                android:alpha="0.65"/>
+      </FrameLayout>
+      <TextView
               android:text="Ile będzie osób kontaktowych?"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:id="@+id/textDodajProjektPytanie2"
+              android:id="@+id/textQuestionIsSingleContactPerson"
               android:layout_marginTop="24dp"
               android:textSize="16sp"
               android:textColor="@color/white"
@@ -68,19 +121,19 @@
                 android:text="Jedna"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textDodajProjektPytanie2Opcja1"
+                android:id="@+id/textSingleContactPerson"
                 android:textColor="@color/white"
                 android:layout_marginRight="12dp"/>
         <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/switchDodajProjektPytanie2"
+                android:id="@+id/switchIsSingleContactPerson"
                 tools:ignore="UseSwitchCompatOrMaterialXml"/>
         <TextView
                 android:text="Wiele"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textDodajProjektPytanie2Opcja2"
+                android:id="@+id/textMultiplyContactPerson"
                 android:textColor="@color/white"
                 android:layout_marginLeft="12dp"/>
       </LinearLayout>
@@ -96,7 +149,7 @@
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textOsobaKontaktowa"/>
+                android:id="@+id/textContactPerson"/>
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -121,7 +174,7 @@
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textNumerTelefonu"
+                android:id="@+id/textPhoneNumber"
                 android:layout_marginTop="24dp"/>
         <FrameLayout
                 android:layout_width="match_parent"
@@ -136,7 +189,7 @@
                   android:inputType="textLongMessage"
                   tools:ignore="MissingConstraints"
                   android:text="np. 123-456-789"
-                  android:id="@+id/editTextNumerTelefonu"
+                  android:id="@+id/editTextPhoneNumber"
                   android:textSize="16sp"
                   android:textColor="@color/white"
                   android:fontFamily="@font/truenolight"
@@ -157,7 +210,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/buttonNormalColor"
-            android:id="@+id/buttonEndStep1"
+            android:id="@+id/buttonEndAddingProject"
             android:textSize="20sp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"

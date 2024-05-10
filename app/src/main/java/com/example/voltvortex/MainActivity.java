@@ -68,20 +68,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void getProjectList(MyDatabaseHelper myDatabaseHelper) {
         projectArrayAdapter = new ArrayAdapter<ProjectModel>
-                (MainActivity.this, R.layout.activity_listview_layout, R.id.listViewText, myDatabaseHelper.viewProjectList()) {
+                (MainActivity.this, R.layout.activity_listview_layout, R.id.listViewTextProjectName, myDatabaseHelper.viewProjectList()) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
 
-                textViewName = view.findViewById(R.id.listViewText);
+                textViewName = view.findViewById(R.id.listViewTextProjectName);
                 textViewId = view.findViewById(R.id.textAddingDate);
 
                 projectModel = getItem(position);
 
                 if (projectModel != null) {
                     textViewName.setText(projectModel.getProjectName());
-                    textViewId.setText(String.valueOf(projectModel.getId()));
+                    textViewId.setText(String.valueOf(projectModel.getProjectID()));
                 }
 
                 return view;
