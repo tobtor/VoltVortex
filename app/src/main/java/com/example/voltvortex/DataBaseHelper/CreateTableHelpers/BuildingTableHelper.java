@@ -1,16 +1,11 @@
 package com.example.voltvortex.DataBaseHelper.CreateTableHelpers;
 
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ContactPersonTableHelper.getTableName_CONTACT_PERSON;
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ContactPersonTableHelper.getColumn_CONTACT_PERSON_ID;
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTableHelper.getTableName_PROJECT;
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTableHelper.getColumnProjectId;
-
 public class BuildingTableHelper {
 
     private static final String TABLE_NAME = "BUILDING";
     private static final String COLUMN_BUILDING_ID = "BUILDING_ID";
     private static final String COLUMN_BUILDING_NAME = "BUILDING_NAME";
-    private static final String COLUMN_DATE_OF_MESURMENTS = "DATE_OF_MESURMENTS";
+    private static final String COLUMN_DATE_OF_MEASUREMENTS = "DATE_OF_MEASUREMENTS";
     private static final String COLUMN_CITY = "CITY";
     private static final String COLUMN_POSTCODE = "POSTCODE";
     private static final String COLUMN_STREET = "STREET";
@@ -30,8 +25,8 @@ public class BuildingTableHelper {
         return COLUMN_BUILDING_NAME;
     }
 
-    public static String getColumn_DATE_OF_MESURMENTS() {
-        return COLUMN_DATE_OF_MESURMENTS;
+    public static String getColumn_DATE_OF_MEASUREMENTS() {
+        return COLUMN_DATE_OF_MEASUREMENTS;
     }
 
     public static String getColumn_CITY() {
@@ -62,17 +57,17 @@ public class BuildingTableHelper {
         String query = "CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_BUILDING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_BUILDING_NAME + " VARCHAR(127) NOT NULL, " +
-                COLUMN_DATE_OF_MESURMENTS + " DATE NOT NULL, " +
+                COLUMN_DATE_OF_MEASUREMENTS + " DATE NOT NULL, " +
                 COLUMN_CITY + " VARCHAR(30) NOT NULL, " +
                 COLUMN_POSTCODE + " VARCHAR(5) NOT NULL, " +
                 COLUMN_STREET + " VARCHAR(60) NOT NULL, " +
                 COLUMN_BUILDING_NUMBER + " VARCHAR(10) NOT NULL, " +
                 COLUMN_PROJECT_ID + " INTEGER, " +
                 COLUMN_CONTACT_PERSON_ID + " INTEGER, " +
-                "FOREIGN KEY (" + COLUMN_PROJECT_ID + ") REFERENCES " + getTableName_PROJECT() +
-                " (" + getColumnProjectId() + "), " +
-                "FOREIGN KEY (" + COLUMN_CONTACT_PERSON_ID + ") REFERENCES " + getTableName_CONTACT_PERSON() +
-                " (" + getColumn_CONTACT_PERSON_ID() + "));";
+                "FOREIGN KEY (" + COLUMN_PROJECT_ID + ") REFERENCES ProjectTableHelper.getTableName_PROJECT() " +
+                "(" + ProjectTableHelper.getColumnProjectId() + "), " +
+                "FOREIGN KEY (" + COLUMN_CONTACT_PERSON_ID + ") REFERENCES ContactPersonTableHelper.getTableName_CONTACT_PERSON() " +
+                "(" + ContactPersonTableHelper.getColumn_CONTACT_PERSON_ID() + "));";
         return query;
     }
 }

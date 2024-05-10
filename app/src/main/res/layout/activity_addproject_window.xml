@@ -138,65 +138,6 @@
                 android:layout_marginLeft="12dp"/>
       </LinearLayout>
 
-      <LinearLayout
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:id="@+id/LinearLayoutProjectContactPerson">
-        <TextView
-                android:text="Osoba kontaktowa"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textContactPerson"/>
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/radius"
-                android:layout_marginTop="12dp">
-
-          <EditText
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:inputType="textLongMessage"
-                  tools:ignore="MissingConstraints"
-                  android:text="np. P.Paweł"
-                  android:id="@+id/editTextOsobaKontaktowa"
-                  android:textSize="16sp"
-                  android:textColor="@color/white"
-                  android:fontFamily="@font/truenolight"
-                  android:alpha="0.65"/>
-        </FrameLayout>
-        <TextView
-                android:text="Numer telefonu"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textPhoneNumber"
-                android:layout_marginTop="24dp"/>
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/radius"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="40dp">
-
-          <EditText
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:inputType="textLongMessage"
-                  tools:ignore="MissingConstraints"
-                  android:text="np. 123-456-789"
-                  android:id="@+id/editTextPhoneNumber"
-                  android:textSize="16sp"
-                  android:textColor="@color/white"
-                  android:fontFamily="@font/truenolight"
-                  android:alpha="0.65"/>
-        </FrameLayout>
-      </LinearLayout>
-
 
     </LinearLayout>
   </ScrollView>
@@ -204,7 +145,8 @@
           android:orientation="horizontal"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/linearLayout">
+          app:layout_constraintBottom_toBottomOf="parent"
+          android:id="@+id/linearLayout">
     <Button
             android:text="Dalej"
             android:layout_width="match_parent"
