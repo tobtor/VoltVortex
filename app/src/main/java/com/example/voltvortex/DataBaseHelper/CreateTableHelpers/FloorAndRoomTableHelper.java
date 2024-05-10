@@ -7,7 +7,7 @@ public class FloorAndRoomTableHelper {
     private static final String COLUMN_ROOM = "ROOM";
     private static final String COLUMN_FLOOR = "FLOOR";
 
-    public static String getTableName_BUILDING() {
+    public static String getTableName_FloorAndRoom() {
         return TABLE_NAME;
     }
     public static String getColumnRoomId() {

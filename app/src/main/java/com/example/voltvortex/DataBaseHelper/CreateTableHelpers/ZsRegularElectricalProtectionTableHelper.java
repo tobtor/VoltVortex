@@ -19,7 +19,7 @@ public class ZsRegularElectricalProtectionTableHelper {
     private static final String COLUMN_ZS_REGULAR_ELECTRICAL_PROTECTION_MULTIPLIER_DC =
             "ZS_REGULAR_ELECTRICAL_PROTECTION_MULTIPLIER_DC";
 
-    public static String getTableName_BUILDING() {
+    public static String getTableName_ZS_REGULAR_ELECTRICAL_PROTECTION() {
         return TABLE_NAME;
     }
     public static String getColumnZsRegularElectricalProtectionId() {

@@ -17,7 +17,7 @@ public class ZsIrregularElectricalProtectionTableHelper {
     private static final String COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION_MULTIPLIER_TT_SWITCHGEAR =
             "ZS_IRREGULAR_ELECTRICAL_PROTECTION_MULTIPLIER_TT_SWITCHGEAR";
 
-    public static String getTableName_BUILDING() {
+    public static String getTableName_ZS_IRREGULAR_ELECTRICAL_PROTECTION() {
         return TABLE_NAME;
     }
     public static String getColumnZsIrregularElectricalProtectionId() {

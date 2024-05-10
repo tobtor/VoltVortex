@@ -19,7 +19,7 @@ public class ZsTableHelper {
     private static final String COLUMN_ZS_MESURED = "ZS_MESURED";
     private static final String COLUMN_RESULT = "RESULT";
 
-    public static String getTableName_PROJECT() {
+    public static String getTableName_ZS() {
         return TABLE_NAME;
     }
     public static String getColumnZsId() {

@@ -6,10 +6,10 @@ public class PPARTabelHelper {
     private static final String COLUMN_PPAR_ID = "PPAR_ID";
     private static final String COLUMN_PPAR_CONTENT = "PPAR_CONTENT";
 
-    public static String getTableName_BUILDING() {
+    public static String getTableName_PPAR() {
         return TABLE_NAME;
     }
-    public static String getColumn_BUILDING_ID() {
+    public static String getColumn_PPAR_ID() {
         return COLUMN_PPAR_ID;
     }
     public static String getColumnPPARContent() {

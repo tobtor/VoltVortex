@@ -6,7 +6,7 @@ public class PARTabelHelper {
     private static final String COLUMN_PAR_ID = "PAR_ID";
     private static final String COLUMN_PAR_CONTENT = "PAR_CONTENT";
 
-    public static String getTableName() {
+    public static String getTableName_PAR() {
         return TABLE_NAME;
     }
     public static String getColumn_BUILDING_ID() {

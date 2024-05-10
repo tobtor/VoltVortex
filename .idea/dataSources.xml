@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="VoltVortex" uuid="8175fbc0-4131-494f-b58c-053cb7b3f81f">
+    <data-source source="LOCAL" name="identifier.sqlite" uuid="aa2044a1-93ef-4442-b6d6-6a708ac6fa2d">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\pawmik\AppData\Local\JetBrains\IntelliJIdea2023.3\device-explorer\Pixel 6 Pro API 23\_\data\data\com.example.voltvortex\databases\VoltVortex.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/identifier.sqlite</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="VoltVortex" uuid="f0a8e5bf-b6b5-41bb-a4d6-3e50cbfd53d3">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\pawmik\AppData\Local\JetBrains\IntelliJIdea2024.1\device-explorer\Pixel 6 Pro API 23\_\data\data\com.example.voltvortex\databases\VoltVortex.db</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
       </jdbc-additional-properties>
