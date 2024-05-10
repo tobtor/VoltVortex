@@ -15,6 +15,7 @@ import java.util.List;
 
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTableHelper.*;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.BuildingTableHelper.*;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PPARTabelHelper.*;
 
 
 public class MyDatabaseHelper extends SQLiteOpenHelper{
@@ -41,7 +42,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
                 COLUMN_PROJECT_NAME + " TEXT, " +
                 COLUMN_IS_MANY_CITIES + " BOOL, " +
                 COLUMN_IS_MANY_CONTACT_PERSONS + " BOOL);";*/
-        String createProjectTable = createProjectTable() + createBuildingTable();
+        String createProjectTable = createProjectTable() + createBuildingTable() + createPPARTable();
         db.execSQL(createProjectTable);
     }
 
