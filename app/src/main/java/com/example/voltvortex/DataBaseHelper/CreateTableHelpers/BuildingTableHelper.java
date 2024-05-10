@@ -47,12 +47,12 @@ public class BuildingTableHelper {
     public static String createBuildingTable() {
         String query = " CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_BUILDING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_BUILDING_NAME + " VARCHAR(127), " +
-                COLUMN_DATE_OF_MESURMENTS + " DATE, " +
-                COLUMN_CITY + " VARCHAR(30), " +
-                COLUMN_POSTCODE + " VARCHAR(5), " +
-                COLUMN_STREET + " VARCHAR(60), " +
-                COLUMN_BUILDING_NUMBER + " VARCHAR(10), " +
+                COLUMN_BUILDING_NAME + " VARCHAR(127) NOT NULL, " +
+                COLUMN_DATE_OF_MESURMENTS + " DATE NOT NULL, " +
+                COLUMN_CITY + " VARCHAR(30) NOT NULL, " +
+                COLUMN_POSTCODE + " VARCHAR(5) NOT NULL, " +
+                COLUMN_STREET + " VARCHAR(60) NOT NULL, " +
+                COLUMN_BUILDING_NUMBER + " VARCHAR(10) NOT NULL, " +
                 COLUMN_PROJECT_ID + " INTEGER, " +
                 COLUMN_CONTACT_PERSON_ID + " INTEGER);";
         return query;

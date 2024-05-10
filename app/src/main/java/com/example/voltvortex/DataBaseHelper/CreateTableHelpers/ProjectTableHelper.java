@@ -39,12 +39,12 @@ public class ProjectTableHelper {
     public static String createProjectTable() {
         String query = " CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_PROJECT_NAME + " VARCHAR(255), " +
-                COLUMN_FIRM + " VARCHAR(50), " +
+                COLUMN_PROJECT_NAME + " VARCHAR(255) NOT NULL, " +
+                COLUMN_FIRM + " VARCHAR(50) NOT NULL, " +
                 COLUMN_DESCRIPTION + " TEXT, " +
                 COLUMN_CONTACT_PERSON_ID + " INTEGER, " +
                 COLUMN_IS_SINGLE_CONTACT_PERSON + " BOOL, " +
-                COLUMN_DATE + " DATE);";
+                COLUMN_DATE + " DATE NOT NULL);";
         return query;
     }
 }
