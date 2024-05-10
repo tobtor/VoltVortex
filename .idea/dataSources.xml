@@ -11,7 +11,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="VoltVortex" uuid="f0a8e5bf-b6b5-41bb-a4d6-3e50cbfd53d3">
+    <data-source source="LOCAL" name="VoltVortex" uuid="a4ac938b-9b79-4d0c-8e66-1430b49d3d10">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
