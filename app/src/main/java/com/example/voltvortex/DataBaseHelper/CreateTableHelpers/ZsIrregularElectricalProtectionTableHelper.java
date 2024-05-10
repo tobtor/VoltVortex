@@ -1,6 +1,6 @@
 package com.example.voltvortex.DataBaseHelper.CreateTableHelpers;
 
-public class ZSIrregularElectricalProtectionTableHelper {
+public class ZsIrregularElectricalProtectionTableHelper {
 
     private static final String TABLE_NAME =
             "ELECTRICAL_ZS_IRREGULAR_ELECTRICAL_PROTECTION";
@@ -20,10 +20,10 @@ public class ZSIrregularElectricalProtectionTableHelper {
     public static String getTableName_BUILDING() {
         return TABLE_NAME;
     }
-    public static String getColumnZS_IRREGULAR_ELECTRICAL_PROTECTION_ID() {
+    public static String getColumnZsIrregularElectricalProtectionId() {
         return COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION_ID;
     }
-    public static String getColumnZS_IRREGULAR_ELECTRICAL_PROTECTION() {
+    public static String getColumnZsIrregularElectricalProtection() {
         return COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION;
     }
     public static String getColumnZsElectricalProtectionIrregularMultiplierTNReciver() {
@@ -39,7 +39,7 @@ public class ZSIrregularElectricalProtectionTableHelper {
         return COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION_MULTIPLIER_TT_SWITCHGEAR;
     }
 
-    public static String createZSIrregularElectricalProtectionTable() {
+    public static String createZsRregularElectricalProtectionTable() {
         String query = " CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION + " VARCHAR(15) NOT NULL, " +
@@ -49,5 +49,4 @@ public class ZSIrregularElectricalProtectionTableHelper {
                 COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION_MULTIPLIER_TT_SWITCHGEAR + " FLOAT NOT NULL);";
         return query;
     }
-
 }
