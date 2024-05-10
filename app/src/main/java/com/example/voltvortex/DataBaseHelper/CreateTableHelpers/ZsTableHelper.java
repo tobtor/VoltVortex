@@ -70,10 +70,8 @@ public class ZsTableHelper {
     public static String createZSTable() {
         String query = " CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_ZS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_ZS_MESURED_COMPONENT_ID + " INT FOREIGN KEY REFERENCES " + getTableName_ZS_COMPONENT() +
-                "(" + getColumnZsComponentsId() + "), " +
-                COLUMN_ZS_ELECTRICAL_PROTECTION_ID + " INT FOREIGN KEY REFERENCES " + getTableName_ZS_ELECTRICAL_PROTECTION() +
-                "(" + getColumnZsElectricalProtectionId() + "), " +
+                COLUMN_ZS_MESURED_COMPONENT_ID + " INTEGER, " +
+                COLUMN_ZS_ELECTRICAL_PROTECTION_ID + " INTEGER, " +
                 COLUMN_TYPE_OF_ELECTRICAL_PROTECTION + " VARCHAR(15), " +
                 COLUMN_MULTIPLIER_OF_ELECTRICAL_PROTECTION + " FLOAT, " +
                 COLUMN_RESULT + " FLOAT NOT NULL, " +
@@ -84,7 +82,11 @@ public class ZsTableHelper {
                 COLUMN_IS_WYRW + " BOOL NOT NULL, " +
                 COLUMN_IS_2PRZEW + " BOOL NOT NULL, " +
                 COLUMN_WAS_MESURED + " BOOL NOT NULL, " +
-                COLUMN_ZS_MESURED + " FLOAT NOT NULL);";
+                COLUMN_ZS_MESURED + " FLOAT NOT NULL " +
+                "FOREIGN KEY (" + COLUMN_ZS_MESURED_COMPONENT_ID + ") REFERENCES " + getTableName_ZS_COMPONENT() +
+                " (" + getColumnZsComponentsId() + "), " +
+                "FOREIGN KEY (" + COLUMN_ZS_ELECTRICAL_PROTECTION_ID + ") REFERENCES " + getTableName_ZS_ELECTRICAL_PROTECTION() +
+                "(" + getColumnZsElectricalProtectionId() + "));";
         return query;
     }
 }

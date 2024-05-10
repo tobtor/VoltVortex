@@ -20,7 +20,7 @@ import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSCompone
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper.*;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ContactPersonTableHelper.*;
 
-public class MyDatabaseHelper extends SQLiteOpenHelper{
+public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
     private static final String DATABASE_NAME = "VoltVortex.db";
@@ -33,31 +33,37 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(createContactPersonTable());
-        db.execSQL(createProjectTable());
-        db.execSQL(createBuildingTable());
         db.execSQL(createPPARTable());
+        db.execSQL(createContactPersonTable());
         db.execSQL(createZSComponentsTable());
         db.execSQL(createZsElectricalProtectionTable());
+        db.execSQL(createProjectTable());
+        db.execSQL(createBuildingTable());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + getTableName_PROJECT());
+        db.execSQL("DROP TABLE IF EXISTS " + getTableName_BUILDING());
+        db.execSQL("DROP TABLE IF EXISTS " + getTableName_CONTACT_PERSON());
+        db.execSQL("DROP TABLE IF EXISTS " + getTableName_ZS_COMPONENT());
+        db.execSQL("DROP TABLE IF EXISTS " + getTableName_ZS_ELECTRICAL_PROTECTION());
+        db.execSQL("DROP TABLE IF EXISTS " + getTableName_PPAR());
         onCreate(db);
     }
 
-
-    public boolean addProject(ProjectModel projectModel){
-
+    public boolean addProject(ProjectModel projectModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(getColumnProjectName(), projectModel.getProjectName());
-        cv.put(getColumnIsSingleContactPerson(), projectModel.isSingleContactPerson());
+        cv.put(getColumnFirm(), projectModel.getFirm());
+        cv.put(getColumnDescription(), projectModel.getDescription());
+        cv.put(getColumnContactPersonId(), projectModel.getContactPersonID());
+        cv.put(getColumnIsSingleContactPerson(), projectModel.isSingleContactPerson() ? 1 : 0);
 
         long insert = db.insert(getTableName_PROJECT(), null, cv);
-        if (insert == -1){
+        if (insert == -1) {
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
             return false;
         } else {
@@ -66,34 +72,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-    public boolean deleteProject(ProjectModel projectModel){
-
+    public boolean deleteProject(ProjectModel projectModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         String queryString = "DELETE FROM " + getTableName_PROJECT() + " WHERE " + getColumnProjectId() + " = " + projectModel.getProjectID();
 
         @SuppressLint("Recycle") Cursor cursor = db.rawQuery(queryString, null);
 
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             return true;
         } else {
             return false;
         }
-
     }
 
-    public List<ProjectModel> viewProjectList(){
-
+    public List<ProjectModel> viewProjectList() {
         List<ProjectModel> returnList = new ArrayList<>();
 
         String queryString = "SELECT * FROM " + getTableName_PROJECT();
 
         SQLiteDatabase db = this.getReadableDatabase();
-
         Cursor cursor = db.rawQuery(queryString, null);
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
-
                 int projectID = cursor.getInt(0);
                 String projectName = cursor.getString(1);
                 String projectFirm = cursor.getString(2);
@@ -101,21 +102,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
                 int contactPersonID = cursor.getInt(4);
                 boolean projectIsSingleContactPerson = cursor.getInt(5) == 1;
 
-                ProjectModel newProjectModel = new ProjectModel
-                        (projectID, projectName, projectFirm, projectDescription, contactPersonID,
-                                projectIsSingleContactPerson);
-
+                ProjectModel newProjectModel = new ProjectModel(projectID, projectName, projectFirm, projectDescription, contactPersonID, projectIsSingleContactPerson);
                 returnList.add(newProjectModel);
 
             } while (cursor.moveToNext());
-
-        } else {
-            //failure. do not add anything to the list
         }
 
         cursor.close();
         db.close();
         return returnList;
     }
-
 }

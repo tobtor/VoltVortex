@@ -1,7 +1,5 @@
 package com.example.voltvortex.DataBaseHelper.CreateTableHelpers;
 
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ContactPersonTableHelper.*;
-
 public class ProjectTableHelper {
 
     private static final String TABLE_NAME = "PROJECT";
@@ -15,34 +13,41 @@ public class ProjectTableHelper {
     public static String getTableName_PROJECT() {
         return TABLE_NAME;
     }
+
     public static String getColumnProjectId() {
         return COLUMN_PROJECT_ID;
     }
+
     public static String getColumnProjectName() {
         return COLUMN_PROJECT_NAME;
     }
+
     public static String getColumnFirm() {
         return COLUMN_FIRM;
     }
+
     public static String getColumnDescription() {
         return COLUMN_DESCRIPTION;
     }
+
     public static String getColumnContactPersonId() {
         return COLUMN_CONTACT_PERSON_ID;
     }
+
     public static String getColumnIsSingleContactPerson() {
         return COLUMN_IS_SINGLE_CONTACT_PERSON;
     }
 
     public static String createProjectTable() {
-        String query = " CREATE TABLE " + TABLE_NAME +
+        String query = "CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_PROJECT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PROJECT_NAME + " VARCHAR(255) NOT NULL, " +
                 COLUMN_FIRM + " VARCHAR(50) NOT NULL, " +
                 COLUMN_DESCRIPTION + " TEXT, " +
-                COLUMN_CONTACT_PERSON_ID + " INT FOREIGN KEY REFERENCES " + getTableName_CONTACT_PERSON() +
-                    "(" + getColumn_CONTACT_PERSON_ID() + "), " +
-                COLUMN_IS_SINGLE_CONTACT_PERSON + " BOOL);";
+                COLUMN_CONTACT_PERSON_ID + " INTEGER, " +
+                COLUMN_IS_SINGLE_CONTACT_PERSON + " INTEGER, " +
+                "FOREIGN KEY (" + COLUMN_CONTACT_PERSON_ID + ") REFERENCES " +
+                ContactPersonTableHelper.getTableName_CONTACT_PERSON() + " (" + ContactPersonTableHelper.getColumn_CONTACT_PERSON_ID() + "));";
         return query;
     }
 }
