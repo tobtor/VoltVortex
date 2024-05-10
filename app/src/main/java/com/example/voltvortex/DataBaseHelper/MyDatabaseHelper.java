@@ -19,7 +19,6 @@ import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PPARTabel
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper.*;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsIrregularElectricalProtectionTableHelper.*;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsRegularElectricalProtectionTableHelper.*;
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.FloorAndRoomTableHelper.*;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper{
 
@@ -46,8 +45,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
                         createPPARTable() +
                         createZSComponentsTable() +
                         createZsIrregularElectricalProtectionTable() +
-                        createZsRegularElectricalProtectionTable() +
-                        createFloorAndRoomTable();
+                        createZsRegularElectricalProtectionTable();
         db.execSQL(createNecessaryTable);
     }
 
@@ -79,7 +77,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
     public boolean deleteProject(ProjectModel projectModel){
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + getTableName_PROJECT() + " WHERE " + getColumnId() + " = " + projectModel.getProjectID();
+        String queryString = "DELETE FROM " + getTableName_PROJECT() + " WHERE " + getColumnProjectId() + " = " + projectModel.getProjectID();
 
         @SuppressLint("Recycle") Cursor cursor = db.rawQuery(queryString, null);
 

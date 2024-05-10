@@ -3,7 +3,7 @@ package com.example.voltvortex.DataBaseHelper.CreateTableHelpers;
 public class ProjectTableHelper {
 
     private static final String TABLE_NAME = "PROJECT";
-    private static final String COLUMN_ID = "PROJECT_ID";
+    private static final String COLUMN_PROJECT_ID = "PROJECT_ID";
     private static final String COLUMN_PROJECT_NAME = "PROJECT_NAME";
     private static final String COLUMN_FIRM = "FIRM";
     private static final String COLUMN_DESCRIPTION = "DESCRIPTION";
@@ -14,8 +14,8 @@ public class ProjectTableHelper {
     public static String getTableName_PROJECT() {
         return TABLE_NAME;
     }
-    public static String getColumnId() {
-        return COLUMN_ID;
+    public static String getColumnProjectId() {
+        return COLUMN_PROJECT_ID;
     }
     public static String getColumnProjectName() {
         return COLUMN_PROJECT_NAME;
@@ -38,7 +38,7 @@ public class ProjectTableHelper {
 
     public static String createProjectTable() {
         String query = " CREATE TABLE " + TABLE_NAME +
-                " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                " (" + COLUMN_PROJECT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PROJECT_NAME + " VARCHAR(255) NOT NULL, " +
                 COLUMN_FIRM + " VARCHAR(50) NOT NULL, " +
                 COLUMN_DESCRIPTION + " TEXT, " +
