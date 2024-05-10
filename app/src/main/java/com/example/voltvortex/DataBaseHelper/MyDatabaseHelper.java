@@ -17,6 +17,7 @@ import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTa
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.BuildingTableHelper.*;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PPARTabelHelper.*;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper.*;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSIrregularElectricalProtectionTableHelper.*;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper{
 
@@ -41,7 +42,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
                 createProjectTable() +
                         createBuildingTable() +
                         createPPARTable() +
-                        createZSComponentsTable();
+                        createZSComponentsTable() +
+                        createZSIrregularElectricalProtectionTable();
         db.execSQL(createNecessaryTable);
     }
 
