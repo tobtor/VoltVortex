@@ -27,10 +27,10 @@ public class ZsTableHelper {
     public static String getColumnZsId() {
         return COLUMN_ZS_ID;
     }
-    public static String getColumnZsMesuredComponentId() {
+    public static String getColumnReferenceZsMesuredComponentId() {
         return COLUMN_ZS_MESURED_COMPONENT_ID;
     }
-    public static String getColumnZsElectricalProtectionId() {
+    public static String getColumnReferenceZsElectricalProtectionId() {
         return COLUMN_ZS_ELECTRICAL_PROTECTION_ID;
     }
     public static String getColumnTypeOfElectricalProtection() {
@@ -75,13 +75,13 @@ public class ZsTableHelper {
                 COLUMN_TYPE_OF_ELECTRICAL_PROTECTION + " VARCHAR(15), " +
                 COLUMN_MULTIPLIER_OF_ELECTRICAL_PROTECTION + " FLOAT, " +
                 COLUMN_RESULT + " FLOAT NOT NULL, " +
-                COLUMN_IS_BZ + " BOOL NOT NULL, " +
-                COLUMN_IS_BPE + " BOOL NOT NULL, " +
-                COLUMN_IS_BK + " BOOL NOT NULL, " +
-                COLUMN_IS_BKLAPKI + " BOOL NOT NULL, " +
-                COLUMN_IS_WYRW + " BOOL NOT NULL, " +
-                COLUMN_IS_2PRZEW + " BOOL NOT NULL, " +
-                COLUMN_WAS_MESURED + " BOOL NOT NULL, " +
+                COLUMN_IS_BZ + " INTEGER NOT NULL, " +
+                COLUMN_IS_BPE + " INTEGER NOT NULL, " +
+                COLUMN_IS_BK + " INTEGER NOT NULL, " +
+                COLUMN_IS_BKLAPKI + " INTEGER NOT NULL, " +
+                COLUMN_IS_WYRW + " INTEGER NOT NULL, " +
+                COLUMN_IS_2PRZEW + " INTEGER NOT NULL, " +
+                COLUMN_WAS_MESURED + " INTEGER NOT NULL, " +
                 COLUMN_ZS_MESURED + " FLOAT NOT NULL " +
                 "FOREIGN KEY (" + COLUMN_ZS_MESURED_COMPONENT_ID + ") REFERENCES " + getTableName_ZS_COMPONENT() +
                 " (" + getColumnZsComponentsId() + "), " +

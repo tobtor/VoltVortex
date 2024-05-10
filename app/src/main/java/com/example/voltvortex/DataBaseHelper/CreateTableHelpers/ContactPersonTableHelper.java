@@ -43,7 +43,7 @@ public class ContactPersonTableHelper {
                 COLUMN_CONTACT_PERSON_SURNAME + " VARCHAR(55), " +
                 COLUMN_FIRM + " VARCHAR(50), " +
                 COLUMN_CONTACT_PERSON_POSITION + " VARCHAR(255), " +
-                COLUMN_CONTACT_PERSON_PHONE + " VARCHAR(12), " +
+                COLUMN_CONTACT_PERSON_PHONE + " VARCHAR(12) NOT NULL, " +
                 COLUMN_CONTACT_PERSON_EMAIL + " VARCHAR(255));";
         return query;
     }
