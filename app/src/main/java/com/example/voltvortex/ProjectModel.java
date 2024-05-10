@@ -2,6 +2,8 @@ package com.example.voltvortex;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DateFormat;
+
 public class ProjectModel {
 
     private int projectID;
@@ -27,7 +29,6 @@ public class ProjectModel {
         this.projectName = projectName;
         this.firm = firm;
         this.description = description;
-
         this.isSingleContactPerson = isManyContactPerson;
     }
 

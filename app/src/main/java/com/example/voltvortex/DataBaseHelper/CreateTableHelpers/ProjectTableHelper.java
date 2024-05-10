@@ -9,7 +9,6 @@ public class ProjectTableHelper {
     private static final String COLUMN_DESCRIPTION = "DESCRIPTION";
     private static final String COLUMN_CONTACT_PERSON_ID = "CONTACT_PERSON_ID";
     private static final String COLUMN_IS_SINGLE_CONTACT_PERSON = "IS_SINGLE_CONTACT_PERSON";
-    private static final String COLUMN_DATE = "DATE";
 
     public static String getTableName_PROJECT() {
         return TABLE_NAME;
@@ -32,9 +31,6 @@ public class ProjectTableHelper {
     public static String getColumnIsSingleContactPerson() {
         return COLUMN_IS_SINGLE_CONTACT_PERSON;
     }
-    public static String getColumnDate() {
-        return COLUMN_DATE;
-    }
 
     public static String createProjectTable() {
         String query = " CREATE TABLE " + TABLE_NAME +
@@ -43,8 +39,7 @@ public class ProjectTableHelper {
                 COLUMN_FIRM + " VARCHAR(50) NOT NULL, " +
                 COLUMN_DESCRIPTION + " TEXT, " +
                 COLUMN_CONTACT_PERSON_ID + " INTEGER, " +
-                COLUMN_IS_SINGLE_CONTACT_PERSON + " BOOL, " +
-                COLUMN_DATE + " DATE NOT NULL);";
+                COLUMN_IS_SINGLE_CONTACT_PERSON + " BOOL);";
         return query;
     }
 }

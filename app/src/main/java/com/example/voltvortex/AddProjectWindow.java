@@ -1,10 +1,12 @@
 package com.example.voltvortex;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 
 public class AddProjectWindow extends AppCompatActivity {
 
@@ -40,7 +42,6 @@ public class AddProjectWindow extends AppCompatActivity {
             }
         });
 
-/*
         buttonEndAddingProject.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -53,7 +54,8 @@ public class AddProjectWindow extends AppCompatActivity {
                     }
                     catch (Exception e){
                         Toast.makeText(AddProjectWindow.this, "Błąd przy dodawaniu!", Toast.LENGTH_SHORT).show();
-                        projectModel = new ProjectModel(-1, "error", switchIsSingleContactPerson.isChecked());
+                        projectModel = new ProjectModel(-1, "error","error","error",
+                                switchIsSingleContactPerson.isChecked());
                     }
 
                     MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(AddProjectWindow.this);
@@ -67,9 +69,5 @@ public class AddProjectWindow extends AppCompatActivity {
 
                 }
             });
-*/
-
-
-
     }
 }

@@ -110,7 +110,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
                 boolean projectIsSingleContactPerson = cursor.getInt(5) == 1;
 
                 ProjectModel newProjectModel = new ProjectModel
-                        (projectID, projectName, projectFirm, projectDescription, contactPersonID, projectIsSingleContactPerson);
+                        (projectID, projectName, projectFirm, projectDescription, contactPersonID,
+                                projectIsSingleContactPerson);
 
                 returnList.add(newProjectModel);
 
