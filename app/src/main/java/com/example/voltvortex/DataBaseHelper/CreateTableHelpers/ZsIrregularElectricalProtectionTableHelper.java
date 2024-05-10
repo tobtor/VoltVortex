@@ -26,20 +26,20 @@ public class ZsIrregularElectricalProtectionTableHelper {
     public static String getColumnZsIrregularElectricalProtection() {
         return COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION;
     }
-    public static String getColumnZsElectricalProtectionIrregularMultiplierTNReciver() {
+    public static String getColumnZsIrregularElectricalProtectionMultiplierTNReciver() {
         return COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION_MULTIPLIER_TN_RECIVER;
     }
-    public static String getColumnZsElectricalProtectionIrregularMultiplierTNSwitchGear() {
+    public static String getColumnZsIrregularElectricalProtectionMultiplierTNSwitchGear() {
         return COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION_MULTIPLIER_TN_SWITCHGEAR;
     }
-    public static String getColumnZsElectricalProtectionMultiplierTTReciver() {
+    public static String getColumnZsIrregularElectricalProtectionMultiplierTTReciver() {
         return COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION_MULTIPLIER_TT_RECIVER;
     }
-    public static String getColumnZsElectricalProtectionMultiplierTTSwitchGear() {
+    public static String getColumnZsIrregularElectricalProtectionMultiplierTTSwitchGear() {
         return COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION_MULTIPLIER_TT_SWITCHGEAR;
     }
 
-    public static String createZsRregularElectricalProtectionTable() {
+    public static String createZsIrregularElectricalProtectionTable() {
         String query = " CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_ZS_IRREGULAR_ELECTRICAL_PROTECTION + " VARCHAR(15) NOT NULL, " +
