@@ -1,7 +1,8 @@
-package com.example.voltvortex;
+package com.example.voltvortex.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.voltvortex.R;
 
 public class ProjectActivity extends AppCompatActivity {
 

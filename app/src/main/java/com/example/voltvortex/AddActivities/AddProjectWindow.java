@@ -1,4 +1,4 @@
-package com.example.voltvortex;
+package com.example.voltvortex.AddActivities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -7,6 +7,9 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
+import com.example.voltvortex.Activities.MainActivity;
+import com.example.voltvortex.Models.ProjectModel;
+import com.example.voltvortex.R;
 
 public class AddProjectWindow extends AppCompatActivity {
 

@@ -1,8 +1,4 @@
-package com.example.voltvortex;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.text.DateFormat;
+package com.example.voltvortex.Models;
 
 public class ProjectModel {
 

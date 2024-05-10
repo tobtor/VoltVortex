@@ -1,5 +1,7 @@
 package com.example.voltvortex.DataBaseHelper.CreateTableHelpers;
 
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ContactPersonTableHelper.*;
+
 public class ProjectTableHelper {
 
     private static final String TABLE_NAME = "PROJECT";
@@ -38,7 +40,8 @@ public class ProjectTableHelper {
                 COLUMN_PROJECT_NAME + " VARCHAR(255) NOT NULL, " +
                 COLUMN_FIRM + " VARCHAR(50) NOT NULL, " +
                 COLUMN_DESCRIPTION + " TEXT, " +
-                COLUMN_CONTACT_PERSON_ID + " INTEGER, " +
+                COLUMN_CONTACT_PERSON_ID + " INT FOREIGN KEY REFERENCES " + getTableName_CONTACT_PERSON() +
+                    "(" + getColumn_CONTACT_PERSON_ID() + "), " +
                 COLUMN_IS_SINGLE_CONTACT_PERSON + " BOOL);";
         return query;
     }

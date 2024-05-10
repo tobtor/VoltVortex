@@ -1,4 +1,4 @@
-package com.example.voltvortex;
+package com.example.voltvortex.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,7 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.voltvortex.AddActivities.AddProjectWindow;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
+import com.example.voltvortex.Models.ProjectModel;
+import com.example.voltvortex.R;
 
 public class MainActivity extends AppCompatActivity {
 

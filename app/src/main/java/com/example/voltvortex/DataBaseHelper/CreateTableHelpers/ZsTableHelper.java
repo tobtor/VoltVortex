@@ -1,11 +1,13 @@
 package com.example.voltvortex.DataBaseHelper.CreateTableHelpers;
 
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper.*;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper.*;
+
 public class ZsTableHelper {
 
     private static final String TABLE_NAME = "ZS";
     private static final String COLUMN_ZS_ID = "ZS_ID";
     private static final String COLUMN_ZS_MESURED_COMPONENT_ID = "ZS_MESURMENT_COMPONENT_ID";
-    private static final String COLUMN_ZS_IS_REGULAR = "ZS_IS_REGULAR";
     private static final String COLUMN_ZS_ELECTRICAL_PROTECTION_ID = "ZS_ELECTRICAL_PROTECTION_ID";
     private static final String COLUMN_TYPE_OF_ELECTRICAL_PROTECTION = "TYPE_OF_ELECTRICAL_PROTECTION";
     private static final String COLUMN_MULTIPLIER_OF_ELECTRICAL_PROTECTION = "MULTIPLIER_OF_ELECTRICAL_PROTECTION";
@@ -27,9 +29,6 @@ public class ZsTableHelper {
     }
     public static String getColumnZsMesuredComponentId() {
         return COLUMN_ZS_MESURED_COMPONENT_ID;
-    }
-    public static String getColumnZsIsRegular() {
-        return COLUMN_ZS_IS_REGULAR;
     }
     public static String getColumnZsElectricalProtectionId() {
         return COLUMN_ZS_ELECTRICAL_PROTECTION_ID;
@@ -71,9 +70,10 @@ public class ZsTableHelper {
     public static String createZSTable() {
         String query = " CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_ZS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_ZS_MESURED_COMPONENT_ID + " INTEGER, " +
-                COLUMN_ZS_IS_REGULAR + " BOOL NOT NULL, " +
-                COLUMN_ZS_ELECTRICAL_PROTECTION_ID + " INTEGER, " +
+                COLUMN_ZS_MESURED_COMPONENT_ID + " INT FOREIGN KEY REFERENCES " + getTableName_ZS_COMPONENT() +
+                "(" + getColumnZsComponentsId() + "), " +
+                COLUMN_ZS_ELECTRICAL_PROTECTION_ID + " INT FOREIGN KEY REFERENCES " + getTableName_ZS_ELECTRICAL_PROTECTION() +
+                "(" + getColumnZsElectricalProtectionId() + "), " +
                 COLUMN_TYPE_OF_ELECTRICAL_PROTECTION + " VARCHAR(15), " +
                 COLUMN_MULTIPLIER_OF_ELECTRICAL_PROTECTION + " FLOAT, " +
                 COLUMN_RESULT + " FLOAT NOT NULL, " +

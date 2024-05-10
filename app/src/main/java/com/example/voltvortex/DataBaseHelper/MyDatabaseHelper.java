@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-import com.example.voltvortex.ProjectModel;
+import com.example.voltvortex.Models.ProjectModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,7 @@ import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTa
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.BuildingTableHelper.*;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PPARTabelHelper.*;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper.*;
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsIrregularElectricalProtectionTableHelper.*;
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsRegularElectricalProtectionTableHelper.*;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper.*;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ContactPersonTableHelper.*;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper{
@@ -34,13 +33,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(createBuildingTable());
+        db.execSQL(createContactPersonTable());
         db.execSQL(createProjectTable());
+        db.execSQL(createBuildingTable());
         db.execSQL(createPPARTable());
         db.execSQL(createZSComponentsTable());
-        db.execSQL(createZsIrregularElectricalProtectionTable());
-        db.execSQL(createZsRegularElectricalProtectionTable());
-        db.execSQL(createContactPersonTable());
+        db.execSQL(createZsElectricalProtectionTable());
     }
 
     @Override
