@@ -16,7 +16,7 @@ import java.util.List;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTableHelper.*;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.BuildingTableHelper.*;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PPARTabelHelper.*;
-
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper.*;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper{
 
@@ -37,13 +37,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        /*String query = "CREATE TABLE " + TABLE_NAME +
-                " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_PROJECT_NAME + " TEXT, " +
-                COLUMN_IS_MANY_CITIES + " BOOL, " +
-                COLUMN_IS_MANY_CONTACT_PERSONS + " BOOL);";*/
-        String createProjectTable = createProjectTable() + createBuildingTable() + createPPARTable();
-        db.execSQL(createProjectTable);
+        String createNecessaryTable =
+                createProjectTable() +
+                        createBuildingTable() +
+                        createPPARTable() +
+                        createZSComponentsTable();
+        db.execSQL(createNecessaryTable);
     }
 
     @Override
