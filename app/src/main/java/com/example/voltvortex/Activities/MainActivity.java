@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     // Metoda do odświeżania listy projektów
     private void getProjectList(MyDatabaseHelper myDatabaseHelper) {
         projectArrayAdapter = new ArrayAdapter<ProjectModel>
-                (MainActivity.this, R.layout.activity_listview_layout,
+                (MainActivity.this, R.layout.activity_listview_main_activity,
                         R.id.listViewTextProjectName, myDatabaseHelper.viewProjectList()) {
             @NonNull
             @Override
