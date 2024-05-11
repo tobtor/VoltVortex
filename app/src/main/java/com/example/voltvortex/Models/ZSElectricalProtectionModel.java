@@ -11,7 +11,9 @@ public class ZSElectricalProtectionModel {
     private float multiplierDC;
 
     // Konstruktor
-    public ZSElectricalProtectionModel(int protectionID, String protectionType, float multiplierTNReceiver, float multiplierTNSwitchgear, float multiplierTTReceiver, float multiplierTTSwitchgear, float multiplierDC) {
+    public ZSElectricalProtectionModel(int protectionID, String protectionType, float multiplierTNReceiver,
+                                       float multiplierTNSwitchgear, float multiplierTTReceiver,
+                                       float multiplierTTSwitchgear, float multiplierDC) {
         this.protectionID = protectionID;
         this.protectionType = protectionType;
         this.multiplierTNReceiver = multiplierTNReceiver;

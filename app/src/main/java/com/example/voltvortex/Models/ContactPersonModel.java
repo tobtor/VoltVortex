@@ -11,7 +11,8 @@ public class ContactPersonModel {
     private String email;
 
     // Konstruktor
-    public ContactPersonModel(int contactPersonID, String name, String surname, String firm, String position, String phone, String email) {
+    public ContactPersonModel(int contactPersonID, String name, String surname, String firm,
+                              String position, String phone, String email) {
         this.contactPersonID = contactPersonID;
         this.name = name;
         this.surname = surname;

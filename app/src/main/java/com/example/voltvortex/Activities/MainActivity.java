@@ -16,6 +16,7 @@ import com.example.voltvortex.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Definicje komponentów interfejsu użytkownika
     Button addProjectButton;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch usuwanie;
@@ -31,44 +32,48 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Przypisanie widoków do zmiennych
         addProjectButton = findViewById(R.id.addProjectButton);
         listOfProjects = findViewById(R.id.listOfProjects);
         usuwanie = findViewById(R.id.usuwanie);
 
+        // Inicjalizacja klasy pomocniczej bazy danych
         myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
 
+        // Wyświetlenie listy projektów
         getProjectList(myDatabaseHelper);
 
+        // Listener zmiany stanu przełącznika usuwanie
         usuwanie.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if (isChecked){
-                listOfProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        ProjectModel clickedProject = (ProjectModel) parent.getItemAtPosition(position);
-                        myDatabaseHelper.deleteProject(clickedProject);
-                        getProjectList(myDatabaseHelper);
-                        Toast.makeText(MainActivity.this, "Deleted " + clickedProject.toString() , Toast.LENGTH_SHORT).show();
-                    }
-                });} else {
-                    ///
+                if (isChecked) {
+                    listOfProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            ProjectModel clickedProject = (ProjectModel) parent.getItemAtPosition(position);
+                            myDatabaseHelper.deleteProject(clickedProject);
+                            getProjectList(myDatabaseHelper);
+                            Toast.makeText(MainActivity.this, "Deleted " + clickedProject.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    listOfProjects.setOnItemClickListener(null);
                 }
             }
         });
 
+        // Listener przycisku dodawania projektu
         addProjectButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddProjectWindow.class);
                 startActivity(intent);
             }
         });
-
     }
 
+    // Metoda do odświeżania listy projektów
     private void getProjectList(MyDatabaseHelper myDatabaseHelper) {
         projectArrayAdapter = new ArrayAdapter<ProjectModel>
                 (MainActivity.this, R.layout.activity_listview_layout, R.id.listViewTextProjectName, myDatabaseHelper.viewProjectList()) {
@@ -76,10 +81,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
-
                 textViewName = view.findViewById(R.id.listViewTextProjectName);
                 textViewId = view.findViewById(R.id.textAddingDate);
-
                 projectModel = getItem(position);
 
                 if (projectModel != null) {
@@ -93,5 +96,4 @@ public class MainActivity extends AppCompatActivity {
 
         listOfProjects.setAdapter(projectArrayAdapter);
     }
-
 }

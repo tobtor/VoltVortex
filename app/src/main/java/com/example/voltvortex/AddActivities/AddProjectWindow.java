@@ -28,11 +28,8 @@ public class AddProjectWindow extends AppCompatActivity {
         projectName = findViewById(R.id.editTextProjectName);
         firm = findViewById(R.id.editTextFirm);
         description = findViewById(R.id.editTextDescription);
-        contactPersonName = findViewById(R.id.editTextOsobaKontaktowa);
-        contactPersonPhoneNumber = findViewById(R.id.editTextPhoneNumber);
         buttonEndAddingProject = findViewById(R.id.buttonEndAddingProject);
         switchIsSingleContactPerson = findViewById(R.id.switchIsSingleContactPerson);
-        LinearLayoutProjectContactPerson = findViewById(R.id.LinearLayoutProjectContactPerson);
 
         switchIsSingleContactPerson.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
