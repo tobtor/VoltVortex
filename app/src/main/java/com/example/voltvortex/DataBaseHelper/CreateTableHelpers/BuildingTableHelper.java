@@ -64,9 +64,9 @@ public class BuildingTableHelper {
                 COLUMN_BUILDING_NUMBER + " VARCHAR(10) NOT NULL, " +
                 COLUMN_PROJECT_ID + " INTEGER, " +
                 COLUMN_CONTACT_PERSON_ID + " INTEGER, " +
-                "FOREIGN KEY (" + COLUMN_PROJECT_ID + ") REFERENCES ProjectTableHelper.getTableName_PROJECT() " +
+                "FOREIGN KEY (" + COLUMN_PROJECT_ID + ") REFERENCES " + ProjectTableHelper.getTableName_PROJECT() +
                 "(" + ProjectTableHelper.getColumnProjectId() + "), " +
-                "FOREIGN KEY (" + COLUMN_CONTACT_PERSON_ID + ") REFERENCES ContactPersonTableHelper.getTableName_CONTACT_PERSON() " +
+                "FOREIGN KEY (" + COLUMN_CONTACT_PERSON_ID + ") REFERENCES " + ContactPersonTableHelper.getTableName_CONTACT_PERSON() +
                 "(" + ContactPersonTableHelper.getColumn_CONTACT_PERSON_ID() + "));";
         return query;
     }

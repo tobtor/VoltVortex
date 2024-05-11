@@ -1,12 +1,19 @@
 package com.example.voltvortex.DataBaseHelper;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
-import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.*;
+import androidx.annotation.Nullable;
+import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTableHelper;
+import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.BuildingTableHelper;
+import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PPARTabelHelper;
+import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper;
+import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ContactPersonTableHelper;
+import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper;
 import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.Models.BuildingModel;
 
@@ -54,6 +61,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + ProjectTableHelper.getTableName_PROJECT());
+        db.execSQL("DROP TABLE IF EXISTS " + BuildingTableHelper.getTableName_BUILDING());
+        db.execSQL("DROP TABLE IF EXISTS " + ContactPersonTableHelper.getTableName_CONTACT_PERSON());
+        db.execSQL("DROP TABLE IF EXISTS " + ZSComponentsTableHelper.getTableName_ZS_COMPONENT());
+        db.execSQL("DROP TABLE IF EXISTS " + ZsElectricalProtectionTableHelper.getTableName_ZS_ELECTRICAL_PROTECTION());
+        db.execSQL("DROP TABLE IF EXISTS " + PPARTabelHelper.getTableName_PPAR());
         onCreate(db);
     }
 
