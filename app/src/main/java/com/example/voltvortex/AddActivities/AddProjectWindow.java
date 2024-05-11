@@ -30,17 +30,6 @@ public class AddProjectWindow extends AppCompatActivity {
         firm = findViewById(R.id.editTextFirm);
         description = findViewById(R.id.editTextDescription);
         buttonEndAddingProject = findViewById(R.id.buttonEndAddingProject);
-        switchIsSingleContactPerson = findViewById(R.id.switchIsSingleContactPerson);
-        LinearLayoutProjectContactPerson = findViewById(R.id.linearLayoutProjectContactPerson);
-
-        // Listener do przełącznika określającego, czy projekt ma pojedynczą osobę kontaktową
-        switchIsSingleContactPerson.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Ukrycie lub wyświetlenie informacji o osobie kontaktowej
-                LinearLayoutProjectContactPerson.setVisibility(isChecked ? View.GONE : View.VISIBLE);
-            }
-        });
 
         buttonEndAddingProject.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
