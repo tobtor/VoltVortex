@@ -13,7 +13,7 @@ import com.example.voltvortex.R;
 
 public class AddProjectWindow extends AppCompatActivity {
 
-    EditText projectName, firm, description, contactPersonName, contactPersonPhoneNumber;
+    EditText projectName, firm, description;
     Button buttonEndAddingProject;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch switchIsSingleContactPerson;
@@ -25,49 +25,49 @@ public class AddProjectWindow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addproject_window);
 
+        // Inicjalizacja elementów interfejsu
         projectName = findViewById(R.id.editTextProjectName);
         firm = findViewById(R.id.editTextFirm);
         description = findViewById(R.id.editTextDescription);
         buttonEndAddingProject = findViewById(R.id.buttonEndAddingProject);
         switchIsSingleContactPerson = findViewById(R.id.switchIsSingleContactPerson);
+        LinearLayoutProjectContactPerson = findViewById(R.id.linearLayoutProjectContactPerson);
 
+        // Listener do przełącznika określającego, czy projekt ma pojedynczą osobę kontaktową
         switchIsSingleContactPerson.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    LinearLayoutProjectContactPerson.setVisibility(View.GONE);
-                } else {
-                    LinearLayoutProjectContactPerson.setVisibility(View.VISIBLE);
-                }
+                // Ukrycie lub wyświetlenie informacji o osobie kontaktowej
+                LinearLayoutProjectContactPerson.setVisibility(isChecked ? View.GONE : View.VISIBLE);
             }
         });
 
         buttonEndAddingProject.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                addProject();
+            }
+        });
+    }
 
-                ProjectModel projectModel;
+    private void addProject() {
+        String projectNameText = projectName.getText().toString();
+        String firmText = firm.getText().toString();
+        String descriptionText = description.getText().toString();
+        boolean isSingleContactPerson = switchIsSingleContactPerson.isChecked();
 
-                try {
-                    projectModel = new ProjectModel(-1, projectName.getText().toString(), firm.getText().toString(),
-                            description.getText().toString(), switchIsSingleContactPerson.isChecked());
-                        Toast.makeText(AddProjectWindow.this, projectModel.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                    catch (Exception e){
-                        Toast.makeText(AddProjectWindow.this, "Błąd przy dodawaniu!", Toast.LENGTH_SHORT).show();
-                        projectModel = new ProjectModel(-1, "error","error","error",
-                                switchIsSingleContactPerson.isChecked());
-                    }
+        // Utworzenie nowego obiektu modelu projektu
+        ProjectModel projectModel = new ProjectModel(-1, projectNameText, firmText, descriptionText,
+                0, isSingleContactPerson);
 
-                    MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(AddProjectWindow.this);
+        // Dodawanie projektu do bazy danych
+        MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(AddProjectWindow.this);
+        boolean success = myDatabaseHelper.addProject(projectModel);
 
-                    boolean success = myDatabaseHelper.addProject(projectModel);
+        Toast.makeText(AddProjectWindow.this, success ? "Projekt dodany pomyślnie" :
+                "Błąd przy dodawaniu projektu", Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(AddProjectWindow.this, "Success " + success, Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(AddProjectWindow.this, MainActivity.class);
-                    startActivity(intent);
-
-                }
-            });
+        // Powrót do głównego ekranu aplikacji
+        Intent intent = new Intent(AddProjectWindow.this, MainActivity.class);
+        startActivity(intent);
     }
 }

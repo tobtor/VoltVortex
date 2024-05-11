@@ -116,7 +116,8 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="12dp"
-              android:gravity="center_horizontal">
+              android:gravity="center_horizontal"
+              android:id="@+id/linearLayoutProjectContactPerson">
         <TextView
                 android:text="Jedna"
                 android:layout_width="wrap_content"
@@ -124,11 +125,10 @@
                 android:id="@+id/textSingleContactPerson"
                 android:textColor="@color/white"
                 android:layout_marginRight="12dp"/>
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/switchIsSingleContactPerson"
-                tools:ignore="UseSwitchCompatOrMaterialXml"/>
+                android:id="@+id/switchIsSingleContactPerson"/>
         <TextView
                 android:text="Wiele"
                 android:layout_width="wrap_content"
