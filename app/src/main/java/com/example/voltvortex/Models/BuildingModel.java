@@ -11,6 +11,7 @@ public class BuildingModel {
     private int projectID;
     private int contactPersonID;
 
+    // Konstruktor
     public BuildingModel(int buildingID, String buildingName, String dateOfMeasurements, String city,
                          String postcode, String street, String buildingNumber, int projectID, int contactPersonID) {
         this.buildingID = buildingID;

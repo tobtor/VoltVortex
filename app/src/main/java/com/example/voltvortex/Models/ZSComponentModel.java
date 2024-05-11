@@ -6,6 +6,7 @@ public class ZSComponentModel {
     private String component;
     private String classOfComponent;
 
+    // Konstruktor
     public ZSComponentModel(int componentID, String component, String classOfComponent) {
         this.componentID = componentID;
         this.component = component;
