@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroudColor"
+        tools:context=".AddActivities.AddProjectWindow">
+
+  <ScrollView
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+          app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+      <TextView
+              android:text="Imie i Nazwisko"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/textContactPersonName"
+              android:textSize="16sp"
+              android:textColor="@color/white"
+              android:layout_marginTop="20dp"/>
+
+      <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/radius"
+              android:layout_marginTop="12dp">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textLongMessage"
+                android:text="np. Paweł Mikołajek"
+                android:id="@+id/editTextContactPersonName"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/truenolight"
+                android:alpha="0.65"/>
+      </FrameLayout>
+
+      <TextView
+              android:text="Firma"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/textContactPersonFirm"
+              android:textSize="16sp"
+              android:textColor="@color/white"
+              android:layout_marginTop="20dp"/>
+      <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/radius"
+              android:layout_marginTop="12dp">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textLongMessage"
+                android:text="np. IBS Budownictwo"
+                android:id="@+id/editTextContactPersonFirm"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/truenolight"
+                android:alpha="0.65"/>
+      </FrameLayout>
+      <TextView
+              android:text="Opis Stanowiska"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/textPosition"
+              android:textSize="16sp"
+              android:textColor="@color/white"
+              android:layout_marginTop="20dp"/>
+      <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/radius"
+              android:layout_marginTop="12dp">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="np. Kierownik ds. Technicznych"
+                android:id="@+id/editTextPosition"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/truenolight"
+                android:alpha="0.65"/>
+      </FrameLayout>
+      <TextView
+              android:text="Email"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/textEmail"
+              android:textSize="16sp"
+              android:textColor="@color/white"
+              android:layout_marginTop="20dp"/>
+      <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/radius"
+              android:layout_marginTop="12dp">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="np. PrzykładowyEmail@gmail.com"
+                android:id="@+id/editTextEmail"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/truenolight"
+                android:alpha="0.65"/>
+      </FrameLayout>
+      <TextView
+              android:text="Telefon Kontaktowy"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/textPhoneNumber"
+              android:textSize="16sp"
+              android:textColor="@color/white"
+              android:layout_marginTop="20dp"/>
+      <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/radius"
+              android:layout_marginTop="12dp">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="np.123456789"
+                android:id="@+id/editTextPhoneNumber"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/truenolight"
+                android:alpha="0.65"/>
+      </FrameLayout>
+    </LinearLayout>
+  </ScrollView>
+  <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toBottomOf="parent"
+          android:id="@+id/linearLayout">
+    <Button
+            android:text="Dodaj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/buttonNormalColor"
+            android:id="@+id/buttonAddContactPerson"
+            android:textSize="20sp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" android:layout_weight="1"/>
+  </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

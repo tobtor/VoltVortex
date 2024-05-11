@@ -94,13 +94,50 @@
                 android:alpha="0.65"/>
       </FrameLayout>
       <TextView
+              android:text="Czy jest jedna osoba kontaktowa?"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/textIsSingleContactPerson"
+              android:textSize="16sp"
+              android:textColor="@color/white"
+              android:layout_marginTop="20dp"/>
+      <LinearLayout
+              android:orientation="horizontal"
+              android:layout_marginTop="8dp"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+        <TextView
+                android:text="Jedna osoba"
+                android:gravity="right"
+                android:textColor="@color/white"
+                android:fontFamily="@font/truenolight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewSinglPerson"
+                android:layout_weight="1"/>
+        <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switchIsSinglePerson"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"/>
+        <TextView
+                android:text="Wiele Osób"
+                android:textColor="@color/white"
+                android:fontFamily="@font/truenolight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewMultiplyPerson"
+                android:layout_weight="1"/>
+      </LinearLayout>
+      <TextView
               android:text="Osoba Kontaktowa"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/textContactPersonSerch"
               android:textSize="16sp"
               android:textColor="@color/white"
-              android:layout_marginTop="20dp"/>
+              android:layout_marginTop="16dp"/>
       <SearchView
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -135,11 +172,11 @@
             android:layout_marginEnd="16dp"
             android:layout_weight="1"/>
     <Button
-            android:text="Dalej"
+            android:text="Dodaj Projekt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/buttonNormalColor"
-            android:id="@+id/buttonEndAddingProject"
+            android:id="@+id/buttonAddProject"
             android:textSize="20sp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="8dp"

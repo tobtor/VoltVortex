@@ -4,7 +4,6 @@ public class ContactPersonModel {
 
     private int contactPersonID;
     private String name;
-    private String surname;
     private String firm;
     private String position;
     private String phone;
@@ -15,7 +14,6 @@ public class ContactPersonModel {
                               String position, String phone, String email) {
         this.contactPersonID = contactPersonID;
         this.name = name;
-        this.surname = surname;
         this.firm = firm;
         this.position = position;
         this.phone = phone;
@@ -37,14 +35,6 @@ public class ContactPersonModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public String getFirm() {

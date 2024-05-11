@@ -16,7 +16,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/listOfProjects"
-            tools:listitem="@layout/activity_listview_main_activity
+            tools:listitem="@layout/activity_listview_main_activity"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintVertical_bias="0.0"/>
 

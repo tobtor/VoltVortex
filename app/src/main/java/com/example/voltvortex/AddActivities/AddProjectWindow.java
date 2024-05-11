@@ -23,13 +23,13 @@ public class AddProjectWindow extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addproject_window);
+        setContentView(R.layout.activity_add_project_window);
 
         // Inicjalizacja elementów interfejsu
         projectName = findViewById(R.id.editTextProjectName);
         firm = findViewById(R.id.editTextFirm);
         description = findViewById(R.id.editTextDescription);
-        buttonEndAddingProject = findViewById(R.id.buttonEndAddingProject);
+        buttonEndAddingProject = findViewById(R.id.buttonAddProject);
 
         buttonEndAddingProject.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
