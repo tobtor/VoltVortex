@@ -1,13 +1,14 @@
-package com.example.voltvortex;
+package com.example.voltvortex.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.voltvortex.R;
 
-public class MainActivity extends AppCompatActivity {
+public class ProjectActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_project);
     }
 }

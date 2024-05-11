@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Custom colors -->
+    <color name="backgroudColor">#112D4E</color>
+    <color name="buttonNormalColor">#618BBD</color>
+    <color name="buttonHighLightColor">#3E5D82</color>
+    <color name="strokeMaicColor">#A2C3EC</color>
+    <color name="strokeSecondaryColor">#99B9E2</color>
+
 </resources>
