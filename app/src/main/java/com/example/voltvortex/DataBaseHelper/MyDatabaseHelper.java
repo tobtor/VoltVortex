@@ -1,21 +1,19 @@
 package com.example.voltvortex.DataBaseHelper;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
-import androidx.annotation.Nullable;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTableHelper;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.BuildingTableHelper;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PPARTabelHelper;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ContactPersonTableHelper;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper;
+import com.example.voltvortex.Models.ContactPersonModel;
 import com.example.voltvortex.Models.ProjectModel;
-import com.example.voltvortex.Models.BuildingModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +76,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
+        cv.put(ProjectTableHelper.getColumnProjectId(), projectModel.getProjectID());
         cv.put(ProjectTableHelper.getColumnProjectName(), projectModel.getProjectName());
         cv.put(ProjectTableHelper.getColumnFirm(), projectModel.getFirm());
         cv.put(ProjectTableHelper.getColumnDescription(), projectModel.getDescription());
@@ -132,6 +131,82 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
                 ProjectModel newProjectModel = new ProjectModel(projectID, projectName, projectFirm, projectDescription, contactPersonID, projectIsSingleContactPerson);
                 returnList.add(newProjectModel);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    /**
+     * Dodanie nowegej osoby kontaktowej do bazy danych.
+     * @param contactPersonModel model osoby kontaktowej
+     * @return true jeśli dodanie się powiodło, false w przeciwnym razie
+     */
+    public boolean addContactPerson(ContactPersonModel contactPersonModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_ID(), contactPersonModel.getContactPersonID());
+        cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_NAME(), contactPersonModel.getName());
+        cv.put(ContactPersonTableHelper.getColumn_FIRM(), contactPersonModel.getFirm());
+        cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_POSITION(), contactPersonModel.getPosition());
+        cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_PHONE(), contactPersonModel.getPhone());
+        cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_EMAIL(), contactPersonModel.getEmail());
+
+        long insert = db.insert(ProjectTableHelper.getTableName_PROJECT(), null, cv);
+        if (insert == -1) {
+            Toast.makeText(context, "Nie udało się dodać osoby kontaktowej!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            Toast.makeText(context, "Osoba kontaktowa dodana pomyślnie.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+    }
+
+    /**
+     * Usunięcie osoby kontaktowej z bazy danych.
+     * @param contactPersonModel model osoby kontaktowej do usunięcia
+     * @return true jeśli usunięcie się powiodło, false w przeciwnym razie
+     */
+    public boolean deleteContactPerson(ContactPersonModel contactPersonModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " +
+                ContactPersonTableHelper.getTableName_CONTACT_PERSON() + " WHERE " +
+                ContactPersonTableHelper.getColumn_CONTACT_PERSON_ID() + " = " +
+                contactPersonModel.getContactPersonID();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+        boolean result = cursor.moveToFirst();
+        cursor.close();
+        return result;
+    }
+
+    /**
+     * Pobranie listy wszystkich osób kontaktowych z bazy danych.
+     * @return lista osób kontaktowych
+     */
+    public List<ContactPersonModel> viewContactPersonList() {
+        List<ContactPersonModel> returnList = new ArrayList<>();
+
+        String queryString = "SELECT * FROM " + ContactPersonTableHelper.getTableName_CONTACT_PERSON();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int contactPersonID = cursor.getInt(0);
+                String contactPersonName = cursor.getString(1);
+                String contactPersonFirm = cursor.getString(2);
+                String contactPersonPosition = cursor.getString(3);
+                String contactPersonPhone = cursor.getString(4);
+                String contactPersonEmail = cursor.getString(5);
+
+                ContactPersonModel contactPersonModel = new ContactPersonModel(contactPersonID,
+                        contactPersonName, contactPersonFirm, contactPersonPosition,
+                        contactPersonPhone, contactPersonEmail);
+                returnList.add(contactPersonModel);
             } while (cursor.moveToNext());
         }
 

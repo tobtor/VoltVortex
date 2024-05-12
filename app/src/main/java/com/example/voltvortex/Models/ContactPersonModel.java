@@ -10,7 +10,7 @@ public class ContactPersonModel {
     private String email;
 
     // Konstruktor
-    public ContactPersonModel(int contactPersonID, String name, String surname, String firm,
+    public ContactPersonModel(int contactPersonID, String name, String firm,
                               String position, String phone, String email) {
         this.contactPersonID = contactPersonID;
         this.name = name;
