@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTableHelper;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.BuildingTableHelper;
@@ -189,12 +190,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      */
     public List<ContactPersonModel> viewContactPersonList() {
         List<ContactPersonModel> returnList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        if (db == null) {
+            Log.e("DatabaseHelper", "Nie udało się otworzyć bazy danych do odczytu.");
+            return returnList; // Zwraca pustą listę, baza danych nie jest dostępna
+        }
 
         String queryString = "SELECT * FROM " + ContactPersonTableHelper.getTableName_CONTACT_PERSON();
-        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
 
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
                 int contactPersonID = cursor.getInt(0);
                 String contactPersonName = cursor.getString(1);
@@ -208,10 +214,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                         contactPersonPhone, contactPersonEmail);
                 returnList.add(contactPersonModel);
             } while (cursor.moveToNext());
+
+            cursor.close();
+        } else {
+            Log.e("DatabaseHelper", "Cursor jest null lub pusty.");
         }
 
-        cursor.close();
         db.close();
         return returnList;
     }
+
 }

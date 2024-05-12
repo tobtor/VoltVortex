@@ -20,7 +20,6 @@ public class ProjectModel {
         this.isSingleContactPerson = isManyContactPerson;
     }
 
-    // Gettery i Settery
     public ProjectModel(int id, String projectName, String firm,
                         String description, boolean isManyContactPerson) {
         this.projectID = id;
@@ -30,6 +29,7 @@ public class ProjectModel {
         this.isSingleContactPerson = isManyContactPerson;
     }
 
+    // Gettery i Settery
     public int getProjectID() {
         return projectID;
     }

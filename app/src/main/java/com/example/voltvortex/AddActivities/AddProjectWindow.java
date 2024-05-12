@@ -2,8 +2,12 @@ package com.example.voltvortex.AddActivities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
@@ -22,6 +26,9 @@ public class AddProjectWindow extends AppCompatActivity {
     ListView listOfContactPerson;
     ArrayAdapter<ContactPersonModel> contactPersonArrayAdapter;
     LinearLayout LinearLayoutAddProject, LinearLayoutButtons;
+    MyDatabaseHelper myDatabaseHelper;
+    TextView textViewName,textViewId, textViewPhone;
+    ContactPersonModel contactPersonModel;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -40,6 +47,11 @@ public class AddProjectWindow extends AppCompatActivity {
         searchForContactPerson = findViewById(R.id.serchBarContactPerson);
         listOfContactPerson = findViewById(R.id.listOfContactPerosn);
         listOfContactPerson.setVisibility(View.GONE);
+        listOfContactPerson.setAdapter(contactPersonArrayAdapter);
+
+        myDatabaseHelper = new MyDatabaseHelper(AddProjectWindow.this);
+
+        getContactPersonList(myDatabaseHelper);
 
         searchForContactPerson.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -50,9 +62,17 @@ public class AddProjectWindow extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                getContactPersonList(myDatabaseHelper);
                 listOfContactPerson.setVisibility(View.VISIBLE);
-
+                contactPersonArrayAdapter.getFilter().filter(newText);
                 return false;
+            }
+        });
+
+        buttonAddContactPerson.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(AddProjectWindow.this, AddContactPersonWindow.class);
+                startActivity(intent);
             }
         });
 
@@ -83,5 +103,43 @@ public class AddProjectWindow extends AppCompatActivity {
         // Powrót do głównego ekranu aplikacji
         Intent intent = new Intent(AddProjectWindow.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    private void getContactPersonList(MyDatabaseHelper myDatabaseHelper) {
+        contactPersonArrayAdapter = new ArrayAdapter<ContactPersonModel>
+                (AddProjectWindow.this, R.layout.activity_listview_contact_person_serch,
+                        R.id.listViewTextContactPersonName, myDatabaseHelper.viewContactPersonList()) {
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                ViewHolder holder;
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext())
+                            .inflate(R.layout.activity_listview_contact_person_serch, parent, false);
+                    holder = new ViewHolder();
+                    holder.textViewName = convertView.findViewById(R.id.listViewTextContactPersonName);
+                    holder.textViewId = convertView.findViewById(R.id.listViewTextContactPersonPhone); // Ustaw właściwy TextView dla numeru telefonu
+                    convertView.setTag(holder);
+                } else {
+                    holder = (ViewHolder) convertView.getTag();
+                }
+
+                ContactPersonModel contactPersonModel = getItem(position);
+                if (contactPersonModel != null) {
+                    holder.textViewName.setText(contactPersonModel.getName());
+                    holder.textViewId.setText(contactPersonModel.getPhone());
+                }
+
+                return convertView;
+            }
+
+            class ViewHolder {
+                TextView textViewName;
+                TextView textViewId;
+            }
+
+        };
+        listOfContactPerson.setAdapter(contactPersonArrayAdapter);
     }
 }
