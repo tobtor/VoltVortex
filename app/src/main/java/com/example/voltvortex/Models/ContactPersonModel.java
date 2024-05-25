@@ -6,28 +6,28 @@ public class ContactPersonModel {
     private String name;
     private String firm;
     private String position;
-    private String phone;
     private String email;
+    private String phone;
 
     // Konstruktor
     public ContactPersonModel(int contactPersonID, String name, String firm,
-                              String position, String phone, String email) {
+                              String position, String email, String phone) {
         this.contactPersonID = contactPersonID;
         this.name = name;
         this.firm = firm;
         this.position = position;
-        this.phone = phone;
         this.email = email;
+        this.phone = phone;
     }
 
     public ContactPersonModel(String name, String firm,
-                              String position, String phone, String email) {
+                              String position, String email, String phone) {
         this.contactPersonID = 200000;
         this.name = name;
         this.firm = firm;
         this.position = position;
-        this.phone = phone;
         this.email = email;
+        this.phone = phone;
     }
 
     // Gettery i Settery

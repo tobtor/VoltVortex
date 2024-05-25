@@ -7,8 +7,8 @@ public class ContactPersonTableHelper {
     private static final String COLUMN_CONTACT_PERSON_NAME = "CONTACT_PERSON_NAME";
     private static final String COLUMN_FIRM = "DESCRIPTION";
     private static final String COLUMN_CONTACT_PERSON_POSITION = "CONTACT_PERSON_POSITION";
-    private static final String COLUMN_CONTACT_PERSON_PHONE = "CONTACT_PERSON_PHONE";
     private static final String COLUMN_CONTACT_PERSON_EMAIL = "CONTACT_PERSON_EMAIL";
+    private static final String COLUMN_CONTACT_PERSON_PHONE = "CONTACT_PERSON_PHONE";
 
     public static String getTableName_CONTACT_PERSON() {
         return TABLE_NAME;
@@ -25,11 +25,11 @@ public class ContactPersonTableHelper {
     public static String getColumn_CONTACT_PERSON_POSITION() {
         return COLUMN_CONTACT_PERSON_POSITION;
     }
-    public static String getColumn_CONTACT_PERSON_PHONE() {
-        return COLUMN_CONTACT_PERSON_PHONE;
-    }
     public static String getColumn_CONTACT_PERSON_EMAIL() {
         return COLUMN_CONTACT_PERSON_EMAIL;
+    }
+    public static String getColumn_CONTACT_PERSON_PHONE() {
+        return COLUMN_CONTACT_PERSON_PHONE;
     }
 
     public static String createContactPersonTable() {
@@ -38,8 +38,8 @@ public class ContactPersonTableHelper {
                 COLUMN_CONTACT_PERSON_NAME + " VARCHAR(70), " +
                 COLUMN_FIRM + " VARCHAR(50), " +
                 COLUMN_CONTACT_PERSON_POSITION + " VARCHAR(255), " +
-                COLUMN_CONTACT_PERSON_PHONE + " VARCHAR(12) NOT NULL, " +
-                COLUMN_CONTACT_PERSON_EMAIL + " VARCHAR(255));";
+                COLUMN_CONTACT_PERSON_EMAIL + " VARCHAR(255) NOT NULL, " +
+                COLUMN_CONTACT_PERSON_PHONE + " VARCHAR(12));";
         return query;
     }
 }

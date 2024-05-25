@@ -29,14 +29,15 @@ public class ContactPersonAdapter extends RecyclerView.Adapter<ContactPersonAdap
     @NonNull
     @Override
     public ContactPersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listview_contact_person_serch, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listview_contact_person_serch,
+                parent, false);
         return new ContactPersonViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContactPersonViewHolder holder, int position) {
         ContactPersonModel contactPersonModel = contactPersonList.get(position);
-        holder.textViewContactPersonName.setText(contactPersonModel.getName());
+        holder.textViewContactPersonName.setText(contactPersonModel.getContactPersonID() + " - " + contactPersonModel.getName());
         holder.textViewPhone.setText(contactPersonModel.getPhone());
     }
 
@@ -61,7 +62,9 @@ public class ContactPersonAdapter extends RecyclerView.Adapter<ContactPersonAdap
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (ContactPersonModel item : contactPersonListFull) {
-                    if (item.getName().toLowerCase().contains(filterPattern) || item.getPhone().toLowerCase().contains(filterPattern)) {
+                    if (item.getName().toLowerCase().contains(filterPattern) ||
+                            String.valueOf(item.getContactPersonID()).contains(filterPattern) ||
+                            item.getPhone().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }

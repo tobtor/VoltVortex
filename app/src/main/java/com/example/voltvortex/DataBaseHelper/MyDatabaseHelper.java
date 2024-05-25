@@ -154,8 +154,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_NAME(), contactPersonModel.getName());
         cv.put(ContactPersonTableHelper.getColumn_FIRM(), contactPersonModel.getFirm());
         cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_POSITION(), contactPersonModel.getPosition());
-        cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_PHONE(), contactPersonModel.getPhone());
         cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_EMAIL(), contactPersonModel.getEmail());
+        cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_PHONE(), contactPersonModel.getPhone());
 
         long insert = db.insert(ContactPersonTableHelper.getTableName_CONTACT_PERSON(), null, cv);
         if (insert == -1) {
@@ -202,12 +202,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 String contactPersonName = cursor.getString(1);
                 String contactPersonFirm = cursor.getString(2);
                 String contactPersonPosition = cursor.getString(3);
-                String contactPersonPhone = cursor.getString(4);
-                String contactPersonEmail = cursor.getString(5);
+                String contactPersonEmail = cursor.getString(4);
+                String contactPersonPhone = cursor.getString(5);
 
                 ContactPersonModel contactPersonModel = new ContactPersonModel(contactPersonID,
                         contactPersonName, contactPersonFirm, contactPersonPosition,
-                        contactPersonPhone, contactPersonEmail);
+                        contactPersonEmail, contactPersonPhone);
                 returnList.add(contactPersonModel);
             } while (cursor.moveToNext());
         }
