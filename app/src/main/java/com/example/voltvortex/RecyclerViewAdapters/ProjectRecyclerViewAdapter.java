@@ -47,7 +47,7 @@ public class ProjectRecyclerViewAdapter
     @NonNull
     @Override
     public ProjectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listview_main_activity, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recyclerview_main_activity, parent, false);
         return new ProjectViewHolder(view, projectRecyclerViewInterface, listener);
     }
 

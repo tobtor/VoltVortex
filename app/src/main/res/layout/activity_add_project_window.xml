@@ -154,7 +154,7 @@
               android:layout_height="wrap_content"
               android:layout_marginBottom="5dp"
               android:id="@+id/listOfContactPerson"
-              tools:listitem="@layout/activity_listview_contact_person_search"/>
+              tools:listitem="@layout/activity_recyclerview_contact_person_search"/>
     </LinearLayout>
   </ScrollView>
   <LinearLayout

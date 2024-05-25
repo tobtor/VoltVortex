@@ -44,7 +44,7 @@ public class ContactPersonRecyclerViewAdapter
     @NonNull
     @Override
     public ContactPersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listview_contact_person_search,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recyclerview_contact_person_search,
                 parent, false);
         return new ContactPersonViewHolder(view, listener);
     }
