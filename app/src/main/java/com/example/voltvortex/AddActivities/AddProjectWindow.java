@@ -2,7 +2,6 @@ package com.example.voltvortex.AddActivities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -27,7 +26,7 @@ public class AddProjectWindow extends AppCompatActivity {
     ArrayAdapter<ContactPersonModel> contactPersonArrayAdapter;
     LinearLayout LinearLayoutAddProject, LinearLayoutButtons;
     MyDatabaseHelper myDatabaseHelper;
-    TextView textViewName,textViewId, textViewPhone;
+    TextView textViewContactPersonName,textViewId, textViewPhone;
     ContactPersonModel contactPersonModel;
 
     @SuppressLint("MissingInflatedId")
@@ -46,15 +45,12 @@ public class AddProjectWindow extends AppCompatActivity {
         switchIsSingleContactPerson.setChecked(true);
         searchForContactPerson = findViewById(R.id.serchBarContactPerson);
         listOfContactPerson = findViewById(R.id.listOfContactPerosn);
-        listOfContactPerson.setVisibility(View.GONE);
-        listOfContactPerson.setAdapter(contactPersonArrayAdapter);
 
         myDatabaseHelper = new MyDatabaseHelper(AddProjectWindow.this);
 
         getContactPersonList(myDatabaseHelper);
 
         searchForContactPerson.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -62,8 +58,6 @@ public class AddProjectWindow extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                getContactPersonList(myDatabaseHelper);
-                listOfContactPerson.setVisibility(View.VISIBLE);
                 contactPersonArrayAdapter.getFilter().filter(newText);
                 return false;
             }
@@ -90,7 +84,7 @@ public class AddProjectWindow extends AppCompatActivity {
         boolean isSingleContactPerson = switchIsSingleContactPerson.isChecked();
 
         // Utworzenie nowego obiektu modelu projektu
-        ProjectModel projectModel = new ProjectModel(-1, projectNameText, firmText, descriptionText,
+        ProjectModel projectModel = new ProjectModel(projectNameText, firmText, descriptionText,
                 0, isSingleContactPerson);
 
         // Dodawanie projektu do bazy danych
@@ -107,38 +101,24 @@ public class AddProjectWindow extends AppCompatActivity {
 
     private void getContactPersonList(MyDatabaseHelper myDatabaseHelper) {
         contactPersonArrayAdapter = new ArrayAdapter<ContactPersonModel>
-                (AddProjectWindow.this, R.layout.activity_listview_contact_person_serch,
+                (this, R.layout.activity_listview_contact_person_serch,
                         R.id.listViewTextContactPersonName, myDatabaseHelper.viewContactPersonList()) {
 
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                ViewHolder holder;
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(getContext())
-                            .inflate(R.layout.activity_listview_contact_person_serch, parent, false);
-                    holder = new ViewHolder();
-                    holder.textViewName = convertView.findViewById(R.id.listViewTextContactPersonName);
-                    holder.textViewId = convertView.findViewById(R.id.listViewTextContactPersonPhone); // Ustaw właściwy TextView dla numeru telefonu
-                    convertView.setTag(holder);
-                } else {
-                    holder = (ViewHolder) convertView.getTag();
-                }
+                View view = super.getView(position, convertView, parent);
+                textViewContactPersonName = view.findViewById(R.id.listViewTextProjectName);
+                textViewId = view.findViewById(R.id.textAddingDate);
+                contactPersonModel = getItem(position);
 
-                ContactPersonModel contactPersonModel = getItem(position);
                 if (contactPersonModel != null) {
-                    holder.textViewName.setText(contactPersonModel.getName());
-                    holder.textViewId.setText(contactPersonModel.getPhone());
+                    textViewContactPersonName.setText(contactPersonModel.getName());
+                    textViewId.setText(String.valueOf(contactPersonModel.getPhone()));
                 }
 
-                return convertView;
+                return view;
             }
-
-            class ViewHolder {
-                TextView textViewName;
-                TextView textViewId;
-            }
-
         };
         listOfContactPerson.setAdapter(contactPersonArrayAdapter);
     }

@@ -2,17 +2,24 @@ package com.example.voltvortex.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.voltvortex.Adapters.ProjectAdapter;
 import com.example.voltvortex.AddActivities.AddProjectWindow;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.R;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
     Button addProjectButton;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch usuwanie;
-    ListView listOfProjects;
+    RecyclerView listOfProjects;
     MyDatabaseHelper myDatabaseHelper;
-    ArrayAdapter<ProjectModel> projectArrayAdapter;
+    ProjectAdapter projectAdapter;
     TextView textViewName, textViewId;
     ProjectModel projectModel;
 
@@ -40,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         // Inicjalizacja klasy pomocniczej bazy danych
         myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
 
+        // Ustawienie LayoutManager dla RecyclerView
+        listOfProjects.setLayoutManager(new LinearLayoutManager(this));
+
         // Wyświetlenie listy projektów
         getProjectList(myDatabaseHelper);
 
@@ -47,19 +57,7 @@ public class MainActivity extends AppCompatActivity {
         usuwanie.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    listOfProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            ProjectModel clickedProject = (ProjectModel) parent.getItemAtPosition(position);
-                            myDatabaseHelper.deleteProject(clickedProject);
-                            getProjectList(myDatabaseHelper);
-                            Toast.makeText(MainActivity.this, "Deleted " + clickedProject.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    listOfProjects.setOnItemClickListener(null);
-                }
+                projectAdapter.setDeleteMode(isChecked);
             }
         });
 
@@ -75,26 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Metoda do odświeżania listy projektów
     private void getProjectList(MyDatabaseHelper myDatabaseHelper) {
-        projectArrayAdapter = new ArrayAdapter<ProjectModel>
-                (MainActivity.this, R.layout.activity_listview_main_activity,
-                        R.id.listViewTextProjectName, myDatabaseHelper.viewProjectList()) {
-            @NonNull
-            @Override
-            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                textViewName = view.findViewById(R.id.listViewTextProjectName);
-                textViewId = view.findViewById(R.id.textAddingDate);
-                projectModel = getItem(position);
-
-                if (projectModel != null) {
-                    textViewName.setText(projectModel.getProjectName());
-                    textViewId.setText(String.valueOf(projectModel.getProjectID()));
-                }
-
-                return view;
-            }
-        };
-
-        listOfProjects.setAdapter(projectArrayAdapter);
+        List<ProjectModel> projectList = myDatabaseHelper.viewProjectList();
+        projectAdapter = new ProjectAdapter(projectList, myDatabaseHelper);
+        listOfProjects.setAdapter(projectAdapter);
     }
 }

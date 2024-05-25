@@ -20,6 +20,16 @@ public class ContactPersonModel {
         this.email = email;
     }
 
+    public ContactPersonModel(String name, String firm,
+                              String position, String phone, String email) {
+        this.contactPersonID = 200000;
+        this.name = name;
+        this.firm = firm;
+        this.position = position;
+        this.phone = phone;
+        this.email = email;
+    }
+
     // Gettery i Settery
     public int getContactPersonID() {
         return contactPersonID;

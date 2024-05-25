@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
+import com.example.voltvortex.AddActivities.AddProjectWindow;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTableHelper;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.BuildingTableHelper;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PPARTabelHelper;
@@ -77,7 +78,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(ProjectTableHelper.getColumnProjectId(), projectModel.getProjectID());
         cv.put(ProjectTableHelper.getColumnProjectName(), projectModel.getProjectName());
         cv.put(ProjectTableHelper.getColumnFirm(), projectModel.getFirm());
         cv.put(ProjectTableHelper.getColumnDescription(), projectModel.getDescription());
@@ -130,7 +130,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 int contactPersonID = cursor.getInt(4);
                 boolean projectIsSingleContactPerson = cursor.getInt(5) == 1;
 
-                ProjectModel newProjectModel = new ProjectModel(projectID, projectName, projectFirm, projectDescription, contactPersonID, projectIsSingleContactPerson);
+                ProjectModel newProjectModel = new ProjectModel
+                        (projectID, projectName, projectFirm, projectDescription,
+                                contactPersonID, projectIsSingleContactPerson);
                 returnList.add(newProjectModel);
             } while (cursor.moveToNext());
         }
@@ -149,14 +151,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_ID(), contactPersonModel.getContactPersonID());
         cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_NAME(), contactPersonModel.getName());
         cv.put(ContactPersonTableHelper.getColumn_FIRM(), contactPersonModel.getFirm());
         cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_POSITION(), contactPersonModel.getPosition());
         cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_PHONE(), contactPersonModel.getPhone());
         cv.put(ContactPersonTableHelper.getColumn_CONTACT_PERSON_EMAIL(), contactPersonModel.getEmail());
 
-        long insert = db.insert(ProjectTableHelper.getTableName_PROJECT(), null, cv);
+        long insert = db.insert(ContactPersonTableHelper.getTableName_CONTACT_PERSON(), null, cv);
         if (insert == -1) {
             Toast.makeText(context, "Nie udało się dodać osoby kontaktowej!", Toast.LENGTH_SHORT).show();
             return false;
@@ -190,17 +191,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      */
     public List<ContactPersonModel> viewContactPersonList() {
         List<ContactPersonModel> returnList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        if (db == null) {
-            Log.e("DatabaseHelper", "Nie udało się otworzyć bazy danych do odczytu.");
-            return returnList; // Zwraca pustą listę, baza danych nie jest dostępna
-        }
 
         String queryString = "SELECT * FROM " + ContactPersonTableHelper.getTableName_CONTACT_PERSON();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
 
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 int contactPersonID = cursor.getInt(0);
                 String contactPersonName = cursor.getString(1);
@@ -214,12 +210,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                         contactPersonPhone, contactPersonEmail);
                 returnList.add(contactPersonModel);
             } while (cursor.moveToNext());
-
-            cursor.close();
-        } else {
-            Log.e("DatabaseHelper", "Cursor jest null lub pusty.");
         }
 
+        cursor.close();
         db.close();
         return returnList;
     }

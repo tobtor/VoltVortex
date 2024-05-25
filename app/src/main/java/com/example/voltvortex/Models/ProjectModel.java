@@ -10,6 +10,16 @@ public class ProjectModel {
     private boolean isSingleContactPerson;
 
     // Konstruktor
+    public ProjectModel(String projectName, String firm,
+                        String description, int contactPersonID, boolean isManyContactPerson) {
+        this.projectID = 100000;
+        this.projectName = projectName;
+        this.firm = firm;
+        this.description = description;
+        this.contactPersonID = contactPersonID;
+        this.isSingleContactPerson = isManyContactPerson;
+    }
+
     public ProjectModel(int id, String projectName, String firm,
                         String description, int contactPersonID, boolean isManyContactPerson) {
         this.projectID = id;
@@ -17,6 +27,15 @@ public class ProjectModel {
         this.firm = firm;
         this.description = description;
         this.contactPersonID = contactPersonID;
+        this.isSingleContactPerson = isManyContactPerson;
+    }
+
+    public ProjectModel(String projectName, String firm,
+                        String description, boolean isManyContactPerson) {
+        this.projectID = 100000;
+        this.projectName = projectName;
+        this.firm = firm;
+        this.description = description;
         this.isSingleContactPerson = isManyContactPerson;
     }
 
