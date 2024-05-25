@@ -16,7 +16,10 @@ import com.example.voltvortex.Models.ContactPersonModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactPersonRecyclerViewAdapter extends RecyclerView.Adapter<ContactPersonRecyclerViewAdapter.ContactPersonViewHolder> implements Filterable {
+public class ContactPersonRecyclerViewAdapter
+        extends RecyclerView.Adapter<ContactPersonRecyclerViewAdapter.ContactPersonViewHolder>
+        implements Filterable {
+
     private List<ContactPersonModel> contactPersonList;
     private List<ContactPersonModel> contactPersonListFull;
     private MyDatabaseHelper myDatabaseHelper;

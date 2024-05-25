@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.voltvortex.Intefraces.ProjectRecyclerViewInterface;
 import com.example.voltvortex.RecyclerViewAdapters.ProjectRecyclerViewAdapter;
 import com.example.voltvortex.AddActivities.AddProjectWindow;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
@@ -18,7 +19,7 @@ import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.R;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ProjectRecyclerViewInterface {
 
     // Definicje komponentów interfejsu użytkownika
     Button addProjectButton;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ProjectRecyclerViewAdapter projectRecyclerViewAdapter;
     TextView textViewName, textViewId;
     ProjectModel projectModel;
+    int projectId = 0;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -71,7 +73,21 @@ public class MainActivity extends AppCompatActivity {
     // Metoda do odświeżania listy projektów
     private void getProjectList(MyDatabaseHelper myDatabaseHelper) {
         List<ProjectModel> projectList = myDatabaseHelper.viewProjectList();
-        projectRecyclerViewAdapter = new ProjectRecyclerViewAdapter(projectList, myDatabaseHelper);
+        projectRecyclerViewAdapter = new ProjectRecyclerViewAdapter(projectList, myDatabaseHelper, this);
+        projectRecyclerViewAdapter.setOnItemClickListener(new ProjectRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int IdOfProject) {
+                projectId = IdOfProject;
+            }
+        });
         listOfProjects.setAdapter(projectRecyclerViewAdapter);
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+        Intent intent = new Intent(MainActivity.this, ProjectActivity.class);
+        intent.putExtra("ID", projectId);
+
+        startActivity(intent);
     }
 }

@@ -9,18 +9,34 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
+import com.example.voltvortex.Intefraces.ProjectRecyclerViewInterface;
 import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.R;
 import java.util.List;
 
-public class ProjectRecyclerViewAdapter extends RecyclerView.Adapter<ProjectRecyclerViewAdapter.ProjectViewHolder> {
+public class ProjectRecyclerViewAdapter
+        extends RecyclerView.Adapter<ProjectRecyclerViewAdapter.ProjectViewHolder> {
+
     private List<ProjectModel> projectList;
     private MyDatabaseHelper myDatabaseHelper;
     private boolean deleteMode = false;
+    private final ProjectRecyclerViewInterface projectRecyclerViewInterface;
+    private OnItemClickListener listener;
 
-    public ProjectRecyclerViewAdapter(List<ProjectModel> projectList, MyDatabaseHelper myDatabaseHelper) {
+    public interface OnItemClickListener {
+        void onItemClick(int IdOfProject);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public ProjectRecyclerViewAdapter(List<ProjectModel> projectList,
+                                      MyDatabaseHelper myDatabaseHelper,
+                                      ProjectRecyclerViewInterface projectRecyclerViewInterface) {
         this.projectList = projectList;
         this.myDatabaseHelper = myDatabaseHelper;
+        this.projectRecyclerViewInterface = projectRecyclerViewInterface;
     }
 
     public void setDeleteMode(boolean deleteMode) {
@@ -32,7 +48,7 @@ public class ProjectRecyclerViewAdapter extends RecyclerView.Adapter<ProjectRecy
     @Override
     public ProjectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listview_main_activity, parent, false);
-        return new ProjectViewHolder(view);
+        return new ProjectViewHolder(view, projectRecyclerViewInterface, listener);
     }
 
     @Override
@@ -62,10 +78,22 @@ public class ProjectRecyclerViewAdapter extends RecyclerView.Adapter<ProjectRecy
     public static class ProjectViewHolder extends RecyclerView.ViewHolder {
         TextView textViewName, textViewId;
 
-        public ProjectViewHolder(@NonNull View itemView) {
+        public ProjectViewHolder(@NonNull View itemView, ProjectRecyclerViewInterface projectRecyclerViewInterface,final OnItemClickListener listener) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.listViewTextProjectName);
             textViewId = itemView.findViewById(R.id.textAddingDate);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (projectRecyclerViewInterface != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(Integer.parseInt(textViewId.getText().toString()));
+                        }
+                    }
+                }
+            });
         }
     }
 }
