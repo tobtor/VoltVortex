@@ -1,4 +1,4 @@
-package com.example.voltvortex.Adapters;
+package com.example.voltvortex.RecyclerViewAdapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +14,14 @@ import com.example.voltvortex.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactPersonAdapter extends RecyclerView.Adapter<ContactPersonAdapter.ContactPersonViewHolder> implements Filterable {
+public class ContactPersonRecyclerViewAdapter extends RecyclerView.Adapter<ContactPersonRecyclerViewAdapter.ContactPersonViewHolder> implements Filterable {
 
     private List<ContactPersonModel> contactPersonList;
     private List<ContactPersonModel> contactPersonListFull;
     private MyDatabaseHelper myDatabaseHelper;
 
-    public ContactPersonAdapter(List<ContactPersonModel> contactPersonList, MyDatabaseHelper myDatabaseHelper) {
+    public ContactPersonRecyclerViewAdapter(List<ContactPersonModel> contactPersonList,
+                                            MyDatabaseHelper myDatabaseHelper) {
         this.contactPersonList = contactPersonList;
         this.contactPersonListFull = new ArrayList<>(contactPersonList);
         this.myDatabaseHelper = myDatabaseHelper;
@@ -29,7 +30,7 @@ public class ContactPersonAdapter extends RecyclerView.Adapter<ContactPersonAdap
     @NonNull
     @Override
     public ContactPersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listview_contact_person_serch,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listview_contact_person_search,
                 parent, false);
         return new ContactPersonViewHolder(view);
     }
@@ -37,9 +38,13 @@ public class ContactPersonAdapter extends RecyclerView.Adapter<ContactPersonAdap
     @Override
     public void onBindViewHolder(@NonNull ContactPersonViewHolder holder, int position) {
         ContactPersonModel contactPersonModel = contactPersonList.get(position);
-        holder.textViewContactPersonName.setText(contactPersonModel.getContactPersonID() + " - " + contactPersonModel.getName());
+        holder.textViewContactPersonId.setText(String.valueOf(contactPersonModel.getContactPersonID()));;
+        holder.textViewContactPersonName.setText(contactPersonModel.getName());
         holder.textViewPhone.setText(contactPersonModel.getPhone());
     }
+
+
+
 
     @Override
     public int getItemCount() {
@@ -85,10 +90,11 @@ public class ContactPersonAdapter extends RecyclerView.Adapter<ContactPersonAdap
     };
 
     public static class ContactPersonViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewContactPersonName, textViewPhone;
+        TextView textViewContactPersonId, textViewContactPersonName, textViewPhone;
 
         public ContactPersonViewHolder(@NonNull View itemView) {
             super(itemView);
+            textViewContactPersonId = itemView.findViewById(R.id.listViewTextContactPersonID);
             textViewContactPersonName = itemView.findViewById(R.id.listViewTextContactPersonName);
             textViewPhone = itemView.findViewById(R.id.listViewTextContactPersonPhone);
         }

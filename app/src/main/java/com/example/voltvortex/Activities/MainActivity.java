@@ -8,13 +8,10 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.voltvortex.Adapters.ProjectAdapter;
+import com.example.voltvortex.RecyclerViewAdapters.ProjectRecyclerViewAdapter;
 import com.example.voltvortex.AddActivities.AddProjectWindow;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 import com.example.voltvortex.Models.ProjectModel;
@@ -29,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Switch usuwanie;
     RecyclerView listOfProjects;
     MyDatabaseHelper myDatabaseHelper;
-    ProjectAdapter projectAdapter;
+    ProjectRecyclerViewAdapter projectRecyclerViewAdapter;
     TextView textViewName, textViewId;
     ProjectModel projectModel;
 
@@ -57,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         usuwanie.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                projectAdapter.setDeleteMode(isChecked);
+                projectRecyclerViewAdapter.setDeleteMode(isChecked);
             }
         });
 
@@ -74,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     // Metoda do odświeżania listy projektów
     private void getProjectList(MyDatabaseHelper myDatabaseHelper) {
         List<ProjectModel> projectList = myDatabaseHelper.viewProjectList();
-        projectAdapter = new ProjectAdapter(projectList, myDatabaseHelper);
-        listOfProjects.setAdapter(projectAdapter);
+        projectRecyclerViewAdapter = new ProjectRecyclerViewAdapter(projectList, myDatabaseHelper);
+        listOfProjects.setAdapter(projectRecyclerViewAdapter);
     }
 }

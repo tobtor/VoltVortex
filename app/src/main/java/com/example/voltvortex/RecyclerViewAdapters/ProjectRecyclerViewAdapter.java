@@ -1,7 +1,6 @@
-package com.example.voltvortex.Adapters;
+package com.example.voltvortex.RecyclerViewAdapters;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +13,12 @@ import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.R;
 import java.util.List;
 
-public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder> {
+public class ProjectRecyclerViewAdapter extends RecyclerView.Adapter<ProjectRecyclerViewAdapter.ProjectViewHolder> {
     private List<ProjectModel> projectList;
     private MyDatabaseHelper myDatabaseHelper;
     private boolean deleteMode = false;
 
-    public ProjectAdapter(List<ProjectModel> projectList, MyDatabaseHelper myDatabaseHelper) {
+    public ProjectRecyclerViewAdapter(List<ProjectModel> projectList, MyDatabaseHelper myDatabaseHelper) {
         this.projectList = projectList;
         this.myDatabaseHelper = myDatabaseHelper;
     }

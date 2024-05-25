@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.voltvortex.Adapters.ContactPersonAdapter;
+import com.example.voltvortex.RecyclerViewAdapters.ContactPersonRecyclerViewAdapter;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 import com.example.voltvortex.Activities.MainActivity;
 import com.example.voltvortex.Models.ContactPersonModel;
@@ -28,7 +28,7 @@ public class AddProjectWindow extends AppCompatActivity {
     Switch switchIsSingleContactPerson;
     SearchView searchForContactPerson;
     RecyclerView listOfContactPerson;
-    ContactPersonAdapter contactPersonAdapter;
+    ContactPersonRecyclerViewAdapter contactPersonRecyclerViewAdapter;
     MyDatabaseHelper myDatabaseHelper;
 
     @SuppressLint("MissingInflatedId")
@@ -52,7 +52,6 @@ public class AddProjectWindow extends AppCompatActivity {
 
         // Ustawienie LayoutManager dla RecyclerView
         listOfContactPerson.setLayoutManager(new LinearLayoutManager(this));
-        listOfContactPerson.setVisibility(View.GONE);
 
         // Pobierz listę kontaktów i ustaw adapter
         getContactPersonList(myDatabaseHelper);
@@ -66,9 +65,8 @@ public class AddProjectWindow extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (contactPersonAdapter != null) {
-                    contactPersonAdapter.getFilter().filter(newText);
-                    listOfContactPerson.setVisibility(View.VISIBLE);
+                if (contactPersonRecyclerViewAdapter != null) {
+                    contactPersonRecyclerViewAdapter.getFilter().filter(newText);
                 }
                 return false;
             }
@@ -95,12 +93,19 @@ public class AddProjectWindow extends AppCompatActivity {
         boolean isSingleContactPerson = switchIsSingleContactPerson.isChecked();
 
         // Utworzenie nowego obiektu modelu projektu
-        ProjectModel projectModel = new ProjectModel(projectNameText, firmText, descriptionText, 0, isSingleContactPerson);
+        ProjectModel projectModel = new ProjectModel(projectNameText,
+                firmText,
+                descriptionText,
+                0,
+                isSingleContactPerson);
 
         // Dodawanie projektu do bazy danych
         boolean success = myDatabaseHelper.addProject(projectModel);
 
-        Toast.makeText(AddProjectWindow.this, success ? "Projekt dodany pomyślnie" : "Błąd przy dodawaniu projektu", Toast.LENGTH_SHORT).show();
+        Toast.makeText(AddProjectWindow.this,
+                success ? "Projekt dodany pomyślnie" : "Błąd przy dodawaniu projektu",
+                Toast.LENGTH_SHORT)
+                .show();
 
         // Powrót do głównego ekranu aplikacji
         Intent intent = new Intent(AddProjectWindow.this, MainActivity.class);
@@ -109,7 +114,7 @@ public class AddProjectWindow extends AppCompatActivity {
 
     private void getContactPersonList(MyDatabaseHelper myDatabaseHelper) {
         List<ContactPersonModel> contactPersonList = myDatabaseHelper.viewContactPersonList();
-        contactPersonAdapter = new ContactPersonAdapter(contactPersonList, myDatabaseHelper);
-        listOfContactPerson.setAdapter(contactPersonAdapter);
+        contactPersonRecyclerViewAdapter = new ContactPersonRecyclerViewAdapter(contactPersonList, myDatabaseHelper);
+        listOfContactPerson.setAdapter(contactPersonRecyclerViewAdapter);
     }
 }
