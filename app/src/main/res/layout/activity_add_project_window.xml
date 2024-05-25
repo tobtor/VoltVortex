@@ -148,13 +148,14 @@
               android:textColor="@color/white"
               android:fontFamily="@font/truenolight"
               android:background="@drawable/radius"/>
-      <ListView
-              android:layout_width="0dp"
-              android:layout_height="0dp"
+
+      <androidx.recyclerview.widget.RecyclerView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
               app:layout_constraintBottom_toTopOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
-              android:id="@+id/listOfContactPerosn"
+              android:id="@+id/listOfContactPerson"
               tools:listitem="@layout/activity_listview_contact_person_serch"
               app:layout_constraintHorizontal_bias="0.0"
               app:layout_constraintVertical_bias="0.0"/>

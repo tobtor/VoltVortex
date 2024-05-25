@@ -12,10 +12,11 @@
           android:layout_height="match_parent"
           android:layout_marginTop="1dp"
           android:background="@drawable/radius">
+
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Imie i Nazwisko"
+            android:text="ID - Imie i Nazwisko"
             android:textColor="@color/white"
             android:id="@+id/listViewTextContactPersonName"
             android:textSize="16sp"

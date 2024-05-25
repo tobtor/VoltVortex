@@ -2,18 +2,23 @@ package com.example.voltvortex.AddActivities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.*;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.SearchView;
+import android.widget.Switch;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.voltvortex.Adapters.ContactPersonAdapter;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 import com.example.voltvortex.Activities.MainActivity;
 import com.example.voltvortex.Models.ContactPersonModel;
 import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.R;
+import java.util.List;
 
 public class AddProjectWindow extends AppCompatActivity {
 
@@ -22,12 +27,9 @@ public class AddProjectWindow extends AppCompatActivity {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch switchIsSingleContactPerson;
     SearchView searchForContactPerson;
-    ListView listOfContactPerson;
-    ArrayAdapter<ContactPersonModel> contactPersonArrayAdapter;
-    LinearLayout LinearLayoutAddProject, LinearLayoutButtons;
+    RecyclerView listOfContactPerson;
+    ContactPersonAdapter contactPersonAdapter;
     MyDatabaseHelper myDatabaseHelper;
-    TextView textViewContactPersonName,textViewId, textViewPhone;
-    ContactPersonModel contactPersonModel;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -44,12 +46,18 @@ public class AddProjectWindow extends AppCompatActivity {
         switchIsSingleContactPerson = findViewById(R.id.switchIsSinglePerson);
         switchIsSingleContactPerson.setChecked(true);
         searchForContactPerson = findViewById(R.id.serchBarContactPerson);
-        listOfContactPerson = findViewById(R.id.listOfContactPerosn);
+        listOfContactPerson = findViewById(R.id.listOfContactPerson);
 
         myDatabaseHelper = new MyDatabaseHelper(AddProjectWindow.this);
 
+        // Ustawienie LayoutManager dla RecyclerView
+        listOfContactPerson.setLayoutManager(new LinearLayoutManager(this));
+        listOfContactPerson.setVisibility(View.GONE);
+
+        // Pobierz listę kontaktów i ustaw adapter
         getContactPersonList(myDatabaseHelper);
 
+        // Ustawienie listenera dla SearchView
         searchForContactPerson.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -58,7 +66,10 @@ public class AddProjectWindow extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                contactPersonArrayAdapter.getFilter().filter(newText);
+                if (contactPersonAdapter != null) {
+                    contactPersonAdapter.getFilter().filter(newText);
+                    listOfContactPerson.setVisibility(View.VISIBLE);
+                }
                 return false;
             }
         });
@@ -84,15 +95,12 @@ public class AddProjectWindow extends AppCompatActivity {
         boolean isSingleContactPerson = switchIsSingleContactPerson.isChecked();
 
         // Utworzenie nowego obiektu modelu projektu
-        ProjectModel projectModel = new ProjectModel(projectNameText, firmText, descriptionText,
-                0, isSingleContactPerson);
+        ProjectModel projectModel = new ProjectModel(projectNameText, firmText, descriptionText, 0, isSingleContactPerson);
 
         // Dodawanie projektu do bazy danych
-        MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(AddProjectWindow.this);
         boolean success = myDatabaseHelper.addProject(projectModel);
 
-        Toast.makeText(AddProjectWindow.this, success ? "Projekt dodany pomyślnie" :
-                "Błąd przy dodawaniu projektu", Toast.LENGTH_SHORT).show();
+        Toast.makeText(AddProjectWindow.this, success ? "Projekt dodany pomyślnie" : "Błąd przy dodawaniu projektu", Toast.LENGTH_SHORT).show();
 
         // Powrót do głównego ekranu aplikacji
         Intent intent = new Intent(AddProjectWindow.this, MainActivity.class);
@@ -100,26 +108,8 @@ public class AddProjectWindow extends AppCompatActivity {
     }
 
     private void getContactPersonList(MyDatabaseHelper myDatabaseHelper) {
-        contactPersonArrayAdapter = new ArrayAdapter<ContactPersonModel>
-                (this, R.layout.activity_listview_contact_person_serch,
-                        R.id.listViewTextContactPersonName, myDatabaseHelper.viewContactPersonList()) {
-
-            @NonNull
-            @Override
-            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                textViewContactPersonName = view.findViewById(R.id.listViewTextProjectName);
-                textViewId = view.findViewById(R.id.textAddingDate);
-                contactPersonModel = getItem(position);
-
-                if (contactPersonModel != null) {
-                    textViewContactPersonName.setText(contactPersonModel.getName());
-                    textViewId.setText(String.valueOf(contactPersonModel.getPhone()));
-                }
-
-                return view;
-            }
-        };
-        listOfContactPerson.setAdapter(contactPersonArrayAdapter);
+        List<ContactPersonModel> contactPersonList = myDatabaseHelper.viewContactPersonList();
+        contactPersonAdapter = new ContactPersonAdapter(contactPersonList, myDatabaseHelper);
+        listOfContactPerson.setAdapter(contactPersonAdapter);
     }
 }
