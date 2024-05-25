@@ -21,16 +21,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ProjectRecyclerViewInterface {
 
-    // Definicje komponentów interfejsu użytkownika
     Button addProjectButton;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch usuwanie;
     RecyclerView listOfProjects;
     MyDatabaseHelper myDatabaseHelper;
     ProjectRecyclerViewAdapter projectRecyclerViewAdapter;
-    TextView textViewName, textViewId;
-    ProjectModel projectModel;
-    int projectId = 0;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -74,20 +70,14 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private void getProjectList(MyDatabaseHelper myDatabaseHelper) {
         List<ProjectModel> projectList = myDatabaseHelper.viewProjectList();
         projectRecyclerViewAdapter = new ProjectRecyclerViewAdapter(projectList, myDatabaseHelper, this);
-        projectRecyclerViewAdapter.setOnItemClickListener(new ProjectRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int IdOfProject) {
-                projectId = IdOfProject;
-            }
-        });
         listOfProjects.setAdapter(projectRecyclerViewAdapter);
     }
 
     @Override
     public void onItemClicked(int position) {
+        ProjectModel projectModel = projectRecyclerViewAdapter.getProjectAt(position);
         Intent intent = new Intent(MainActivity.this, ProjectActivity.class);
-        intent.putExtra("ID", projectId);
-
+        intent.putExtra("ID", projectModel.getProjectID());
         startActivity(intent);
     }
 }

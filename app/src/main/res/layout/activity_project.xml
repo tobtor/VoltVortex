@@ -15,6 +15,20 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="10dp">
+        <Button
+                android:text="Dodaj Budynek"
+                android:backgroundTint="@color/buttonNormalColor"
+                android:id="@+id/buttonAddBuidling"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

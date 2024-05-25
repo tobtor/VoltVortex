@@ -21,15 +21,6 @@ public class ProjectRecyclerViewAdapter
     private MyDatabaseHelper myDatabaseHelper;
     private boolean deleteMode = false;
     private final ProjectRecyclerViewInterface projectRecyclerViewInterface;
-    private OnItemClickListener listener;
-
-    public interface OnItemClickListener {
-        void onItemClick(int IdOfProject);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
 
     public ProjectRecyclerViewAdapter(List<ProjectModel> projectList,
                                       MyDatabaseHelper myDatabaseHelper,
@@ -48,7 +39,7 @@ public class ProjectRecyclerViewAdapter
     @Override
     public ProjectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recyclerview_main_activity, parent, false);
-        return new ProjectViewHolder(view, projectRecyclerViewInterface, listener);
+        return new ProjectViewHolder(view, projectRecyclerViewInterface);
     }
 
     @Override
@@ -65,6 +56,8 @@ public class ProjectRecyclerViewAdapter
                     projectList.remove(position);
                     notifyItemRemoved(position);
                     Toast.makeText(holder.itemView.getContext(), "Deleted " + projectModel.toString(), Toast.LENGTH_SHORT).show();
+                } else {
+                    projectRecyclerViewInterface.onItemClicked(position);
                 }
             }
         });
@@ -75,25 +68,17 @@ public class ProjectRecyclerViewAdapter
         return projectList.size();
     }
 
+    public ProjectModel getProjectAt(int position) {
+        return projectList.get(position);
+    }
+
     public static class ProjectViewHolder extends RecyclerView.ViewHolder {
         TextView textViewName, textViewId;
 
-        public ProjectViewHolder(@NonNull View itemView, ProjectRecyclerViewInterface projectRecyclerViewInterface,final OnItemClickListener listener) {
+        public ProjectViewHolder(@NonNull View itemView, ProjectRecyclerViewInterface projectRecyclerViewInterface) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.listViewTextProjectName);
             textViewId = itemView.findViewById(R.id.textAddingDate);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (projectRecyclerViewInterface != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(Integer.parseInt(textViewId.getText().toString()));
-                        }
-                    }
-                }
-            });
         }
     }
 }

@@ -5,9 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.widget.Toast;
-import com.example.voltvortex.AddActivities.AddProjectWindow;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTableHelper;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.BuildingTableHelper;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PPARTabelHelper;
@@ -16,8 +14,10 @@ import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ContactPersonTab
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper;
 import com.example.voltvortex.Models.ContactPersonModel;
 import com.example.voltvortex.Models.ProjectModel;
+import com.example.voltvortex.Models.BuildingModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -217,4 +217,87 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+    /**
+     * Dodanie nowego budynku do bazy danych.
+     * @param buildingModel model osoby kontaktowej
+     * @return true jeśli dodanie się powiodło, false w przeciwnym razie
+     */
+    public boolean addBuilding(BuildingModel buildingModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(BuildingTableHelper.getColumn_BUILDING_NAME(), buildingModel.getBuildingName());
+        cv.put(BuildingTableHelper.getColumn_DATE_OF_MEASUREMENTS(), buildingModel.getDateOfMeasurements().getTime());
+        cv.put(BuildingTableHelper.getColumn_CITY(), buildingModel.getCity());
+        cv.put(BuildingTableHelper.getColumn_POSTCODE(), buildingModel.getPostcode());
+        cv.put(BuildingTableHelper.getColumn_STREET(), buildingModel.getStreet());
+        cv.put(BuildingTableHelper.getColumn_BUILDING_NUMBER(), buildingModel.getBuildingNumber());
+        cv.put(BuildingTableHelper.getColumn_PROJECT_ID(), buildingModel.getProjectID());
+        cv.put(BuildingTableHelper.getColumn_CONTACT_PERSON_ID(), buildingModel.getContactPersonID());
+
+
+        long insert = db.insert(BuildingTableHelper.getTableName_BUILDING(), null, cv);
+        if (insert == -1) {
+            Toast.makeText(context, "Nie udało się dodać osoby kontaktowej!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            Toast.makeText(context, "Osoba kontaktowa dodana pomyślnie.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+    }
+
+    /**
+     * Usunięcie budynku z bazy danych.
+     * @param buildingModel model osoby kontaktowej do usunięcia
+     * @return true jeśli usunięcie się powiodło, false w przeciwnym razie
+     */
+    public boolean deleteBuilding(BuildingModel buildingModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " +
+                BuildingTableHelper.getTableName_BUILDING() + " WHERE " +
+                BuildingTableHelper.getColumn_BUILDING_ID() + " = " +
+                buildingModel.getBuildingID();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+        boolean result = cursor.moveToFirst();
+        cursor.close();
+        return result;
+    }
+
+    /**
+     * Pobranie listy wszystkich budynków z bazy danych.
+     * @return lista budynków
+     */
+    public List<BuildingModel> viewBuildingList() {
+        List<BuildingModel> returnList = new ArrayList<>();
+
+        String queryString = "SELECT * FROM " + BuildingTableHelper.getTableName_BUILDING();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int buildingID = cursor.getInt(0);
+                String buildingName = cursor.getString(1);
+                long dateOfMeasurementsLong = cursor.getLong(2);
+                String city = cursor.getString(3);
+                String postcode = cursor.getString(4);
+                String street = cursor.getString(5);
+                String buildingNumber = cursor.getString(6);
+                int projectID = cursor.getInt(7);
+                int contactPersonID = cursor.getInt(8);
+
+                Date dateOfMeasurements = new Date(dateOfMeasurementsLong);
+
+                BuildingModel newBuildingModel = new BuildingModel
+                        (buildingID, buildingName, dateOfMeasurements, city,
+                                postcode, street, buildingNumber, projectID, contactPersonID);
+                returnList.add(newBuildingModel);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return returnList;
+    }
 }

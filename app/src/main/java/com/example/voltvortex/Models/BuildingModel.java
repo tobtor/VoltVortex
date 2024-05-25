@@ -1,9 +1,11 @@
 package com.example.voltvortex.Models;
 
+import java.util.Date;
+
 public class BuildingModel {
     private int buildingID;
     private String buildingName;
-    private String dateOfMeasurements;
+    private Date dateOfMeasurements;
     private String city;
     private String postcode;
     private String street;
@@ -12,9 +14,22 @@ public class BuildingModel {
     private int contactPersonID;
 
     // Konstruktor
-    public BuildingModel(int buildingID, String buildingName, String dateOfMeasurements, String city,
+    public BuildingModel(int buildingID, String buildingName, Date dateOfMeasurements, String city,
                          String postcode, String street, String buildingNumber, int projectID, int contactPersonID) {
         this.buildingID = buildingID;
+        this.buildingName = buildingName;
+        this.dateOfMeasurements = dateOfMeasurements;
+        this.city = city;
+        this.postcode = postcode;
+        this.street = street;
+        this.buildingNumber = buildingNumber;
+        this.projectID = projectID;
+        this.contactPersonID = contactPersonID;
+    }
+
+    public BuildingModel(String buildingName, Date dateOfMeasurements, String city,
+                         String postcode, String street, String buildingNumber, int projectID, int contactPersonID) {
+        this.buildingID = 300000;
         this.buildingName = buildingName;
         this.dateOfMeasurements = dateOfMeasurements;
         this.city = city;
@@ -42,11 +57,11 @@ public class BuildingModel {
         this.buildingName = buildingName;
     }
 
-    public String getDateOfMeasurements() {
+    public Date getDateOfMeasurements() {
         return dateOfMeasurements;
     }
 
-    public void setDateOfMeasurements(String dateOfMeasurements) {
+    public void setDateOfMeasurements(Date dateOfMeasurements) {
         this.dateOfMeasurements = dateOfMeasurements;
     }
 
