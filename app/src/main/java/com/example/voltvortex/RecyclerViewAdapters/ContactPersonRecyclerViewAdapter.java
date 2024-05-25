@@ -8,6 +8,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.voltvortex.AddActivities.AddProjectWindow;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 import com.example.voltvortex.Models.ContactPersonModel;
 import com.example.voltvortex.R;
@@ -19,6 +20,15 @@ public class ContactPersonRecyclerViewAdapter extends RecyclerView.Adapter<Conta
     private List<ContactPersonModel> contactPersonList;
     private List<ContactPersonModel> contactPersonListFull;
     private MyDatabaseHelper myDatabaseHelper;
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int contactPersonID);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public ContactPersonRecyclerViewAdapter(List<ContactPersonModel> contactPersonList,
                                             MyDatabaseHelper myDatabaseHelper) {
@@ -32,7 +42,7 @@ public class ContactPersonRecyclerViewAdapter extends RecyclerView.Adapter<Conta
     public ContactPersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listview_contact_person_search,
                 parent, false);
-        return new ContactPersonViewHolder(view);
+        return new ContactPersonViewHolder(view, listener);
     }
 
     @Override
@@ -42,9 +52,6 @@ public class ContactPersonRecyclerViewAdapter extends RecyclerView.Adapter<Conta
         holder.textViewContactPersonName.setText(contactPersonModel.getName());
         holder.textViewPhone.setText(contactPersonModel.getPhone());
     }
-
-
-
 
     @Override
     public int getItemCount() {
@@ -89,14 +96,27 @@ public class ContactPersonRecyclerViewAdapter extends RecyclerView.Adapter<Conta
         }
     };
 
+
     public static class ContactPersonViewHolder extends RecyclerView.ViewHolder {
         TextView textViewContactPersonId, textViewContactPersonName, textViewPhone;
 
-        public ContactPersonViewHolder(@NonNull View itemView) {
+        public ContactPersonViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             textViewContactPersonId = itemView.findViewById(R.id.listViewTextContactPersonID);
             textViewContactPersonName = itemView.findViewById(R.id.listViewTextContactPersonName);
             textViewPhone = itemView.findViewById(R.id.listViewTextContactPersonPhone);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(Integer.parseInt(textViewContactPersonId.getText().toString()));
+                        }
+                    }
+                }
+            });
         }
     }
 }

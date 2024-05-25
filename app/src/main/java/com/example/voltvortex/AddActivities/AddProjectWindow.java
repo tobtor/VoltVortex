@@ -30,6 +30,7 @@ public class AddProjectWindow extends AppCompatActivity {
     RecyclerView listOfContactPerson;
     ContactPersonRecyclerViewAdapter contactPersonRecyclerViewAdapter;
     MyDatabaseHelper myDatabaseHelper;
+    int idOfContactPerson = 0;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -96,7 +97,7 @@ public class AddProjectWindow extends AppCompatActivity {
         ProjectModel projectModel = new ProjectModel(projectNameText,
                 firmText,
                 descriptionText,
-                0,
+                idOfContactPerson,
                 isSingleContactPerson);
 
         // Dodawanie projektu do bazy danych
@@ -115,6 +116,13 @@ public class AddProjectWindow extends AppCompatActivity {
     private void getContactPersonList(MyDatabaseHelper myDatabaseHelper) {
         List<ContactPersonModel> contactPersonList = myDatabaseHelper.viewContactPersonList();
         contactPersonRecyclerViewAdapter = new ContactPersonRecyclerViewAdapter(contactPersonList, myDatabaseHelper);
+        contactPersonRecyclerViewAdapter.setOnItemClickListener(new ContactPersonRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int contactPersonID) {
+                idOfContactPerson = contactPersonID;
+            }
+        });
         listOfContactPerson.setAdapter(contactPersonRecyclerViewAdapter);
     }
+
 }
