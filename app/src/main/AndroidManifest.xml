@@ -13,6 +13,9 @@
             android:theme="@style/Theme.VoltVortex"
             tools:targetApi="31">
         <activity
+                android:name=".Activities.BuildingActivity"
+                android:exported="false"/>
+        <activity
                 android:name=".AddActivities.AddBuildingActicity"
                 android:exported="false"/>
         <activity

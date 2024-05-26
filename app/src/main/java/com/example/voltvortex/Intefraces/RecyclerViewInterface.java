@@ -1,7 +1,6 @@
 package com.example.voltvortex.Intefraces;
 
-public interface ProjectRecyclerViewInterface {
-
+public interface RecyclerViewInterface {
     void onItemClicked(int position);
 
 }

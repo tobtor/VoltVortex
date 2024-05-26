@@ -7,11 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.voltvortex.Intefraces.ProjectRecyclerViewInterface;
+import com.example.voltvortex.Intefraces.RecyclerViewInterface;
 import com.example.voltvortex.RecyclerViewAdapters.ProjectRecyclerViewAdapter;
 import com.example.voltvortex.AddActivities.AddProjectWindow;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
@@ -19,7 +18,7 @@ import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.R;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ProjectRecyclerViewInterface {
+public class MainActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     Button addProjectButton;
     @SuppressLint("UseSwitchCompatOrMaterialCode")

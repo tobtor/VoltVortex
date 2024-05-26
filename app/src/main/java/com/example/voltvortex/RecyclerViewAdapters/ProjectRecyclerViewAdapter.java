@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
-import com.example.voltvortex.Intefraces.ProjectRecyclerViewInterface;
+import com.example.voltvortex.Intefraces.RecyclerViewInterface;
 import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.R;
 import java.util.List;
@@ -20,14 +20,14 @@ public class ProjectRecyclerViewAdapter
     private List<ProjectModel> projectList;
     private MyDatabaseHelper myDatabaseHelper;
     private boolean deleteMode = false;
-    private final ProjectRecyclerViewInterface projectRecyclerViewInterface;
+    private final RecyclerViewInterface recyclerViewInterface;
 
     public ProjectRecyclerViewAdapter(List<ProjectModel> projectList,
                                       MyDatabaseHelper myDatabaseHelper,
-                                      ProjectRecyclerViewInterface projectRecyclerViewInterface) {
+                                      RecyclerViewInterface recyclerViewInterface) {
         this.projectList = projectList;
         this.myDatabaseHelper = myDatabaseHelper;
-        this.projectRecyclerViewInterface = projectRecyclerViewInterface;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
     public void setDeleteMode(boolean deleteMode) {
@@ -37,13 +37,14 @@ public class ProjectRecyclerViewAdapter
 
     @NonNull
     @Override
-    public ProjectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recyclerview_main_activity, parent, false);
-        return new ProjectViewHolder(view, projectRecyclerViewInterface);
+    public ProjectViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_recyclerview_main_activity, viewGroup, false);
+        return new ProjectViewHolder(view, recyclerViewInterface);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProjectViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull ProjectViewHolder holder,
+                                 @SuppressLint("RecyclerView") int position) {
         ProjectModel projectModel = projectList.get(position);
         holder.textViewName.setText(projectModel.getProjectName());
         holder.textViewId.setText(String.valueOf(projectModel.getProjectID()));
@@ -57,7 +58,7 @@ public class ProjectRecyclerViewAdapter
                     notifyItemRemoved(position);
                     Toast.makeText(holder.itemView.getContext(), "Deleted " + projectModel.toString(), Toast.LENGTH_SHORT).show();
                 } else {
-                    projectRecyclerViewInterface.onItemClicked(position);
+                    recyclerViewInterface.onItemClicked(position);
                 }
             }
         });
@@ -75,7 +76,7 @@ public class ProjectRecyclerViewAdapter
     public static class ProjectViewHolder extends RecyclerView.ViewHolder {
         TextView textViewName, textViewId;
 
-        public ProjectViewHolder(@NonNull View itemView, ProjectRecyclerViewInterface projectRecyclerViewInterface) {
+        public ProjectViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.listViewTextProjectName);
             textViewId = itemView.findViewById(R.id.textAddingDate);
