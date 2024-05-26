@@ -5,6 +5,205 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AddActivities.AddBuildingActicity">
+        tools:context=".AddActivities.AddBuildingActicity"
+        android:background="@color/backgroudColor">
 
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayoutOfButtons"
+            app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="parent">
+
+            <TextView
+                    android:text="Nazwa Budynku"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textBuildingName"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="20dp"/>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radius"
+                    android:layout_marginTop="12dp">
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textLongMessage"
+                        android:text="np. Budynek A"
+                        android:id="@+id/editTextBuildingName"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/truenolight"
+                        android:alpha="0.65"/>
+            </FrameLayout>
+
+            <TextView
+                    android:text="Miasto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textCity"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="20dp"/>
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radius"
+                    android:layout_marginTop="12dp">
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textLongMessage"
+                        android:text="np. Toruń"
+                        android:id="@+id/editTextCity"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/truenolight"
+                        android:alpha="0.65"/>
+            </FrameLayout>
+            <TextView
+                    android:text="Kod Pocztowy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textPostCode"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="20dp"/>
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radius"
+                    android:layout_marginTop="12dp">
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="np. 87-100"
+                        android:id="@+id/editTextPostCode"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/truenolight"
+                        android:alpha="0.65"/>
+            </FrameLayout>
+            <TextView
+                    android:text="Ulica"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textStreet"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="20dp"/>
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radius"
+                    android:layout_marginTop="12dp">
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="np. Długa"
+                        android:id="@+id/editTextStreet"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/truenolight"
+                        android:alpha="0.65"/>
+            </FrameLayout>
+            <TextView
+                    android:text="Numer Budynku"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textBuildingNumber"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="20dp"/>
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radius"
+                    android:layout_marginTop="12dp">
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="np. 22A/4"
+                        android:id="@+id/editTextBuildingNumber"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/truenolight"
+                        android:alpha="0.65"/>
+            </FrameLayout>
+
+
+            <TextView
+                    android:text="Osoba Kontaktowa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textContactPersonSerch"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="16dp"/>
+            <TextView
+                    android:text="Wybierz jeśli jest inna niż w projekcie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textContactPersonSerchAdditionalInfo"
+                    android:textSize="12dp"
+                    android:alpha="0.3"
+                    android:textColor="@color/white"/>
+            <SearchView
+                    android:layout_width="match_parent"
+                    android:id="@+id/serchBarContactPerson"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/truenolight"
+                    android:background="@drawable/radius"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/listOfContactPerson"
+                    tools:listitem="@layout/activity_recyclerview_contact_person_search"/>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/linearLayoutOfButtons">
+        <Button
+                android:text="Dodaj osobę kontaktową"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/buttonNormalColor"
+                android:id="@+id/buttonAddContactPerson"
+                android:textSize="20sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"/>
+        <Button
+                android:text="Dodaj Budynek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/buttonNormalColor"
+                android:id="@+id/buttonAddBuidling"
+                android:textSize="20sp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp" android:layout_weight="1"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
