@@ -81,6 +81,18 @@ public class BuildingRecyclerViewAdapter
             super(itemView);
             textViewBuildingName = itemView.findViewById(R.id.textViewBuildingName);
             textViewDate = itemView.findViewById(R.id.textViewDate);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (recyclerViewInterface != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            recyclerViewInterface.onItemClicked(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }
