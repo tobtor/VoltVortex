@@ -242,6 +242,7 @@ public class InsertInitialDataHelper {
                                    String content){
         ContentValues cv = new ContentValues();
         cv.put(PPARTabelHelper.getColumnPPARContent(), content);
+        db.insert(PPARTabelHelper.getTableName_PPAR(), null, cv);
     }
 
     private static void insertZSComponent(SQLiteDatabase db,
@@ -250,6 +251,7 @@ public class InsertInitialDataHelper {
         ContentValues cv = new ContentValues();
         cv.put(ZSComponentsTableHelper.getColumnZsComponent(), component);
         cv.put(ZSComponentsTableHelper.getColumnClassOfComponent(), classOfComponent);
+        db.insert(ZSComponentsTableHelper.getTableName_ZS_COMPONENT(), null, cv);
     }
 
     private static void insertZSElectricalProtection(SQLiteDatabase db,
@@ -266,6 +268,7 @@ public class InsertInitialDataHelper {
         cv.put(ZsElectricalProtectionTableHelper.getColumnZsElectricalProtectionMultiplierTTReciver(), multiplierTTReceiver);
         cv.put(ZsElectricalProtectionTableHelper.getColumnZsElectricalProtectionMultiplierTTSwitchGear(), multiplierTTSwitchgear);
         cv.put(ZsElectricalProtectionTableHelper.getColumnZsElectricalProtectionMultiplierDC(), multiplierDC);
+        db.insert(ZsElectricalProtectionTableHelper.getTableName_ZS_ELECTRICAL_PROTECTION(), null, cv);
     }
 
     private static void insertZSElectricalProtection(SQLiteDatabase db,
@@ -280,6 +283,7 @@ public class InsertInitialDataHelper {
         cv.put(ZsElectricalProtectionTableHelper.getColumnZsElectricalProtectionMultiplierTNSwitchGear(), multiplierTNSwitchgear);
         cv.put(ZsElectricalProtectionTableHelper.getColumnZsElectricalProtectionMultiplierTTReciver(), multiplierTTReceiver);
         cv.put(ZsElectricalProtectionTableHelper.getColumnZsElectricalProtectionMultiplierTTSwitchGear(), multiplierTTSwitchgear);
+        db.insert(ZsElectricalProtectionTableHelper.getTableName_ZS_ELECTRICAL_PROTECTION(), null, cv);
     }
 
 }
