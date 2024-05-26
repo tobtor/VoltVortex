@@ -13,7 +13,9 @@ import com.example.voltvortex.Models.BuildingModel;
 import com.example.voltvortex.R;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class BuildingRecyclerViewAdapter
         extends RecyclerView.Adapter<BuildingRecyclerViewAdapter.BuildingViewHolder>{
@@ -42,8 +44,12 @@ public class BuildingRecyclerViewAdapter
     public void onBindViewHolder(@NonNull @NotNull BuildingViewHolder holder,
                                  @SuppressLint("RecyclerView") int position) {
         BuildingModel buildingModel = buildingList.get(position);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy, EEEE", Locale.getDefault());
+        String formattedDate = sdf.format(buildingModel.getDateOfMeasurements());
+
         holder.textViewBuildingName.setText(buildingModel.getBuildingName());
-        holder.textViewDate.setText(String.valueOf(buildingModel.getDateOfMeasurements()));
+        holder.textViewDate.setText(formattedDate);
 
         /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
