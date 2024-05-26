@@ -130,9 +130,33 @@ public class InsertInitialDataHelper {
         insertZSComponent(db, "Grill", "Inne");
         insertZSComponent(db, "Frytkownica", "Inne");
 
-        insertZSElectricalProtection(db,"DO1 gG-2",
-                14.375F,26.4367816091954F,
-                12.1052631578947F, 18.91818F);
+        insertZSElectricalProtection(db, "DO1 gG-2",
+                14.38F, 26.44F,
+                12.11F, 18.92F);
+        insertZSElectricalProtection(db, "DO1 gG-4",
+                7.42F, 12.30F,
+                6.67F, 8.82F);
+        insertZSElectricalProtection(db, "DO1 gG-6",
+                4.67F, 9.09F,
+                3.85F, 6.19F);
+        insertZSElectricalProtection(db, "DO1 gG-10",
+                3.10F, 5.29F,
+                2.64F, 3.63F);
+        insertZSElectricalProtection(db, "DO1 gG-16",
+                1.98F, 3.41F,
+                1.72F, 2.74F);
+        insertZSElectricalProtection(db, "DO1 gG-20",
+                1.58F, 2.80F,
+                1.32F, 1.92F);
+        insertZSElectricalProtection(db, "DO1 gG-25",
+                1.14F, 2.08F,
+                1.00F, 1.58F);
+        insertZSElectricalProtection(db, "DO1 gG-32",
+                1.01F, 1.74F,
+                0.86F, 1.06F);
+        insertZSElectricalProtection(db, "DO1 gG-35",
+                0.83F, 1.48F,
+                0.69F, 1.12F);
         insertZSElectricalProtection(db,"A",
                 3,3,
                 3,3,5);
@@ -145,9 +169,43 @@ public class InsertInitialDataHelper {
         insertZSElectricalProtection(db,"D",
                 20,6,
                 20,20,23);
-        insertZSElectricalProtection(db,"gG-16",
-                1.54569892473118F, 2.72189349112426F,
-                1.19791666666667F, 2.7383276506F);
+        insertZSElectricalProtection(db, "gG-2",
+                14.38F, 25.56F,
+                12.11F, 18.92F);
+        insertZSElectricalProtection(db, "gG-4",
+                7.19F, 13.53F,
+                5.90F, 8.82F);
+        insertZSElectricalProtection(db, "gG-6",
+                4.34F, 8.21F,
+                3.71F, 6.19F);
+        insertZSElectricalProtection(db, "gG-10",
+                2.77F, 5.00F,
+                2.34F, 3.63F);
+        insertZSElectricalProtection(db, "gG-16",
+                1.55F, 2.72F,
+                1.20F, 2.74F);
+        insertZSElectricalProtection(db, "gG-20",
+                1.18F, 2.19F,
+                1.02F, 1.92F);
+        insertZSElectricalProtection(db, "gG-25",
+                0.90F, 1.76F,
+                0.73F, 1.58F);
+        insertZSElectricalProtection(db, "gG-32",
+                0.71F, 1.31F,
+                0.58F, 1.06F);
+        insertZSElectricalProtection(db, "gG-35",
+                0.64F, 1.16F,
+                0.52F, 1.12F);
+        insertZSElectricalProtection(db, "gG-40",
+                0.57F, 1.12F,
+                0.47F, 0.87F);
+        insertZSElectricalProtection(db, "gG-50",
+                0.41F, 0.77F,
+                0.33F, 0.61F);
+        insertZSElectricalProtection(db, "gG-63",
+                0.35F, 0.65F,
+                0.28F, 0.51F);
+
     }
 
     private static void insertContactPerson(SQLiteDatabase db,
