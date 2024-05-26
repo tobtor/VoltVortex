@@ -110,6 +110,7 @@ public class AddProjectWindow extends AppCompatActivity {
 
         // Powrót do głównego ekranu aplikacji
         Intent intent = new Intent(AddProjectWindow.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

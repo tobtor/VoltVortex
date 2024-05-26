@@ -21,7 +21,8 @@ public class ProjectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project);
-        int projectId = getIntent().getExtras().getInt("ID");
+        int projectId = getIntent().getExtras().getInt("PROJECT_ID");
+        int contactPersonId = getIntent().getExtras().getInt("CONTACT_PERSON_ID");
 
         addBuildingButton = findViewById(R.id.buttonAddBuidling);
 
@@ -29,7 +30,8 @@ public class ProjectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProjectActivity.this, AddBuildingActicity.class);
-                intent.putExtra("ID", projectId);
+                intent.putExtra("PROJECT_ID", projectId);
+                intent.putExtra("CONTACT_PERSON_ID", contactPersonId);
                 startActivity(intent);
             }
         });

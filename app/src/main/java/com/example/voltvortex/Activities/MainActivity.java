@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     public void onItemClicked(int position) {
         ProjectModel projectModel = projectRecyclerViewAdapter.getProjectAt(position);
         Intent intent = new Intent(MainActivity.this, ProjectActivity.class);
-        intent.putExtra("ID", projectModel.getProjectID());
+        intent.putExtra("PROJECT_ID", projectModel.getProjectID());
+        intent.putExtra("CONTACT_PERSON_ID", projectModel.getContactPersonID());
         startActivity(intent);
     }
 }
