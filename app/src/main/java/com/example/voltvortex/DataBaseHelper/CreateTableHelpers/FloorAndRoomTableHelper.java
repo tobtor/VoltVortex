@@ -20,8 +20,8 @@ public class FloorAndRoomTableHelper {
         return COLUMN_FLOOR;
     }
 
-    public static String createFloorAndRoomTable() {
-        String query = " CREATE TABLE " + TABLE_NAME +
+    public static String createFloorAndRoomTable(int buildingId) {
+        String query = " CREATE TABLE " + buildingId + "_" + TABLE_NAME +
                 " (" + COLUMN_ROOM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_ROOM + " VARCHAR(80) NOT NULL, " +
                 COLUMN_FLOOR + " VARCHAR(80) NOT NULL);";

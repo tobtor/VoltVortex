@@ -67,8 +67,8 @@ public class ZsTableHelper {
         return COLUMN_RESULT;
     }
 
-    public static String createZSTable() {
-        String query = " CREATE TABLE " + TABLE_NAME +
+    public static String createZSTable(int buildingId) {
+        String query = " CREATE TABLE " + buildingId + "_" + TABLE_NAME +
                 " (" + COLUMN_ZS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_ZS_MESURED_COMPONENT_ID + " INTEGER, " +
                 COLUMN_ZS_ELECTRICAL_PROTECTION_ID + " INTEGER, " +

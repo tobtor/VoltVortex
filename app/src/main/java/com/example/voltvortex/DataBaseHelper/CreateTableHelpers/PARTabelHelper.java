@@ -16,8 +16,8 @@ public class PARTabelHelper {
         return COLUMN_PAR_CONTENT;
     }
 
-    public static String createPPARTable() {
-        String query = " CREATE TABLE " + TABLE_NAME +
+    public static String createPPARTable(int buildingId) {
+        String query = " CREATE TABLE " + buildingId + "_" + TABLE_NAME +
                 " (" + COLUMN_PAR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PAR_CONTENT + " TEXT NOT NULL);";
         return query;

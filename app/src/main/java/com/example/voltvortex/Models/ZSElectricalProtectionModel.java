@@ -23,6 +23,42 @@ public class ZSElectricalProtectionModel {
         this.multiplierDC = multiplierDC;
     }
 
+    public ZSElectricalProtectionModel(int protectionID, String protectionType, float multiplierTNReceiver,
+                                       float multiplierTNSwitchgear, float multiplierTTReceiver,
+                                       float multiplierTTSwitchgear) {
+        this.protectionID = protectionID;
+        this.protectionType = protectionType;
+        this.multiplierTNReceiver = multiplierTNReceiver;
+        this.multiplierTNSwitchgear = multiplierTNSwitchgear;
+        this.multiplierTTReceiver = multiplierTTReceiver;
+        this.multiplierTTSwitchgear = multiplierTTSwitchgear;
+        this.multiplierDC = Float.parseFloat(null);
+    }
+
+    public ZSElectricalProtectionModel(String protectionType, float multiplierTNReceiver,
+                                       float multiplierTNSwitchgear, float multiplierTTReceiver,
+                                       float multiplierTTSwitchgear, float multiplierDC) {
+        this.protectionID = 400000;
+        this.protectionType = protectionType;
+        this.multiplierTNReceiver = multiplierTNReceiver;
+        this.multiplierTNSwitchgear = multiplierTNSwitchgear;
+        this.multiplierTTReceiver = multiplierTTReceiver;
+        this.multiplierTTSwitchgear = multiplierTTSwitchgear;
+        this.multiplierDC = multiplierDC;
+    }
+
+    public ZSElectricalProtectionModel(String protectionType, float multiplierTNReceiver,
+                                       float multiplierTNSwitchgear, float multiplierTTReceiver,
+                                       float multiplierTTSwitchgear) {
+        this.protectionID = 400000;
+        this.protectionType = protectionType;
+        this.multiplierTNReceiver = multiplierTNReceiver;
+        this.multiplierTNSwitchgear = multiplierTNSwitchgear;
+        this.multiplierTTReceiver = multiplierTTReceiver;
+        this.multiplierTTSwitchgear = multiplierTTSwitchgear;
+        this.multiplierDC = Float.parseFloat(null);
+    }
+
     // Gettery i Settery
     public int getProtectionID() {
         return protectionID;

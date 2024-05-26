@@ -84,7 +84,6 @@ public class AddBuildingActicity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         Date dateOfMesurments = calendar.getTime();
 
-
         BuildingModel buildingModel = new BuildingModel(buildingName, dateOfMesurments,
                 city, postCode, street, buildingNumber, projectId, contactPersonId);
 
@@ -95,9 +94,11 @@ public class AddBuildingActicity extends AppCompatActivity {
                 Toast.LENGTH_SHORT)
                 .show();
 
-        Intent intent = new Intent(this, ProjectActivity.class);
-        intent.putExtra("CONTACT_PERSON_ID", contactPersonId);
-        startActivity(intent);
+        if (success) {
+            Intent intent = new Intent(this, ProjectActivity.class);
+            intent.putExtra("CONTACT_PERSON_ID", contactPersonId);
+            startActivity(intent);
+        }
     }
 
     private void getContactPersonList(MyDatabaseHelper myDatabaseHelper) {

@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.FloorAndRoomTableHelper.createFloorAndRoomTable;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PARTabelHelper.createPPARTable;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsTableHelper.createZSTable;
+
 /**
  * Klasa pomocnicza do zarządzania bazą danych.
  */
@@ -50,6 +54,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(ZsElectricalProtectionTableHelper.createZsElectricalProtectionTable());
         db.execSQL(ProjectTableHelper.createProjectTable());
         db.execSQL(BuildingTableHelper.createBuildingTable());
+        InsertInitialDataHelper.insertInitialData(db);
     }
 
     /**
@@ -67,6 +72,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + ZsElectricalProtectionTableHelper.getTableName_ZS_ELECTRICAL_PROTECTION());
         db.execSQL("DROP TABLE IF EXISTS " + PPARTabelHelper.getTableName_PPAR());
         onCreate(db);
+    }
+
+    public void createTableForBuilding(int buildingId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(createFloorAndRoomTable(buildingId));
+        db.execSQL(createZSTable(buildingId));
+        db.execSQL(createPPARTable(buildingId));
     }
 
     /**
@@ -235,13 +247,22 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(BuildingTableHelper.getColumn_PROJECT_ID(), buildingModel.getProjectID());
         cv.put(BuildingTableHelper.getColumn_CONTACT_PERSON_ID(), buildingModel.getContactPersonID());
 
-
         long insert = db.insert(BuildingTableHelper.getTableName_BUILDING(), null, cv);
         if (insert == -1) {
             Toast.makeText(context, "Nie udało się dodać osoby kontaktowej!", Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            Toast.makeText(context, "Osoba kontaktowa dodana pomyślnie.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Budynek dodany pomyślnie.", Toast.LENGTH_SHORT).show();
+
+            // Pobierz ID dodanego budynku
+            Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
+            if (cursor.moveToFirst()) {
+                int buildingId = cursor.getInt(0);
+
+                // Tworzenie nowych tabel
+                createTableForBuilding(buildingId);
+            }
+            cursor.close();
             return true;
         }
     }
