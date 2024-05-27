@@ -5,6 +5,36 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Activities.BuildingActivity">
+        tools:context=".Activities.BuildingActivity"
+        android:background="@color/backgroudColor">
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        <Button
+                android:text="Uwagi i Zalecenia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonPAR"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/buttonNormalColor"
+                android:textSize="16dp"
+                android:textColor="@color/white"/>
+        <Button
+                android:text="Impedancja Pętli Zwarcia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/buttonZS"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/buttonNormalColor"
+                android:textSize="16dp"
+                android:textColor="@color/white"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
