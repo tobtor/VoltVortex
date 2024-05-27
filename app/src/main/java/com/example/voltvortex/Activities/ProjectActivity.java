@@ -1,8 +1,10 @@
 package com.example.voltvortex.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,15 +24,16 @@ public class ProjectActivity extends AppCompatActivity implements RecyclerViewIn
     MyDatabaseHelper myDatabaseHelper;
     BuildingRecyclerViewAdapter buildingRecyclerViewAdapter;
     RecyclerView listOfBuildings;
+    int projectId = 0, contactPersonId = 0;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project);
 
-        int projectId = getIntent().getExtras().getInt("PROJECT_ID");
-        int contactPersonId = getIntent().getExtras().getInt("CONTACT_PERSON_ID");
-
+        projectId = getIntent().getExtras().getInt("PROJECT_ID");
+        contactPersonId = getIntent().getExtras().getInt("CONTACT_PERSON_ID");
         addBuildingButton = findViewById(R.id.buttonAddBuidling);
         listOfBuildings = findViewById(R.id.listOfBuildings);
 
@@ -38,7 +41,7 @@ public class ProjectActivity extends AppCompatActivity implements RecyclerViewIn
 
         listOfBuildings.setLayoutManager(new LinearLayoutManager(this));
 
-        getBuildingList(myDatabaseHelper);
+        getBuildingList(myDatabaseHelper, projectId);
 
         addBuildingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,11 +55,15 @@ public class ProjectActivity extends AppCompatActivity implements RecyclerViewIn
     }
 
     // Metoda do odświeżania listy budynków
-    private void getBuildingList(MyDatabaseHelper myDatabaseHelper) {
-        List<BuildingModel> buildinglist = myDatabaseHelper.viewBuildingList();
-        buildingRecyclerViewAdapter = new BuildingRecyclerViewAdapter(buildinglist,
-                myDatabaseHelper, this);
-        listOfBuildings.setAdapter(buildingRecyclerViewAdapter);
+    private void getBuildingList(MyDatabaseHelper myDatabaseHelper, int projectId) {
+        if (projectId == 0){
+            Toast.makeText(context, "Nie udało się uzyskać listy budynków!", Toast.LENGTH_SHORT).show();
+        } else {
+            List<BuildingModel> buildinglist = myDatabaseHelper.viewBuildingListByProjectId(projectId);
+            buildingRecyclerViewAdapter = new BuildingRecyclerViewAdapter(buildinglist,
+                    myDatabaseHelper, this);
+            listOfBuildings.setAdapter(buildingRecyclerViewAdapter);
+        }
     }
 
     @Override

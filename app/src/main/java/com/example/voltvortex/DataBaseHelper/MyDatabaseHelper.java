@@ -324,4 +324,41 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+
+    /**
+     * Pobranie listy wybranych budynków z bazy danych na podstawie projectId.
+     * @return lista budynków
+     */
+    public List<BuildingModel> viewBuildingListByProjectId(int projectId) {
+        List<BuildingModel> returnList = new ArrayList<>();
+
+        String queryString = "SELECT * FROM " + BuildingTableHelper.getTableName_BUILDING() +
+                " WHERE " + BuildingTableHelper.getColumn_PROJECT_ID() + " = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, new String[]{String.valueOf(projectId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int buildingID = cursor.getInt(0);
+                String buildingName = cursor.getString(1);
+                long dateOfMeasurementsLong = cursor.getLong(2);
+                String city = cursor.getString(3);
+                String postcode = cursor.getString(4);
+                String street = cursor.getString(5);
+                String buildingNumber = cursor.getString(6);
+                int contactPersonID = cursor.getInt(7);
+
+                Date dateOfMeasurements = new Date(dateOfMeasurementsLong);
+
+                BuildingModel newBuildingModel = new BuildingModel
+                        (buildingID, buildingName, dateOfMeasurements, city,
+                                postcode, street, buildingNumber, projectId, contactPersonID);
+                returnList.add(newBuildingModel);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return returnList;
+    }
 }
