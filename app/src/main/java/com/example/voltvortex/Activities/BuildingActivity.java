@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.voltvortex.AddActivities.AddProjectWindow;
 import com.example.voltvortex.R;
 
 public class BuildingActivity extends AppCompatActivity {
@@ -24,7 +23,7 @@ public class BuildingActivity extends AppCompatActivity {
         buttonPAR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BuildingActivity.this, PARActivity.class);
+                Intent intent = new Intent(BuildingActivity.this, PPARActivity.class);
                 intent.putExtra("BUILDING_ID", buidlingId);
                 startActivity(intent);
             }

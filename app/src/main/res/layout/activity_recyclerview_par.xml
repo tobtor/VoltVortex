@@ -20,7 +20,7 @@
                     android:layout_height="wrap_content"
                     android:text="Treść PPAR"
                     android:textColor="@color/white"
-                    android:id="@+id/listViewPPAR"
+                    android:id="@+id/textViewPPAR"
                     android:textSize="14dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"

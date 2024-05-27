@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.*;
 import com.example.voltvortex.Models.ContactPersonModel;
+import com.example.voltvortex.Models.PPARModel;
 import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.Models.BuildingModel;
 
@@ -354,6 +355,31 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                         (buildingID, buildingName, dateOfMeasurements, city,
                                 postcode, street, buildingNumber, projectId, contactPersonID);
                 returnList.add(newBuildingModel);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    /**
+     * Pobranie listy wszystkich PPAR z bazy danych.
+     * @return lista PPAR
+     */
+    public List<PPARModel> viewPPARList() {
+        List<PPARModel> returnList = new ArrayList<>();
+
+        String queryString = "SELECT * FROM " + PPARTabelHelper.getTableName_PPAR();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String content = cursor.getString(1);
+
+                PPARModel pPARModel = new PPARModel (content);
+                returnList.add(pPARModel);
             } while (cursor.moveToNext());
         }
 

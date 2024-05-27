@@ -16,7 +16,7 @@
                 android:name=".Activities.ZSActivity"
                 android:exported="false"/>
         <activity
-                android:name=".Activities.PARActivity"
+                android:name=".Activities.PPARActivity"
                 android:exported="false"/>
         <activity
                 android:name=".Activities.BuildingActivity"

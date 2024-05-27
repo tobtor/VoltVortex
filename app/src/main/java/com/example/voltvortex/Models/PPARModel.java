@@ -11,6 +11,11 @@ public class PPARModel {
         this.content = content;
     }
 
+    public PPARModel(String content) {
+        this.pparID = 500000;
+        this.content = content;
+    }
+
     // Gettery i Settery
     public int getPparID() {
         return pparID;
