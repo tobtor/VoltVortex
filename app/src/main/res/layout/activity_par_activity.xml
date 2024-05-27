@@ -5,6 +5,34 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Activities.PARActivity">
+        tools:context=".Activities.PARActivity"
+        android:background="@color/backgroudColor">
 
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerViewPPAR"
+            tools:listitem="@layout/activity_recyclerview_PPAR"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@id/line"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/line"
+            android:background="@color/white"
+            app:layout_constraintBottom_toTopOf="recyclerViewPAR"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewPPAR">
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            tools:listitem="@layout/activity_recyclerview_PPAR"
+            app:layout_constraintTop_toBottomOf="@+id/line"
+            android:id="@+id/recyclerViewPAR"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
