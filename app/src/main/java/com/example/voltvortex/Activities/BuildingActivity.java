@@ -11,12 +11,13 @@ import com.example.voltvortex.R;
 public class BuildingActivity extends AppCompatActivity {
 
     Button buttonPAR, buttonZS ;
+    int buidlingId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building);
-
+        buidlingId = getIntent().getExtras().getInt("BUILDING_ID");
         buttonPAR = findViewById(R.id.buttonPAR);
         buttonZS = findViewById(R.id.buttonZS);
 
@@ -24,6 +25,7 @@ public class BuildingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuildingActivity.this, PARActivity.class);
+                intent.putExtra("BUILDING_ID", buidlingId);
                 startActivity(intent);
             }
         });
@@ -32,6 +34,7 @@ public class BuildingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuildingActivity.this, ZSActivity.class);
+                intent.putExtra("BUILDING_ID", buidlingId);
                 startActivity(intent);
             }
         });
