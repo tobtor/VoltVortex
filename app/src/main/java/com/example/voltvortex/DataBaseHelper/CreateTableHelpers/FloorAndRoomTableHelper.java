@@ -10,21 +10,23 @@ public class FloorAndRoomTableHelper {
     public static String getTableName_FloorAndRoom() {
         return TABLE_NAME;
     }
+
     public static String getColumnRoomId() {
         return COLUMN_ROOM_ID;
     }
+
     public static String getColumnRoom() {
         return COLUMN_ROOM;
     }
+
     public static String getColumnFloor() {
         return COLUMN_FLOOR;
     }
 
     public static String createFloorAndRoomTable(int buildingId) {
-        String query = " CREATE TABLE " + buildingId + "_" + TABLE_NAME +
+        return "CREATE TABLE IF NOT EXISTS ID" + buildingId + "_" + TABLE_NAME +
                 " (" + COLUMN_ROOM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_ROOM + " VARCHAR(80) NOT NULL, " +
                 COLUMN_FLOOR + " VARCHAR(80) NOT NULL);";
-        return query;
     }
 }

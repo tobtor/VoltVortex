@@ -5,13 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
-import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ProjectTableHelper;
-import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.BuildingTableHelper;
-import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PPARTabelHelper;
-import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper;
-import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ContactPersonTableHelper;
-import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper;
+import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.*;
 import com.example.voltvortex.Models.ContactPersonModel;
 import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.Models.BuildingModel;
@@ -21,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.FloorAndRoomTableHelper.createFloorAndRoomTable;
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PARTabelHelper.createPPARTable;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PARTabelHelper.createPARTable;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsTableHelper.createZSTable;
 
 /**
@@ -76,9 +72,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public void createTableForBuilding(int buildingId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(createFloorAndRoomTable(buildingId));
-        db.execSQL(createZSTable(buildingId));
-        db.execSQL(createPPARTable(buildingId));
+        String floorAndRoomTable = FloorAndRoomTableHelper.createFloorAndRoomTable(buildingId);
+        String zsTable = ZsTableHelper.createZSTable(buildingId);
+        String parTable = PARTabelHelper.createPARTable(buildingId);
+
+        Log.d("MyDatabaseHelper", "Creating table with query: " + floorAndRoomTable);
+        db.execSQL(floorAndRoomTable);
+
+        Log.d("MyDatabaseHelper", "Creating table with query: " + zsTable);
+        db.execSQL(zsTable);
+
+        Log.d("MyDatabaseHelper", "Creating table with query: " + parTable);
+        db.execSQL(parTable);
     }
 
     /**
@@ -248,18 +253,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(BuildingTableHelper.getColumn_CONTACT_PERSON_ID(), buildingModel.getContactPersonID());
 
         long insert = db.insert(BuildingTableHelper.getTableName_BUILDING(), null, cv);
+
         if (insert == -1) {
-            Toast.makeText(context, "Nie udało się dodać osoby kontaktowej!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Nie udało się dodać budynku!", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             Toast.makeText(context, "Budynek dodany pomyślnie.", Toast.LENGTH_SHORT).show();
 
-            // Pobierz ID dodanego budynku
             Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
             if (cursor.moveToFirst()) {
                 int buildingId = cursor.getInt(0);
-
-                // Tworzenie nowych tabel
                 createTableForBuilding(buildingId);
             }
             cursor.close();

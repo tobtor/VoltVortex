@@ -1,7 +1,9 @@
 package com.example.voltvortex.DataBaseHelper.CreateTableHelpers;
 
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper.*;
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper.*;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper.getTableName_ZS_COMPONENT;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper.getTableName_ZS_ELECTRICAL_PROTECTION;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper.getColumnZsComponentsId;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper.getColumnZsElectricalProtectionId;
 
 public class ZsTableHelper {
 
@@ -68,7 +70,7 @@ public class ZsTableHelper {
     }
 
     public static String createZSTable(int buildingId) {
-        String query = " CREATE TABLE " + buildingId + "_" + TABLE_NAME +
+        return "CREATE TABLE IF NOT EXISTS ID" + buildingId + "_" + TABLE_NAME +
                 " (" + COLUMN_ZS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_ZS_MESURED_COMPONENT_ID + " INTEGER, " +
                 COLUMN_ZS_ELECTRICAL_PROTECTION_ID + " INTEGER, " +
@@ -82,11 +84,10 @@ public class ZsTableHelper {
                 COLUMN_IS_WYRW + " INTEGER NOT NULL, " +
                 COLUMN_IS_2PRZEW + " INTEGER NOT NULL, " +
                 COLUMN_WAS_MESURED + " INTEGER NOT NULL, " +
-                COLUMN_ZS_MESURED + " FLOAT NOT NULL " +
+                COLUMN_ZS_MESURED + " FLOAT NOT NULL, " +
                 "FOREIGN KEY (" + COLUMN_ZS_MESURED_COMPONENT_ID + ") REFERENCES " + getTableName_ZS_COMPONENT() +
                 " (" + getColumnZsComponentsId() + "), " +
                 "FOREIGN KEY (" + COLUMN_ZS_ELECTRICAL_PROTECTION_ID + ") REFERENCES " + getTableName_ZS_ELECTRICAL_PROTECTION() +
                 "(" + getColumnZsElectricalProtectionId() + "));";
-        return query;
     }
 }
