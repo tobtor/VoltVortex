@@ -97,6 +97,7 @@ public class AddBuildingActicity extends AppCompatActivity {
         if (success) {
             Intent intent = new Intent(this, ProjectActivity.class);
             intent.putExtra("CONTACT_PERSON_ID", contactPersonId);
+            intent.putExtra("PROJECT_ID", projectId);
             startActivity(intent);
         }
     }
