@@ -4,11 +4,19 @@ public class PARModel {
 
     private int parID;
     private String content;
+    private int isUsed;
 
     // Konstruktor
-    public PARModel(int parID, String content) {
+    public PARModel(int parID, String content, int isUsed) {
         this.parID = parID;
         this.content = content;
+        this.isUsed = isUsed;
+    }
+
+    public PARModel(String content, int isUsed) {
+        this.parID = 600000;
+        this.content = content;
+        this.isUsed = isUsed;
     }
 
     // Gettery i Settery
@@ -26,5 +34,13 @@ public class PARModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getIsUsed() {
+        return isUsed;
+    }
+
+    public void setIsUsed(int isUsed) {
+        this.isUsed = isUsed;
     }
 }

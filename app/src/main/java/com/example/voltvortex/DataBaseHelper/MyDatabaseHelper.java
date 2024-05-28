@@ -85,6 +85,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         Log.d("MyDatabaseHelper", "Creating table with query: " + parTable);
         db.execSQL(parTable);
+
+        InsertBasicBuildingData.insertBasicBuildingData(db, buildingId);
     }
 
     /**
