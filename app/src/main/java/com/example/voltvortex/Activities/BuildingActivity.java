@@ -23,7 +23,7 @@ public class BuildingActivity extends AppCompatActivity {
         buttonPAR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BuildingActivity.this, PPARActivity.class);
+                Intent intent = new Intent(BuildingActivity.this, PARActivity.class);
                 intent.putExtra("BUILDING_ID", buidlingId);
                 startActivity(intent);
             }

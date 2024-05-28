@@ -60,35 +60,6 @@ public class InsertInitialDataHelper {
                         "termin: kwiecień/maj",
                 11, true);
 
-        insertPPAR(db, "W przypadku oznaczenia BPE należy podłączyć przewód ochronny PE do bolca w " +
-                "gniazdku, aby zapewnić ochronę poprzez samoczynne wyłączenie zasilania.");
-        insertPPAR(db, "W przypadku oznaczenia BN należy zapewnić ciągłość przewodu neutralnego na " +
-                "drodze od rozdzielni elektrycznej, aż do odpowiedniego styku w gnieździe.");
-        insertPPAR(db, "W przypadku oznaczenia BK należy wymienić gniazdo nieposiadające styku " +
-                "ochronnego, na taki styk posiadające oraz podłączyć przewód PE. W przypadku gniazd BK " +
-                "należy podłączać do nich tylko urządzenia w II klasie ochronności.");
-        insertPPAR(db, "W związku z nietrwałym mocowaniem poprawić i co pewien okres sprawdzać " +
-                "mocowanie gniazd wtyczkowych, w protokole zaznaczone komentarzem „wyrwane”.");
-        insertPPAR(db, "Zaleca się testowanie wyłączników RCD za pomocą przycisku „TEST” " +
-                "zgodnie z zaleceniami producenta.");
-        insertPPAR(db, "„Połączenie realizowane 2-przewodowo” - opis zawarty przy wynikach pomiarów " +
-                "impedancji pętli zwarcia odnosi się do wypustów oświetleniowych: żyrandoli, plastikowych i " +
-                "szklanych lamp, oraz wszystkich innych punktów świetlnych, które realizują jedynie połączenie " +
-                "przewodem fazowym i neutralnym.");
-        insertPPAR(db, "Przeprowadzić konserwację rozdzielni elektrycznych, szczególnie oczyścić je " +
-                "z kurzu i pajęczyn.");
-        insertPPAR(db, "Brak kompletnej dokumentacji powykonawczej instalacji uniemożliwiający " +
-                "dokonanie pełnej weryfikacji zgodności instalacji z projektem (w zakresie doboru i nastaw " +
-                "urządzeń, przewodów i aparatów) – zaleca się uzupełnienie i weryfikację ww. elementów " +
-                "instalacji z dokumentacją.");
-        insertPPAR(db, "Brak aktualnych oznaczeń obwodów i schematów rozdzielnic i tablic – " +
-                "zaleca się uzupełnienie i zaktualizowanie.");
-        insertPPAR(db, "Zalecane dokonywanie co najmniej raz do roku okresowej konserwacji tablic i " +
-                "rozdzielnic polegającej na oczyszczeniu zacisków, aparatów i przewodów i dokręceniu połączeń " +
-                "śrubowych potwierdzonej adnotacją w niniejszym protokole.");
-        insertPPAR(db, "Wynik oględzin instalacji odgromowej dotyczącej budynku pozytywny. " +
-                "Instalacja ciągła i w dobrym stanie technicznym.");
-
         insertZSComponent(db, "Gn 1f p", "Gniazda");
         insertZSComponent(db, "Gn 1f 2p.1", "Gniazda");
         insertZSComponent(db, "Gn 1f 2p.2", "Gniazda");
@@ -236,13 +207,6 @@ public class InsertInitialDataHelper {
         cv.put(ProjectTableHelper.getColumnContactPersonId(), contactPersonId);
         cv.put(ProjectTableHelper.getColumnIsSingleContactPerson(), isSingleContactPerson ? 1 : 0);
         db.insert(ProjectTableHelper.getTableName_PROJECT(), null, cv);
-    }
-
-    private static void insertPPAR(SQLiteDatabase db,
-                                   String content){
-        ContentValues cv = new ContentValues();
-        cv.put(PPARTabelHelper.getColumnPPARContent(), content);
-        db.insert(PPARTabelHelper.getTableName_PPAR(), null, cv);
     }
 
     private static void insertZSComponent(SQLiteDatabase db,

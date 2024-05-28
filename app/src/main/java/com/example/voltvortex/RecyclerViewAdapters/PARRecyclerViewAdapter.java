@@ -7,24 +7,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
-import com.example.voltvortex.Models.PPARModel;
+import com.example.voltvortex.Models.PARModel;
 import com.example.voltvortex.R;
 import com.example.voltvortex.Intefraces.RecyclerViewInterface;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class PPARRecyclerViewAdapter
-        extends RecyclerView.Adapter<PPARRecyclerViewAdapter.PPARViewHolder> {
+public class PARRecyclerViewAdapter
+        extends RecyclerView.Adapter<PARRecyclerViewAdapter.PARViewHolder> {
 
-    private List<PPARModel> pparList;
+    private List<PARModel> parList;
     private MyDatabaseHelper myDatabaseHelper;
     private final RecyclerViewInterface recyclerViewInterface;
 
-    public PPARRecyclerViewAdapter(List<PPARModel> pparList,
-                                   MyDatabaseHelper myDatabaseHelper,
-                                   RecyclerViewInterface recyclerViewInterface) {
-        this.pparList = pparList;
+    public PARRecyclerViewAdapter(List<PARModel> parList,
+                                  MyDatabaseHelper myDatabaseHelper,
+                                  RecyclerViewInterface recyclerViewInterface) {
+        this.parList = parList;
         this.myDatabaseHelper = myDatabaseHelper;
         this.recyclerViewInterface = recyclerViewInterface;
     }
@@ -32,32 +32,32 @@ public class PPARRecyclerViewAdapter
     @NonNull
     @NotNull
     @Override
-    public PPARViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup viewGroup, int viewType) {
+    public PARViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_recyclerview_par, viewGroup, false);
-        return new PPARViewHolder(view, recyclerViewInterface);
+        return new PARViewHolder(view, recyclerViewInterface);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull PPARViewHolder holder, int position) {
-        PPARModel pparModel = pparList.get(position);
-        holder.textViewPPAR.setText(pparModel.getContent());
+    public void onBindViewHolder(@NonNull @NotNull PARViewHolder holder, int position) {
+        PARModel parModel = parList.get(position);
+        holder.textViewPAR.setText(parModel.getContent());
     }
 
     @Override
     public int getItemCount() {
-        return pparList.size();
+        return parList.size();
     }
 
-    public PPARModel getPPARAt(int position) {
-        return pparList.get(position);
+    public PARModel getPARAt(int position) {
+        return parList.get(position);
     }
 
-    public class PPARViewHolder extends RecyclerView.ViewHolder {
-        public TextView textViewPPAR;
+    public class PARViewHolder extends RecyclerView.ViewHolder {
+        public TextView textViewPAR;
 
-        public PPARViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
+        public PARViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
-            textViewPPAR= itemView.findViewById(R.id.textViewPPAR);
+            textViewPAR= itemView.findViewById(R.id.textViewPPAR);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

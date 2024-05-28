@@ -7,51 +7,42 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 import com.example.voltvortex.Intefraces.RecyclerViewInterface;
-import com.example.voltvortex.Models.PPARModel;
+import com.example.voltvortex.Models.PARModel;
 import com.example.voltvortex.R;
-import com.example.voltvortex.RecyclerViewAdapters.PPARRecyclerViewAdapter;
+import com.example.voltvortex.RecyclerViewAdapters.PARRecyclerViewAdapter;
 
 import java.util.List;
 
-public class PPARActivity extends AppCompatActivity implements RecyclerViewInterface {
+public class PARActivity extends AppCompatActivity implements RecyclerViewInterface {
 
-    int buidlingId, pparId;
-    RecyclerView recyclerViewPPAR, recyclerViewPAR;
+    int buidlingId;
+    RecyclerView recyclerViewPAR;
     MyDatabaseHelper myDatabaseHelper;
-    PPARRecyclerViewAdapter pparRecyclerViewAdapter;
-    //PARRecyclerViewAdapter parRecyclerViewAdapter;
+    PARRecyclerViewAdapter parRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_par_activity);
         buidlingId = getIntent().getExtras().getInt("BUILDING_ID");
-        recyclerViewPPAR = findViewById(R.id.recyclerViewPPAR);
         recyclerViewPAR = findViewById(R.id.recyclerViewPAR);
 
         myDatabaseHelper = new MyDatabaseHelper(this);
 
-        recyclerViewPPAR.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewPAR.setLayoutManager(new LinearLayoutManager(this));
 
-        getPPARList(myDatabaseHelper);
-        //getPARList(myDatabaseHelper);
-
+        getPARList(myDatabaseHelper, buidlingId);
     }
 
-    private void getPPARList(MyDatabaseHelper myDatabaseHelper) {
-        List<PPARModel> pparList = myDatabaseHelper.viewPPARList();
+    private void getPARList(MyDatabaseHelper myDatabaseHelper, int buidlingId) {
+        List<PARModel> pparList = myDatabaseHelper.viewPARList(buidlingId);
         if (pparList.isEmpty()) {
             Toast.makeText(this, "Nie udało się uzyskać listy PPAR!", Toast.LENGTH_SHORT).show();
         } else {
-            pparRecyclerViewAdapter = new PPARRecyclerViewAdapter(pparList,
+            parRecyclerViewAdapter = new PARRecyclerViewAdapter(pparList,
                     myDatabaseHelper, this);
-            recyclerViewPPAR.setAdapter(pparRecyclerViewAdapter);
+            recyclerViewPAR.setAdapter(parRecyclerViewAdapter);
         }
-    }
-
-    private void getPARList (MyDatabaseHelper myDatabaseHelper){
-
     }
 
     @Override

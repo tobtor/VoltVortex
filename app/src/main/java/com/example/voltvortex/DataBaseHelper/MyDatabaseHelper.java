@@ -9,17 +9,13 @@ import android.util.Log;
 import android.widget.Toast;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.*;
 import com.example.voltvortex.Models.ContactPersonModel;
-import com.example.voltvortex.Models.PPARModel;
+import com.example.voltvortex.Models.PARModel;
 import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.Models.BuildingModel;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.FloorAndRoomTableHelper.createFloorAndRoomTable;
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.PARTabelHelper.createPARTable;
-import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsTableHelper.createZSTable;
 
 /**
  * Klasa pomocnicza do zarządzania bazą danych.
@@ -45,7 +41,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(PPARTabelHelper.createPPARTable());
         db.execSQL(ContactPersonTableHelper.createContactPersonTable());
         db.execSQL(ZSComponentsTableHelper.createZSComponentsTable());
         db.execSQL(ZsElectricalProtectionTableHelper.createZsElectricalProtectionTable());
@@ -67,7 +62,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + ContactPersonTableHelper.getTableName_CONTACT_PERSON());
         db.execSQL("DROP TABLE IF EXISTS " + ZSComponentsTableHelper.getTableName_ZS_COMPONENT());
         db.execSQL("DROP TABLE IF EXISTS " + ZsElectricalProtectionTableHelper.getTableName_ZS_ELECTRICAL_PROTECTION());
-        db.execSQL("DROP TABLE IF EXISTS " + PPARTabelHelper.getTableName_PPAR());
         onCreate(db);
     }
 
@@ -364,24 +358,24 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
-
     /**
      * Pobranie listy wszystkich PPAR z bazy danych.
      * @return lista PPAR
      */
-    public List<PPARModel> viewPPARList() {
-        List<PPARModel> returnList = new ArrayList<>();
+    public List<PARModel> viewPARList(int buildingId) {
+        List<PARModel> returnList = new ArrayList<>();
 
-        String queryString = "SELECT * FROM " + PPARTabelHelper.getTableName_PPAR();
+        String queryString = "SELECT * FROM " + PARTabelHelper.getTableName_PAR(buildingId);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
 
         if (cursor.moveToFirst()) {
             do {
                 String content = cursor.getString(1);
+                int isUsed = cursor.getInt(2);
 
-                PPARModel pPARModel = new PPARModel (content);
-                returnList.add(pPARModel);
+                PARModel pARModel = new PARModel (content, isUsed);
+                returnList.add(pARModel);
             } while (cursor.moveToNext());
         }
 
