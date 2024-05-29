@@ -358,6 +358,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+
+    /**
+     * Dodanie nowej Uwagi odnośnie budynku do bazy danych.
+     * @param parModel model
+     * @return true jeśli dodanie się powiodło, false w przeciwnym razie
+     */
+    public boolean addPAR(PARModel parModel, int buildingId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(PARTabelHelper.getColumnPARContent(), parModel.getContent());
+        cv.put(PARTabelHelper.getColumnPARIsUsed(), parModel.getIsUsed());
+
+        long insert = db.insert(PARTabelHelper.getTableName_PAR(buildingId), null, cv);
+        if (insert == -1) {
+            Toast.makeText(context, "Nie udało się dodać projektu", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            Toast.makeText(context, "Projekt dodany pomyślnie", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+    }
+
     /**
      * Pobranie listy wszystkich PPAR z bazy danych.
      * @return lista PPAR
