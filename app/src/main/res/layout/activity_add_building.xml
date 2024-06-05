@@ -34,7 +34,7 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/radius"
+                    android:background="@drawable/radius_normal"
                     android:layout_marginTop="12dp">
                 <EditText
                         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/radius"
+                    android:background="@drawable/radius_normal"
                     android:layout_marginTop="12dp">
                 <EditText
                         android:layout_width="match_parent"
@@ -83,7 +83,7 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/radius"
+                    android:background="@drawable/radius_normal"
                     android:layout_marginTop="12dp">
                 <EditText
                         android:layout_width="match_parent"
@@ -106,7 +106,7 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/radius"
+                    android:background="@drawable/radius_normal"
                     android:layout_marginTop="12dp">
                 <EditText
                         android:layout_width="match_parent"
@@ -129,7 +129,7 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/radius"
+                    android:background="@drawable/radius_normal"
                     android:layout_marginTop="12dp">
                 <EditText
                         android:layout_width="match_parent"
@@ -166,7 +166,7 @@
                     android:layout_marginTop="16dp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/truenolight"
-                    android:background="@drawable/radius"/>
+                    android:background="@drawable/radius_normal"/>
 
             <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"

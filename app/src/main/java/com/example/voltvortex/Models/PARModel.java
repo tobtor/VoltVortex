@@ -14,7 +14,7 @@ public class PARModel {
     }
 
     public PARModel(String content, int isUsed) {
-        this.parID = 600000;
+        this.parID = 0;
         this.content = content;
         this.isUsed = isUsed;
     }

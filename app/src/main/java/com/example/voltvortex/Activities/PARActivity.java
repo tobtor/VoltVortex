@@ -2,6 +2,7 @@ package com.example.voltvortex.Activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -55,7 +56,10 @@ public class PARActivity extends AppCompatActivity implements RecyclerViewInterf
             Toast.makeText(this, "Nie udało się uzyskać listy PPAR!", Toast.LENGTH_SHORT).show();
         } else {
             parRecyclerViewAdapter = new PARRecyclerViewAdapter(pparList,
-                    myDatabaseHelper, this);
+                    myDatabaseHelper,
+                    this,
+                    buidlingId,
+                    this);
             recyclerViewPAR.setAdapter(parRecyclerViewAdapter);
         }
     }
@@ -116,9 +120,25 @@ public class PARActivity extends AppCompatActivity implements RecyclerViewInterf
         }
     }
 
-
     @Override
     public void onItemClicked(int position) {
+        PARModel clickedPAR = parRecyclerViewAdapter.getPARAt(position);
+        int newIsUsed = clickedPAR.getIsUsed() == 1 ? 0 : 1;
 
+        Log.d("onItemClicked", "Clicked position: " + position);
+        Log.d("onItemClicked", "PAR ID: " + clickedPAR.getParID());
+        Log.d("onItemClicked", "Old isUsed: " + clickedPAR.getIsUsed());
+        Log.d("onItemClicked", "New isUsed: " + newIsUsed);
+
+        clickedPAR.setIsUsed(newIsUsed);
+
+        boolean isUpdated = myDatabaseHelper.updatePARIsUsed(buidlingId, clickedPAR.getParID(), newIsUsed);
+        if (isUpdated) {
+            Log.d("onItemClicked", "Updated isUsed in DB");
+            parRecyclerViewAdapter.notifyItemChanged(position); // Odśwież element RecyclerView
+        } else {
+            Toast.makeText(this, "Aktualizowanie pozycji zakończone niepowodzeniem!", Toast.LENGTH_SHORT).show();
+        }
     }
+
 }

@@ -1,32 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cardViewPAR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <FrameLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <LinearLayout
-                android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+        <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/radius">
-            <TextView
+                android:background="@color/backgroudColor">
+
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Treść PPAR"
-                    android:textColor="@color/white"
-                    android:id="@+id/textViewPPAR"
-                    android:textSize="14dp"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_gravity="center"/>
-        </LinearLayout>
-    </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/LinearLayoutPAR"
+                    android:background="@drawable/radius_normal">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Treść PPAR"
+                        android:textColor="@color/white"
+                        android:id="@+id/textViewPPAR"
+                        android:textSize="14dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center"/>
+            </LinearLayout>
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

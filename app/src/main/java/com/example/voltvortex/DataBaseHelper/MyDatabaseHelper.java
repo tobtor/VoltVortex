@@ -14,6 +14,7 @@ import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.Models.BuildingModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -394,10 +395,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
+                int parID = cursor.getInt(0);
                 String content = cursor.getString(1);
                 int isUsed = cursor.getInt(2);
 
-                PARModel pARModel = new PARModel (content, isUsed);
+                PARModel pARModel = new PARModel(parID, content, isUsed);
                 returnList.add(pARModel);
             } while (cursor.moveToNext());
         }
@@ -406,4 +408,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+
+
+    public boolean updatePARIsUsed(int buildingID, int parID, int newIsUsed) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(PARTabelHelper.getColumnPARIsUsed(), newIsUsed);
+
+        String tableName = PARTabelHelper.getTableName_PAR(buildingID);
+        String whereClause = PARTabelHelper.getColumn_PAR_ID() + " = ?";
+        String[] whereArgs = {String.valueOf(parID)};
+
+        Log.d("updatePARIsUsed", "Updating table: " + tableName);
+        Log.d("updatePARIsUsed", "ContentValues: " + cv.toString());
+        Log.d("updatePARIsUsed", "WhereClause: " + whereClause);
+        Log.d("updatePARIsUsed", "WhereArgs: " + Arrays.toString(whereArgs));
+
+        int update = db.update(tableName, cv, whereClause, whereArgs);
+        db.close();
+
+        Log.d("updatePARIsUsed", "Update result: " + update);
+
+        return update != -1;
+    }
+
+
 }
