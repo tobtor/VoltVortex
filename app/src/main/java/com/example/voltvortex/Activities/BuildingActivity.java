@@ -32,7 +32,7 @@ public class BuildingActivity extends AppCompatActivity {
         buttonZS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BuildingActivity.this, ZSActivity.class);
+                Intent intent = new Intent(BuildingActivity.this, FloorAndRoomActivity.class);
                 intent.putExtra("BUILDING_ID", buidlingId);
                 startActivity(intent);
             }

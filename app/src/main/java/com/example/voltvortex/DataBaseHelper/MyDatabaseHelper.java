@@ -8,10 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.*;
-import com.example.voltvortex.Models.ContactPersonModel;
-import com.example.voltvortex.Models.PARModel;
-import com.example.voltvortex.Models.ProjectModel;
-import com.example.voltvortex.Models.BuildingModel;
+import com.example.voltvortex.Models.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,12 +65,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public void createTableForBuilding(int buildingId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String floorAndRoomTable = FloorAndRoomTableHelper.createFloorAndRoomTable(buildingId);
+        String floorTable = FloorTableHelper.createFloorTable(buildingId);
+        String roomTable = RoomTableHelper.createRoomTable(buildingId);
         String zsTable = ZsTableHelper.createZSTable(buildingId);
         String parTable = PARTabelHelper.createPARTable(buildingId);
 
-        Log.d("MyDatabaseHelper", "Creating table with query: " + floorAndRoomTable);
-        db.execSQL(floorAndRoomTable);
+        Log.d("MyDatabaseHelper", "Creating table with query: " + floorTable);
+        db.execSQL(floorTable);
+
+        Log.d("MyDatabaseHelper", "Creating table with query: " + roomTable);
+        db.execSQL(roomTable);
 
         Log.d("MyDatabaseHelper", "Creating table with query: " + zsTable);
         db.execSQL(zsTable);
@@ -430,6 +431,43 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Log.d("updatePARIsUsed", "Update result: " + update);
 
         return update != -1;
+    }
+
+    public List<FloorModel> getFloors(int buildingId) {
+        List<FloorModel> floors = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = "ID" + buildingId + "_" + FloorTableHelper.getTableName_Floor();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + tableName, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String floor = cursor.getString(1);
+                floors.add(new FloorModel(id, floor));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return floors;
+    }
+
+    public List<RoomModel> getRoomsForFloor(int buildingId, int floorId) {
+        List<RoomModel> rooms = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = "ID" + buildingId + "_" + RoomTableHelper.getTableName_Room();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " WHERE " + RoomTableHelper.getColumnFloorId() + " = ?", new String[]{String.valueOf(floorId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String room = cursor.getString(1);
+                int floor = cursor.getInt(2);
+                rooms.add(new RoomModel(id, room, floor));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return rooms;
     }
 
 
