@@ -10,7 +10,7 @@ public class PARTabelHelper {
     public static String getTableName_PAR(int buildingId) {
         return "ID" + buildingId + "_" +TABLE_NAME;
     }
-    public static String getColumn_BUILDING_ID() {
+    public static String getColumn_PAR_ID() {
         return COLUMN_PAR_ID;
     }
     public static String getColumnPARContent() {
