@@ -470,5 +470,61 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return rooms;
     }
 
+    public List<String> getFloorNames(int buildingId) {
+        List<String> floorNames = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = "ID" + buildingId + "_" + FloorTableHelper.getTableName_Floor();
+        Cursor cursor = db.rawQuery("SELECT " + FloorTableHelper.getColumnFloor() + " FROM " + tableName, null);
 
+        if (cursor.moveToFirst()) {
+            do {
+                String floorName = cursor.getString(0);
+                floorNames.add(floorName);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return floorNames;
+    }
+
+    public int getFloorIdByName(int buildingId, String floorName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = "ID" + buildingId + "_" + FloorTableHelper.getTableName_Floor();
+        Cursor cursor = db.rawQuery("SELECT " + FloorTableHelper.getColumnFloorId() + " FROM " + tableName + " WHERE " + FloorTableHelper.getColumnFloor() + " = ?", new String[]{floorName});
+        int floorId = -1;
+
+        if (cursor.moveToFirst()) {
+            floorId = cursor.getInt(0);
+        }
+
+        cursor.close();
+        return floorId;
+    }
+
+    public void addFloor(int buildingId, FloorModel floor) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(FloorTableHelper.getColumnFloor(), floor.getFloor());
+        db.insert("ID" + buildingId + "_" + FloorTableHelper.getTableName_Floor(), null, cv);
+    }
+
+    public void addRoom(int buildingId, RoomModel room) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(RoomTableHelper.getColumnRoom(), room.getRoom());
+        cv.put(RoomTableHelper.getColumnFloorId(), room.getFloorId());
+        db.insert("ID" + buildingId + "_" + RoomTableHelper.getTableName_Room(), null, cv);
+    }
+
+    public int getMaxFloorNumber(int buildingId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = "ID" + buildingId + "_" + FloorTableHelper.getTableName_Floor();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tableName, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count - 1;
+    }
 }

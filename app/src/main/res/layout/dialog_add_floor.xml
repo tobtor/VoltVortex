@@ -11,6 +11,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
         <TextView
                 android:text="Podaj Nazwę Piętra:"
                 android:textColor="@color/white"
@@ -19,26 +20,27 @@
                 android:textSize="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewAddPAR"/>
+                android:id="@+id/textViewAddFloor"/>
+
         <EditText
-                android:id="@+id/editTextPARContent"
+                android:id="@+id/editTextFloorName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:hint=""
-                android:inputType="textMultiLine"
+                android:inputType="text"
                 android:textColor="@color/white"
                 android:shadowColor="@color/white"
-                android:backgroundTint="@color/buttonNormalColor"
-                android:maxLines="7"
-                android:scrollHorizontally="false"/>
+                android:backgroundTint="@color/buttonNormalColor"/>
+
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
+
             <Button
                     android:text="Anuluj"
                     android:layout_marginTop="5dp"
@@ -48,7 +50,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/buttonNormalColor"
-                    android:id="@+id/buttonCancelAddPAR"/>
+                    android:id="@+id/buttonCancelAddFloor"/>
+
             <Button
                     android:text="Dodaj"
                     android:layout_marginTop="5dp"
@@ -58,8 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/buttonNormalColor"
-
-                    android:id="@+id/buttonConfirmAddPAR"/>
+                    android:id="@+id/buttonConfirmAddFloor"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

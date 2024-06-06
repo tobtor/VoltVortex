@@ -19,6 +19,7 @@ public class FloorRecyclerViewAdapter extends RecyclerView.Adapter<FloorRecycler
     private List<FloorModel> floorData;
     private Context context;
     private int buildingId;
+    private int expandedPosition = -1; // Dodaj zmienną do śledzenia rozwiniętego elementu
 
     public FloorRecyclerViewAdapter(Context context, List<FloorModel> floorData, int buildingId) {
         this.context = context;
@@ -39,23 +40,30 @@ public class FloorRecyclerViewAdapter extends RecyclerView.Adapter<FloorRecycler
 
         MyDatabaseHelper dbHelper = new MyDatabaseHelper(context);
         List<RoomModel> rooms = dbHelper.getRoomsForFloor(buildingId, floor.getFloorId());
-        RoomRecyclerViewAdapter roomAdapter = new RoomRecyclerViewAdapter(context, rooms);
+        RoomRecyclerViewAdapter roomAdapter = new RoomRecyclerViewAdapter(context, rooms, buildingId, floor.getFloorId());
 
         holder.roomRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.roomRecyclerView.setAdapter(roomAdapter);
 
+        final boolean isExpanded = position == expandedPosition;
+        holder.roomRecyclerView.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.itemView.setActivated(isExpanded);
+
         holder.itemView.setOnClickListener(v -> {
-            if (holder.roomRecyclerView.getVisibility() == View.GONE) {
-                holder.roomRecyclerView.setVisibility(View.VISIBLE);
-            } else {
-                holder.roomRecyclerView.setVisibility(View.GONE);
-            }
+            expandedPosition = isExpanded ? -1 : position;
+            notifyItemChanged(position); // Zaktualizuj obecny element
+            notifyDataSetChanged(); // Zaktualizuj całą listę, aby zwinąć inne rozwinięte elementy
         });
     }
 
     @Override
     public int getItemCount() {
         return floorData.size();
+    }
+
+    public void updateFloors(List<FloorModel> newFloors) {
+        this.floorData = newFloors;
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
