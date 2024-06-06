@@ -24,7 +24,7 @@ public class ZSComponentsTableHelper {
         String query = " CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_ZS_COMPONENTS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_ZS_COMPONENTS + " VARCHAR(25) NOT NULL, " +
-                COLUMN_CLASS_OF_COMPONENT + " VARCHAR(25) NOT NULL;";
+                COLUMN_CLASS_OF_COMPONENT + " VARCHAR(25) NOT NULL);";
         return query;
     }
 }

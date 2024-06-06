@@ -7,7 +7,6 @@ public class ZSModel {
     private int electricalProtectionID;
     private int floorId;
     private int roomId;
-    private String typeOfProtection;
     private float multiplierOfProtection;
     private float measuredZS;
     private float result;
@@ -20,15 +19,33 @@ public class ZSModel {
     private boolean wasMeasured;
 
     public ZSModel(int zsID, int measuredComponentID, int electricalProtectionID, int floorId, int roomId,
-                   String typeOfProtection, float multiplierOfProtection, float measuredZS, float result,
-                   boolean isBZ, boolean isBPE, boolean isBK, boolean isBKLAPKI, boolean isWYRW,
-                   boolean is2PRZEW, boolean wasMeasured) {
+                   float multiplierOfProtection, float measuredZS, float result, boolean isBZ, boolean isBPE, boolean isBK,
+                   boolean isBKLAPKI, boolean isWYRW, boolean is2PRZEW, boolean wasMeasured) {
         this.zsID = zsID;
         this.measuredComponentID = measuredComponentID;
         this.electricalProtectionID = electricalProtectionID;
         this.floorId = floorId;
         this.roomId = roomId;
-        this.typeOfProtection = typeOfProtection;
+        this.multiplierOfProtection = multiplierOfProtection;
+        this.measuredZS = measuredZS;
+        this.result = result;
+        this.isBZ = isBZ;
+        this.isBPE = isBPE;
+        this.isBK = isBK;
+        this.isBKLAPKI = isBKLAPKI;
+        this.isWYRW = isWYRW;
+        this.is2PRZEW = is2PRZEW;
+        this.wasMeasured = wasMeasured;
+    }
+
+    public ZSModel(int measuredComponentID, int electricalProtectionID, int floorId, int roomId,
+                   float multiplierOfProtection, float measuredZS, float result, boolean isBZ, boolean isBPE, boolean isBK,
+                   boolean isBKLAPKI, boolean isWYRW, boolean is2PRZEW, boolean wasMeasured) {
+        this.zsID = 0;
+        this.measuredComponentID = measuredComponentID;
+        this.electricalProtectionID = electricalProtectionID;
+        this.floorId = floorId;
+        this.roomId = roomId;
         this.multiplierOfProtection = multiplierOfProtection;
         this.measuredZS = measuredZS;
         this.result = result;
@@ -79,14 +96,6 @@ public class ZSModel {
 
     public void setRoomId(int roomId) {
         this.roomId = roomId;
-    }
-
-    public String getTypeOfProtection() {
-        return typeOfProtection;
-    }
-
-    public void setTypeOfProtection(String typeOfProtection) {
-        this.typeOfProtection = typeOfProtection;
     }
 
     public float getMultiplierOfProtection() {

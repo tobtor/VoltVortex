@@ -17,7 +17,6 @@ public class ZsTableHelper {
     private static final String COLUMN_ZS_ELECTRICAL_PROTECTION_ID = "ZS_ELECTRICAL_PROTECTION_ID";
     private static final String COLUMN_FLOOR_ID = "FLOOR_ID";
     private static final String COLUMN_ROOM_ID = "ROOM_ID";
-    private static final String COLUMN_TYPE_OF_ELECTRICAL_PROTECTION = "TYPE_OF_ELECTRICAL_PROTECTION";
     private static final String COLUMN_MULTIPLIER_OF_ELECTRICAL_PROTECTION = "MULTIPLIER_OF_ELECTRICAL_PROTECTION";
     private static final String COLUMN_IS_BZ = "IS_BZ";
     private static final String COLUMN_IS_BPE = "IS_BPE";
@@ -46,9 +45,6 @@ public class ZsTableHelper {
     }
     public static String getColumnRoomId() {
         return COLUMN_ROOM_ID;
-    }
-    public static String getColumnTypeOfElectricalProtection() {
-        return COLUMN_TYPE_OF_ELECTRICAL_PROTECTION;
     }
     public static String getColumnMultiplierOfElectricalProtection() {
         return COLUMN_MULTIPLIER_OF_ELECTRICAL_PROTECTION;
@@ -88,7 +84,6 @@ public class ZsTableHelper {
                 COLUMN_ZS_ELECTRICAL_PROTECTION_ID + " INTEGER, " +
                 COLUMN_FLOOR_ID + " INTEGER, " +
                 COLUMN_ROOM_ID + " INTEGER, " +
-                COLUMN_TYPE_OF_ELECTRICAL_PROTECTION + " VARCHAR(15), " +
                 COLUMN_MULTIPLIER_OF_ELECTRICAL_PROTECTION + " FLOAT, " +
                 COLUMN_RESULT + " FLOAT NOT NULL, " +
                 COLUMN_IS_BZ + " INTEGER NOT NULL, " +

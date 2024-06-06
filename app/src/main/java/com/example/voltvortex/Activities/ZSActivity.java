@@ -1,6 +1,9 @@
 package com.example.voltvortex.Activities;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsTableHelper;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
+import com.example.voltvortex.Helpers.ZSPointDialogHelper;
 import com.example.voltvortex.Models.ZSModel;
 import com.example.voltvortex.R;
 import com.example.voltvortex.RecyclerViewAdapters.ZSRecyclerViewAdapter;
@@ -23,6 +28,7 @@ public class ZSActivity extends AppCompatActivity {
     ZSRecyclerViewAdapter zsAdapter;
     MyDatabaseHelper myDatabaseHelper;
     Button buttonAddZSPoint, buttonUpFloor, buttonDownFloor, buttonPreviousRoom, buttonNextRoom;
+    float result = 0.7f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,18 +88,13 @@ public class ZSActivity extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_zs_point, null);
         builder.setView(dialogView);
-
-        Button buttonCancelAddPAR = dialogView.findViewById(R.id.buttonCancelAddPAR);
-
         AlertDialog dialog = builder.create();
 
-        buttonCancelAddPAR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        ZSPointDialogHelper helper = new ZSPointDialogHelper(this, zsAdapter, buildingId, floorId, roomId, result);
+        helper.setupButtons(dialogView, dialog);
 
         dialog.show();
     }
+
+
 }

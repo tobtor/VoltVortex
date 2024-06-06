@@ -116,13 +116,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public boolean deleteProject(ProjectModel projectModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         String queryString = "DELETE FROM " + ProjectTableHelper.getTableName_PROJECT() +
-            " WHERE " + ProjectTableHelper.getColumnProjectId() + " = " + projectModel.getProjectID();
+                " WHERE " + ProjectTableHelper.getColumnProjectId() + " = ?";
 
-        Cursor cursor = db.rawQuery(queryString, null);
+        Cursor cursor = db.rawQuery(queryString, new String[]{String.valueOf(projectModel.getProjectID())});
         boolean result = cursor.moveToFirst();
         cursor.close();
         return result;
     }
+
 
     /**
      * Pobranie listy wszystkich projektów z bazy danych.
@@ -532,36 +533,111 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String tableName = ZsTableHelper.getTableName_ZS(buildingId);
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " WHERE " +
-                ZsTableHelper.getColumnFloorId() + " = ? AND " +
-                ZsTableHelper.getColumnRoomId() + " = ?", new String[]{String.valueOf(floorId), String.valueOf(roomId)});
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + tableName + " WHERE " +
+                    ZsTableHelper.getColumnFloorId() + " = ? AND " +
+                    ZsTableHelper.getColumnRoomId() + " = ?", new String[]{String.valueOf(floorId), String.valueOf(roomId)});
 
-        if (cursor.moveToFirst()) {
-            do {
-                int zsID = cursor.getInt(0);
-                int measuredComponentID = cursor.getInt(1);
-                int electricalProtectionID = cursor.getInt(2);
-                int floorID = cursor.getInt(3);
-                int roomID = cursor.getInt(4);
-                String typeOfProtection = cursor.getString(5);
-                float multiplierOfProtection = cursor.getFloat(6);
-                float result = cursor.getFloat(7);
-                boolean isBZ = cursor.getInt(8) == 1;
-                boolean isBPE = cursor.getInt(9) == 1;
-                boolean isBK = cursor.getInt(10) == 1;
-                boolean isBKLAPKI = cursor.getInt(11) == 1;
-                boolean isWYRW = cursor.getInt(12) == 1;
-                boolean is2PRZEW = cursor.getInt(13) == 1;
-                boolean wasMeasured = cursor.getInt(14) == 1;
-                float measuredZS = cursor.getFloat(15);
+            if (cursor.moveToFirst()) {
+                do {
+                    int zsID = cursor.getInt(0);
+                    int measuredComponentID = cursor.getInt(1);
+                    int electricalProtectionID = cursor.getInt(2);
+                    int floorID = cursor.getInt(3);
+                    int roomID = cursor.getInt(4);
+                    float multiplierOfProtection = cursor.getFloat(5);
+                    float result = cursor.getFloat(6);
+                    boolean isBZ = cursor.getInt(7) == 1;
+                    boolean isBPE = cursor.getInt(8) == 1;
+                    boolean isBK = cursor.getInt(9) == 1;
+                    boolean isBKLAPKI = cursor.getInt(10) == 1;
+                    boolean isWYRW = cursor.getInt(11) == 1;
+                    boolean is2PRZEW = cursor.getInt(12) == 1;
+                    boolean wasMeasured = cursor.getInt(13) == 1;
+                    float measuredZS = cursor.getFloat(14);
 
-                zsPoints.add(new ZSModel(zsID, measuredComponentID, electricalProtectionID, floorID, roomID,
-                        typeOfProtection, multiplierOfProtection, measuredZS, result, isBZ, isBPE, isBK,
-                        isBKLAPKI, isWYRW, is2PRZEW, wasMeasured));
-            } while (cursor.moveToNext());
+                    zsPoints.add(new ZSModel(zsID, measuredComponentID, electricalProtectionID, floorID, roomID,
+                            multiplierOfProtection, measuredZS, result, isBZ, isBPE, isBK,
+                            isBKLAPKI, isWYRW, is2PRZEW, wasMeasured));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("MyDatabaseHelper", "Error while trying to get ZS points from database", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
-        cursor.close();
         return zsPoints;
+    }
+
+    public String getComponentName(int measuredComponentID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String componentName = null;
+        Cursor cursor = null;
+
+        try {
+            Log.d("MyDatabaseHelper", "Querying for component name with ID: " + measuredComponentID);
+
+            cursor = db.rawQuery("SELECT * FROM " + ZSComponentsTableHelper.getTableName_ZS_COMPONENT() +
+                            " WHERE " + ZSComponentsTableHelper.getColumnZsComponentsId() + " = ?",
+                    new String[]{String.valueOf(measuredComponentID)});
+
+            if (cursor.moveToFirst()) {
+                componentName = cursor.getString(1);
+            }
+        } catch (Exception e) {
+            Log.e("MyDatabaseHelper", "Error while fetching component name for ID: " + measuredComponentID, e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        if (componentName == null) {
+            componentName = "Unknown"; // Wartość domyślna w przypadku braku wyniku
+        }
+
+        Log.d("MyDatabaseHelper", "Component name for ID " + measuredComponentID + ": " + componentName);
+
+        return componentName;
+    }
+
+
+
+    public boolean addZSPoint(ZSModel zsModel, int buildingId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(ZsTableHelper.getColumnReferenceZsMesuredComponentId(), zsModel.getMeasuredComponentID());
+        cv.put(ZsTableHelper.getColumnReferenceZsElectricalProtectionId(), zsModel.getElectricalProtectionID());
+        cv.put(ZsTableHelper.getColumnFloorId(), zsModel.getFloorId());
+        cv.put(ZsTableHelper.getColumnRoomId(), zsModel.getRoomId());
+        cv.put(ZsTableHelper.getColumnMultiplierOfElectricalProtection(), zsModel.getMultiplierOfProtection());
+        cv.put(ZsTableHelper.getColumnIsBz(), zsModel.isBZ());
+        cv.put(ZsTableHelper.getColumnIsBpe(), zsModel.isBPE());
+        cv.put(ZsTableHelper.getColumnIsBK(), zsModel.isBK());
+        cv.put(ZsTableHelper.getColumnIsBKLAPKI(), zsModel.isBKLAPKI());
+        cv.put(ZsTableHelper.getColumnIsWyrw(), zsModel.isWYRW());
+        cv.put(ZsTableHelper.getColumnIs2przew(), zsModel.isIs2PRZEW());
+        cv.put(ZsTableHelper.getColumnWasMeasured(), zsModel.isWasMeasured());
+        cv.put(ZsTableHelper.getColumnZsMeasured(), zsModel.getMeasuredZS());
+        cv.put(ZsTableHelper.getColumnResult(), zsModel.getResult());
+
+        long insert = db.insert(ZsTableHelper.getTableName_ZS(buildingId), null, cv);
+
+        if (insert == -1) {
+            Toast.makeText(context, "Nie udało się dodać punktu!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            Toast.makeText(context, "Punkt dodany pomyślnie.", Toast.LENGTH_SHORT).show();
+
+            Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
+
+            cursor.close();
+            return true;
+        }
     }
 }
