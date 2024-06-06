@@ -436,7 +436,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public List<FloorModel> getFloors(int buildingId) {
         List<FloorModel> floors = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String tableName = "ID" + buildingId + "_" + FloorTableHelper.getTableName_Floor();
+        String tableName = FloorTableHelper.getTableName_Floor(buildingId);
         Cursor cursor = db.rawQuery("SELECT * FROM " + tableName, null);
 
         if (cursor.moveToFirst()) {
@@ -454,8 +454,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public List<RoomModel> getRoomsForFloor(int buildingId, int floorId) {
         List<RoomModel> rooms = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String tableName = "ID" + buildingId + "_" + RoomTableHelper.getTableName_Room();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " WHERE " + RoomTableHelper.getColumnFloorId() + " = ?", new String[]{String.valueOf(floorId)});
+        String tableName = RoomTableHelper.getTableName_Room(buildingId);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " WHERE " +
+                RoomTableHelper.getColumnFloorId() + " = ?", new String[]{String.valueOf(floorId)});
 
         if (cursor.moveToFirst()) {
             do {
@@ -473,7 +474,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public List<String> getFloorNames(int buildingId) {
         List<String> floorNames = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String tableName = "ID" + buildingId + "_" + FloorTableHelper.getTableName_Floor();
+        String tableName = FloorTableHelper.getTableName_Floor(buildingId);
         Cursor cursor = db.rawQuery("SELECT " + FloorTableHelper.getColumnFloor() + " FROM " + tableName, null);
 
         if (cursor.moveToFirst()) {
@@ -489,7 +490,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public int getFloorIdByName(int buildingId, String floorName) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String tableName = "ID" + buildingId + "_" + FloorTableHelper.getTableName_Floor();
+        String tableName = FloorTableHelper.getTableName_Floor(buildingId);
         Cursor cursor = db.rawQuery("SELECT " + FloorTableHelper.getColumnFloorId() + " FROM " + tableName + " WHERE " + FloorTableHelper.getColumnFloor() + " = ?", new String[]{floorName});
         int floorId = -1;
 
@@ -505,7 +506,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(FloorTableHelper.getColumnFloor(), floor.getFloor());
-        db.insert("ID" + buildingId + "_" + FloorTableHelper.getTableName_Floor(), null, cv);
+        db.insert(FloorTableHelper.getTableName_Floor(buildingId), null, cv);
     }
 
     public void addRoom(int buildingId, RoomModel room) {
@@ -513,12 +514,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(RoomTableHelper.getColumnRoom(), room.getRoom());
         cv.put(RoomTableHelper.getColumnFloorId(), room.getFloorId());
-        db.insert("ID" + buildingId + "_" + RoomTableHelper.getTableName_Room(), null, cv);
+        db.insert(RoomTableHelper.getTableName_Room(buildingId), null, cv);
     }
 
     public int getMaxFloorNumber(int buildingId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String tableName = "ID" + buildingId + "_" + FloorTableHelper.getTableName_Floor();
+        String tableName = FloorTableHelper.getTableName_Floor(buildingId);
         Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tableName, null);
         int count = 0;
         if (cursor.moveToFirst()) {

@@ -5,6 +5,8 @@ public class ZSModel {
     private int zsID;
     private int measuredComponentID;
     private int electricalProtectionID;
+    private int floorId;
+    private int roomId;
     private String typeOfProtection;
     private float multiplierOfProtection;
     private float measuredZS;
@@ -18,12 +20,15 @@ public class ZSModel {
     private boolean wasMeasured;
 
     // Kostruktor
-    public ZSModel(int zsID, int measuredComponentID, int electricalProtectionID, String typeOfProtection,
-                   float multiplierOfProtection, float measuredZS, float result, boolean isBZ, boolean isBPE,
-                   boolean isBK, boolean isBKLAPKI, boolean isWYRW, boolean is2PRZEW, boolean wasMeasured) {
+    public ZSModel(int zsID, int measuredComponentID, int electricalProtectionID, int floorId, int roomId,
+                   String typeOfProtection, float multiplierOfProtection, float measuredZS, float result,
+                   boolean isBZ, boolean isBPE, boolean isBK, boolean isBKLAPKI, boolean isWYRW,
+                   boolean is2PRZEW, boolean wasMeasured) {
         this.zsID = zsID;
         this.measuredComponentID = measuredComponentID;
         this.electricalProtectionID = electricalProtectionID;
+        this.floorId = floorId;
+        this.roomId = roomId;
         this.typeOfProtection = typeOfProtection;
         this.multiplierOfProtection = multiplierOfProtection;
         this.measuredZS = measuredZS;
@@ -60,6 +65,22 @@ public class ZSModel {
 
     public void setElectricalProtectionID(int electricalProtectionID) {
         this.electricalProtectionID = electricalProtectionID;
+    }
+
+    public int getFloorId() {
+        return floorId;
+    }
+
+    public void setFloorId(int floorId) {
+        this.floorId = floorId;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
     public String getTypeOfProtection() {

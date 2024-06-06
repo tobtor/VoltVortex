@@ -7,8 +7,8 @@ public class RoomTableHelper {
     private static final String COLUMN_ROOM = "ROOM";
     private static final String COLUMN_FLOOR_ID = "FLOOR_ID"; // New column for foreign key
 
-    public static String getTableName_Room() {
-        return TABLE_NAME;
+    public static String getTableName_Room(int buildingId) {
+        return "ID" + buildingId + "_" + TABLE_NAME;
     }
 
     public static String getColumnRoomId() {

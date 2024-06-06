@@ -4,6 +4,10 @@ import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSCompone
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper.getTableName_ZS_ELECTRICAL_PROTECTION;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZSComponentsTableHelper.getColumnZsComponentsId;
 import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsElectricalProtectionTableHelper.getColumnZsElectricalProtectionId;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.FloorTableHelper.getTableName_Floor;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.FloorTableHelper.getColumnFloorId;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.RoomTableHelper.getTableName_Room;
+import static com.example.voltvortex.DataBaseHelper.CreateTableHelpers.RoomTableHelper.getColumnRoomId;
 
 public class ZsTableHelper {
 
@@ -11,6 +15,8 @@ public class ZsTableHelper {
     private static final String COLUMN_ZS_ID = "ZS_ID";
     private static final String COLUMN_ZS_MESURED_COMPONENT_ID = "ZS_MESURMENT_COMPONENT_ID";
     private static final String COLUMN_ZS_ELECTRICAL_PROTECTION_ID = "ZS_ELECTRICAL_PROTECTION_ID";
+    private static final String COLUMN_FLOOR_ID = "FLOOR_ID";
+    private static final String COLUMN_ROOM_ID = "ROOM_ID";
     private static final String COLUMN_TYPE_OF_ELECTRICAL_PROTECTION = "TYPE_OF_ELECTRICAL_PROTECTION";
     private static final String COLUMN_MULTIPLIER_OF_ELECTRICAL_PROTECTION = "MULTIPLIER_OF_ELECTRICAL_PROTECTION";
     private static final String COLUMN_IS_BZ = "IS_BZ";
@@ -23,8 +29,8 @@ public class ZsTableHelper {
     private static final String COLUMN_ZS_MESURED = "ZS_MESURED";
     private static final String COLUMN_RESULT = "RESULT";
 
-    public static String getTableName_ZS() {
-        return TABLE_NAME;
+    public static String getTableName_ZS(int buildingId) {
+        return "ID" + buildingId + "_" + TABLE_NAME;
     }
     public static String getColumnZsId() {
         return COLUMN_ZS_ID;
@@ -34,6 +40,12 @@ public class ZsTableHelper {
     }
     public static String getColumnReferenceZsElectricalProtectionId() {
         return COLUMN_ZS_ELECTRICAL_PROTECTION_ID;
+    }
+    public static String getColumnFloorId() {
+        return COLUMN_FLOOR_ID;
+    }
+    public static String getColumnRoomId() {
+        return COLUMN_ROOM_ID;
     }
     public static String getColumnTypeOfElectricalProtection() {
         return COLUMN_TYPE_OF_ELECTRICAL_PROTECTION;
@@ -74,6 +86,8 @@ public class ZsTableHelper {
                 " (" + COLUMN_ZS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_ZS_MESURED_COMPONENT_ID + " INTEGER, " +
                 COLUMN_ZS_ELECTRICAL_PROTECTION_ID + " INTEGER, " +
+                COLUMN_FLOOR_ID + " INTEGER, " +
+                COLUMN_ROOM_ID + " INTEGER, " +
                 COLUMN_TYPE_OF_ELECTRICAL_PROTECTION + " VARCHAR(15), " +
                 COLUMN_MULTIPLIER_OF_ELECTRICAL_PROTECTION + " FLOAT, " +
                 COLUMN_RESULT + " FLOAT NOT NULL, " +
@@ -88,6 +102,10 @@ public class ZsTableHelper {
                 "FOREIGN KEY (" + COLUMN_ZS_MESURED_COMPONENT_ID + ") REFERENCES " + getTableName_ZS_COMPONENT() +
                 " (" + getColumnZsComponentsId() + "), " +
                 "FOREIGN KEY (" + COLUMN_ZS_ELECTRICAL_PROTECTION_ID + ") REFERENCES " + getTableName_ZS_ELECTRICAL_PROTECTION() +
-                "(" + getColumnZsElectricalProtectionId() + "));";
+                " (" + getColumnZsElectricalProtectionId() + "), " +
+                "FOREIGN KEY (" + COLUMN_FLOOR_ID + ") REFERENCES " + getTableName_Floor(buildingId) +
+                " (" + getColumnFloorId() + "), " +
+                "FOREIGN KEY (" + COLUMN_ROOM_ID + ") REFERENCES " + getTableName_Room(buildingId) +
+                " (" + getColumnRoomId() + "));";
     }
 }

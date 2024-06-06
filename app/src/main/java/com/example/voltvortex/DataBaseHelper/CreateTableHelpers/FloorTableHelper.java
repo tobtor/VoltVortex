@@ -6,8 +6,8 @@ public class FloorTableHelper {
     private static final String COLUMN_FLOOR_ID = "FLOOR_ID";
     private static final String COLUMN_FLOOR = "FLOOR";
 
-    public static String getTableName_Floor() {
-        return TABLE_NAME;
+    public static String getTableName_Floor(int buildingId) {
+        return "ID" + buildingId + "_" + TABLE_NAME;
     }
 
     public static String getColumnFloorId() {
