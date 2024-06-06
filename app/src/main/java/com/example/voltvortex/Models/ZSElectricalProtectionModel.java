@@ -10,7 +10,6 @@ public class ZSElectricalProtectionModel {
     private float multiplierTTSwitchgear;
     private float multiplierDC;
 
-    // Konstruktor
     public ZSElectricalProtectionModel(int protectionID, String protectionType, float multiplierTNReceiver,
                                        float multiplierTNSwitchgear, float multiplierTTReceiver,
                                        float multiplierTTSwitchgear, float multiplierDC) {
@@ -59,7 +58,6 @@ public class ZSElectricalProtectionModel {
         this.multiplierDC = Float.parseFloat(null);
     }
 
-    // Gettery i Settery
     public int getProtectionID() {
         return protectionID;
     }

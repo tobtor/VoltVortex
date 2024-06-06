@@ -1,5 +1,6 @@
 package com.example.voltvortex.DataBaseHelper;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,10 +11,7 @@ import android.widget.Toast;
 import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.*;
 import com.example.voltvortex.Models.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Klasa pomocnicza do zarządzania bazą danych.
@@ -527,5 +525,43 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return count - 1;
+    }
+
+    public List<ZSModel> getZSPoints(int buildingId, int floorId, int roomId) {
+        List<ZSModel> zsPoints = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = ZsTableHelper.getTableName_ZS(buildingId);
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " WHERE " +
+                ZsTableHelper.getColumnFloorId() + " = ? AND " +
+                ZsTableHelper.getColumnRoomId() + " = ?", new String[]{String.valueOf(floorId), String.valueOf(roomId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int zsID = cursor.getInt(0);
+                int measuredComponentID = cursor.getInt(1);
+                int electricalProtectionID = cursor.getInt(2);
+                int floorID = cursor.getInt(3);
+                int roomID = cursor.getInt(4);
+                String typeOfProtection = cursor.getString(5);
+                float multiplierOfProtection = cursor.getFloat(6);
+                float result = cursor.getFloat(7);
+                boolean isBZ = cursor.getInt(8) == 1;
+                boolean isBPE = cursor.getInt(9) == 1;
+                boolean isBK = cursor.getInt(10) == 1;
+                boolean isBKLAPKI = cursor.getInt(11) == 1;
+                boolean isWYRW = cursor.getInt(12) == 1;
+                boolean is2PRZEW = cursor.getInt(13) == 1;
+                boolean wasMeasured = cursor.getInt(14) == 1;
+                float measuredZS = cursor.getFloat(15);
+
+                zsPoints.add(new ZSModel(zsID, measuredComponentID, electricalProtectionID, floorID, roomID,
+                        typeOfProtection, multiplierOfProtection, measuredZS, result, isBZ, isBPE, isBK,
+                        isBKLAPKI, isWYRW, is2PRZEW, wasMeasured));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return zsPoints;
     }
 }

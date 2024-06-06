@@ -19,7 +19,6 @@ public class ZSModel {
     private boolean is2PRZEW;
     private boolean wasMeasured;
 
-    // Kostruktor
     public ZSModel(int zsID, int measuredComponentID, int electricalProtectionID, int floorId, int roomId,
                    String typeOfProtection, float multiplierOfProtection, float measuredZS, float result,
                    boolean isBZ, boolean isBPE, boolean isBK, boolean isBKLAPKI, boolean isWYRW,
@@ -42,7 +41,6 @@ public class ZSModel {
         this.wasMeasured = wasMeasured;
     }
 
-    // Gettery i Settery
     public int getZsID() {
         return zsID;
     }
