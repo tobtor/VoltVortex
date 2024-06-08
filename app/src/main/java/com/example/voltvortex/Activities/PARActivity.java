@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +35,9 @@ public class PARActivity extends AppCompatActivity implements RecyclerViewInterf
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_par_activity);
-        buidlingId = getIntent().getExtras().getInt("BUILDING_ID");
+
+        SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
+        buidlingId = sharedPreferences.getInt("BUILDING_ID",0);
         recyclerViewPAR = findViewById(R.id.recyclerViewPAR);
         buttonAddPAR = findViewById(R.id.buttonAddPAR);
 
@@ -153,6 +156,16 @@ public class PARActivity extends AppCompatActivity implements RecyclerViewInterf
         return extras;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onStop() {

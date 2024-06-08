@@ -2,32 +2,40 @@ package com.example.voltvortex.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import com.example.voltvortex.R;
 
 import java.util.Map;
 
 public class BuildingActivity extends AppCompatActivity {
 
-    Button buttonPAR, buttonZS ;
-    int buidlingId;
+    Button buttonPAR, buttonZS, buttonBack;
+    int buildingId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building);
-        buidlingId = getIntent().getExtras().getInt("BUILDING_ID");
+
+        SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
+        buildingId = sharedPreferences.getInt("BUILDING_ID", 0);
         buttonPAR = findViewById(R.id.buttonPAR);
         buttonZS = findViewById(R.id.buttonZS);
+        buttonBack = findViewById(R.id.buttonBackToProject);
 
         buttonPAR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuildingActivity.this, PARActivity.class);
-                intent.putExtra("BUILDING_ID", buidlingId);
+                // Zapisz buildingId do SharedPreferences
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("BUILDING_ID", buildingId);
+                editor.putString("lastActivity", "PARActivity");
+                editor.apply();
                 startActivity(intent);
             }
         });
@@ -36,7 +44,20 @@ public class BuildingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuildingActivity.this, FloorAndRoomActivity.class);
-                intent.putExtra("BUILDING_ID", buidlingId);
+                // Zapisz buildingId do SharedPreferences
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("BUILDING_ID", buildingId);
+                editor.putString("lastActivity", "FloorAndRoomActivity");
+                editor.apply();
+                startActivity(intent);
+            }
+        });
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BuildingActivity.this, ProjectActivity.class);
+                clearLastActivity();
                 startActivity(intent);
             }
         });
@@ -58,6 +79,14 @@ public class BuildingActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    // Metoda do kasowania informacji o ostatniej aktywności
+    private void clearLastActivity() {
+        SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("lastActivity");
+        editor.apply();
+    }
+
     // Metoda do odczytu danych aktywności z SharedPreferences
     private Bundle getLastActivityData() {
         SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
@@ -73,12 +102,25 @@ public class BuildingActivity extends AppCompatActivity {
         return extras;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
+    @Override
     protected void onStop() {
         super.onStop();
-        // Zapisz aktualną aktywność jako ostatnią otwartą
-        Bundle extras = new Bundle();
-        extras.putInt("BUILDING_ID", buidlingId);
-        saveLastActivity(BuildingActivity.class.getSimpleName(), extras);
+        // Zapisz aktualną aktywność jako ostatnią otwartą tylko w przypadku zamykania aplikacji
+        SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("lastActivity", "BuildingActivity");
+        editor.putInt("BUILDING_ID", buildingId);
+        editor.apply();
     }
 }

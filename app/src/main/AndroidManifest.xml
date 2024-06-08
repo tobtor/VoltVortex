@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 
@@ -12,18 +11,22 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.VoltVortex"
             tools:targetApi="31">
+
         <activity
                 android:name=".Activities.FloorAndRoomActivity"
-                android:exported="false"/>
+                android:exported="false"
+                android:parentActivityName=".Activities.BuildingActivity"/>
         <activity
                 android:name=".Activities.ZSActivity"
                 android:exported="false"/>
         <activity
                 android:name=".Activities.PARActivity"
-                android:exported="false"/>
+                android:exported="false"
+                android:parentActivityName=".Activities.BuildingActivity"/>
         <activity
                 android:name=".Activities.BuildingActivity"
-                android:exported="false"/>
+                android:exported="false"
+                android:parentActivityName=".Activities.ProjectActivity"/>
         <activity
                 android:name=".AddActivities.AddBuildingActicity"
                 android:exported="false"/>
@@ -32,7 +35,8 @@
                 android:exported="false"/>
         <activity
                 android:name=".Activities.ProjectActivity"
-                android:exported="false"/>
+                android:exported="false"
+                android:parentActivityName=".Activities.MainActivity"/>
         <activity
                 android:name=".AddActivities.AddProjectWindow"
                 android:exported="false"/>
@@ -41,7 +45,6 @@
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,7 +38,8 @@ public class FloorAndRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_floor_and_room);
 
-        buildingId = getIntent().getExtras().getInt("BUILDING_ID");
+        SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
+        buildingId = sharedPreferences.getInt("BUILDING_ID", 0);
         myDatabaseHelper = new MyDatabaseHelper(this);
 
         recyclerView = findViewById(R.id.recyclerViewFloorAndRoom);
@@ -174,6 +176,18 @@ public class FloorAndRoomActivity extends AppCompatActivity {
         }
         return extras;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     @Override
     protected void onStop() {

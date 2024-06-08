@@ -6,9 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.TaskStackBuilder;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.voltvortex.Intefraces.RecyclerViewInterface;
@@ -18,7 +17,6 @@ import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.R;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewInterface {
 
@@ -37,36 +35,31 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
         String lastActivity = sharedPreferences.getString("lastActivity", null);
         if (lastActivity != null) {
-            Intent intent;
-            Bundle extras = getLastActivityData();
+            Intent intent = null;
             switch (lastActivity) {
                 case "BuildingActivity":
                     intent = new Intent(this, BuildingActivity.class);
-                    intent.putExtras(extras);
-                    startActivity(intent);
-                    finish();
                     break;
                 case "FloorAndRoomActivity":
                     intent = new Intent(this, FloorAndRoomActivity.class);
-                    intent.putExtras(extras);
-                    startActivity(intent);
-                    finish();
                     break;
                 case "PARActivity":
                     intent = new Intent(this, PARActivity.class);
-                    intent.putExtras(extras);
-                    startActivity(intent);
-                    finish();
                     break;
                 case "ProjectActivity":
                     intent = new Intent(this, ProjectActivity.class);
-                    intent.putExtras(extras);
-                    startActivity(intent);
-                    finish();
                     break;
                 default:
                     // Brak ostatniej aktywności, kontynuuj normalne uruchamianie MainActivity
                     break;
+            }
+            if (intent != null) {
+                clearLastActivity();  // Wyczyszczenie lastActivity po jej użyciu
+                TaskStackBuilder.create(this)
+                        .addNextIntentWithParentStack(intent)
+                        .startActivities();
+                finish();
+                return;  // Dodajemy return, aby zakończyć onCreate, jeśli przechodzimy do innej aktywności
             }
         }
 
@@ -93,22 +86,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         });
     }
 
-    // Metoda do odświeżania listy projektów
-    private void getProjectList(MyDatabaseHelper myDatabaseHelper) {
-        List<ProjectModel> projectList = myDatabaseHelper.viewProjectList();
-        projectRecyclerViewAdapter = new ProjectRecyclerViewAdapter(projectList, myDatabaseHelper, this);
-        listOfProjects.setAdapter(projectRecyclerViewAdapter);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // Zapisz aktualną aktywność jako ostatnią otwartą
-        Bundle extras = new Bundle();
-        // Dodaj dodatkowe dane, które chcesz zapamiętać
-        saveLastActivity(MainActivity.class.getSimpleName(), extras);
-    }
-
+    // Metoda do zapisu danych aktywności do SharedPreferences
     private void saveLastActivity(String activityName, Bundle extras) {
         SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -124,26 +102,41 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         editor.apply();
     }
 
-    private Bundle getLastActivityData() {
+    // Metoda do kasowania informacji o ostatniej aktywności
+    private void clearLastActivity() {
         SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("lastActivity");
+        editor.apply();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Zapisz aktualną aktywność jako ostatnią otwartą
         Bundle extras = new Bundle();
-        Map<String, ?> allEntries = sharedPreferences.getAll();
-        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            if (entry.getValue() instanceof Integer) {
-                extras.putInt(entry.getKey(), (Integer) entry.getValue());
-            } else if (entry.getValue() instanceof String) {
-                extras.putString(entry.getKey(), (String) entry.getValue());
-            }
-        }
-        return extras;
+        // Dodaj dodatkowe dane, które chcesz zapamiętać
+        saveLastActivity(MainActivity.class.getSimpleName(), extras);
+    }
+
+    // Metoda do odświeżania listy projektów
+    private void getProjectList(MyDatabaseHelper myDatabaseHelper) {
+        List<ProjectModel> projectList = myDatabaseHelper.viewProjectList();
+        projectRecyclerViewAdapter = new ProjectRecyclerViewAdapter(projectList, myDatabaseHelper, this);
+        listOfProjects.setAdapter(projectRecyclerViewAdapter);
     }
 
     @Override
     public void onItemClicked(int position) {
         ProjectModel projectModel = projectRecyclerViewAdapter.getProjectAt(position);
+        // Zapisz dane do SharedPreferences zamiast przekazywać przez Intent
+        SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("PROJECT_ID", projectModel.getProjectID());
+        editor.putInt("CONTACT_PERSON_ID", projectModel.getContactPersonID());
+        editor.putString("lastActivity", "ProjectActivity");
+        editor.apply();
         Intent intent = new Intent(MainActivity.this, ProjectActivity.class);
-        intent.putExtra("PROJECT_ID", projectModel.getProjectID());
-        intent.putExtra("CONTACT_PERSON_ID", projectModel.getContactPersonID());
         startActivity(intent);
     }
 }
