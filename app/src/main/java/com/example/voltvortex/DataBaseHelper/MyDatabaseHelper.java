@@ -710,4 +710,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(RoomTableHelper.getTableName_Room(buildingId), RoomTableHelper.getColumnRoomId() + " = ?", new String[]{String.valueOf(roomId)});
     }
+
+    public void deleteProject(int projectId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(ProjectTableHelper.getTableName_PROJECT(), ProjectTableHelper.getColumnProjectId() + " = ?", new String[]{String.valueOf(projectId)});
+    }
 }

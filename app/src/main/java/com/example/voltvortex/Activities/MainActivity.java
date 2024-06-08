@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
     Button addProjectButton;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
-    Switch usuwanie;
     RecyclerView listOfProjects;
     MyDatabaseHelper myDatabaseHelper;
     ProjectRecyclerViewAdapter projectRecyclerViewAdapter;
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         // Przypisanie widoków do zmiennych
         addProjectButton = findViewById(R.id.addProjectButton);
         listOfProjects = findViewById(R.id.listOfProjects);
-        usuwanie = findViewById(R.id.usuwanie);
 
         // Inicjalizacja klasy pomocniczej bazy danych
         myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
@@ -84,14 +82,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
         // Wyświetlenie listy projektów
         getProjectList(myDatabaseHelper);
-
-        // Listener zmiany stanu przełącznika usuwanie
-        usuwanie.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                projectRecyclerViewAdapter.setDeleteMode(isChecked);
-            }
-        });
 
         // Listener przycisku dodawania projektu
         addProjectButton.setOnClickListener(new View.OnClickListener() {

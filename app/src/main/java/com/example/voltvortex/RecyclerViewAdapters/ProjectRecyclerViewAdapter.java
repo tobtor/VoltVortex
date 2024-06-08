@@ -1,6 +1,7 @@
 package com.example.voltvortex.RecyclerViewAdapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,10 @@ import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 import com.example.voltvortex.Intefraces.RecyclerViewInterface;
 import com.example.voltvortex.Models.ProjectModel;
 import com.example.voltvortex.R;
+
 import java.util.List;
 
-public class ProjectRecyclerViewAdapter
-        extends RecyclerView.Adapter<ProjectRecyclerViewAdapter.ProjectViewHolder> {
+public class ProjectRecyclerViewAdapter extends RecyclerView.Adapter<ProjectRecyclerViewAdapter.ProjectViewHolder> {
 
     private List<ProjectModel> projectList;
     private MyDatabaseHelper myDatabaseHelper;
@@ -49,18 +50,32 @@ public class ProjectRecyclerViewAdapter
         holder.textViewName.setText(projectModel.getProjectName());
         holder.textViewId.setText(String.valueOf(projectModel.getProjectID()));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (deleteMode) {
-                    myDatabaseHelper.deleteProject(projectModel);
-                    projectList.remove(position);
-                    notifyItemRemoved(position);
-                    Toast.makeText(holder.itemView.getContext(), "Deleted " + projectModel.toString(), Toast.LENGTH_SHORT).show();
-                } else {
-                    recyclerViewInterface.onItemClicked(position);
-                }
+        holder.itemView.setOnClickListener(v -> {
+            if (deleteMode) {
+                myDatabaseHelper.deleteProject(projectModel.getProjectID());
+                projectList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, projectList.size());
+                Toast.makeText(holder.itemView.getContext(), "Deleted " + projectModel.toString(), Toast.LENGTH_SHORT).show();
+            } else {
+                recyclerViewInterface.onItemClicked(position);
             }
+        });
+
+        holder.itemView.setOnLongClickListener(v -> {
+            new AlertDialog.Builder(holder.itemView.getContext())
+                    .setTitle("Delete Project")
+                    .setMessage("Are you sure you want to delete this project?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        myDatabaseHelper.deleteProject(projectModel.getProjectID());
+                        projectList.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, projectList.size());
+                        Toast.makeText(holder.itemView.getContext(), "Deleted " + projectModel.toString(), Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+            return true;
         });
     }
 
