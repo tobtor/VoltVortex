@@ -1,10 +1,12 @@
 package com.example.voltvortex.RecyclerViewAdapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
@@ -17,8 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class BuildingRecyclerViewAdapter
-        extends RecyclerView.Adapter<BuildingRecyclerViewAdapter.BuildingViewHolder>{
+public class BuildingRecyclerViewAdapter extends RecyclerView.Adapter<BuildingRecyclerViewAdapter.BuildingViewHolder> {
 
     private List<BuildingModel> buildingList;
     private MyDatabaseHelper myDatabaseHelper;
@@ -51,18 +52,30 @@ public class BuildingRecyclerViewAdapter
         holder.textViewBuildingName.setText(buildingModel.getBuildingName());
         holder.textViewDate.setText(formattedDate);
 
-        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    myDatabaseHelper.deleteBuilding(buildingModel);
-                    buildingList.remove(position);
-                    notifyItemRemoved(position);
-                    Toast.makeText(holder.itemView.getContext(), "Deleted " + buildingModel.toString(), Toast.LENGTH_SHORT).show();
-                } else {
-                    recyclerViewInterface.onItemClicked(position);
+        holder.itemView.setOnClickListener(v -> {
+            if (recyclerViewInterface != null) {
+                int pos = holder.getAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION) {
+                    recyclerViewInterface.onItemClicked(pos);
                 }
             }
-        });*/
+        });
+
+        holder.itemView.setOnLongClickListener(v -> {
+            new AlertDialog.Builder(holder.itemView.getContext())
+                    .setTitle("Delete Building")
+                    .setMessage("Are you sure you want to delete this building?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        myDatabaseHelper.deleteBuilding(buildingModel.getBuildingID());
+                        buildingList.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, buildingList.size());
+                        Toast.makeText(holder.itemView.getContext(), "Deleted " + buildingModel.toString(), Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+            return true;
+        });
     }
 
     @Override
@@ -82,14 +95,11 @@ public class BuildingRecyclerViewAdapter
             textViewBuildingName = itemView.findViewById(R.id.textViewBuildingName);
             textViewDate = itemView.findViewById(R.id.textViewDate);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (recyclerViewInterface != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.onItemClicked(position);
-                        }
+            itemView.setOnClickListener(v -> {
+                if (recyclerViewInterface != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        recyclerViewInterface.onItemClicked(position);
                     }
                 }
             });
