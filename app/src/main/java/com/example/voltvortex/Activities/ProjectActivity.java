@@ -50,12 +50,8 @@ public class ProjectActivity extends AppCompatActivity implements RecyclerViewIn
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProjectActivity.this, AddBuildingActicity.class);
-                // Możesz zapisać nowe dane do SharedPreferences, jeśli potrzebujesz
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("PROJECT_ID", projectId);
-                editor.putInt("CONTACT_PERSON_ID", contactPersonId);
-                editor.putString("lastActivity", "ProjectActivity");
-                editor.apply();
+                intent.putExtra("CONTACT_PERSON_ID", contactPersonId);
+                intent.putExtra("PROJECT_ID", projectId);
                 startActivity(intent);
             }
         });

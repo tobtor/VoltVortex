@@ -698,26 +698,31 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteZSPoint(int buildingId, int zsID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(ZsTableHelper.getTableName_ZS(buildingId), ZsTableHelper.getColumnZsId() + " = ?", new String[]{String.valueOf(zsID)});
+        db.delete(ZsTableHelper.getTableName_ZS(buildingId),
+                ZsTableHelper.getColumnZsId() + " = ?", new String[]{String.valueOf(zsID)});
     }
 
     public void deleteFloor(int buildingId, int floorId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(FloorTableHelper.getTableName_Floor(buildingId), FloorTableHelper.getColumnFloorId() + " = ?", new String[]{String.valueOf(floorId)});
+        db.delete(FloorTableHelper.getTableName_Floor(buildingId),
+                FloorTableHelper.getColumnFloorId() + " = ?", new String[]{String.valueOf(floorId)});
     }
 
     public void deleteRoom(int buildingId, int roomId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(RoomTableHelper.getTableName_Room(buildingId), RoomTableHelper.getColumnRoomId() + " = ?", new String[]{String.valueOf(roomId)});
+        db.delete(RoomTableHelper.getTableName_Room(buildingId),
+                RoomTableHelper.getColumnRoomId() + " = ?", new String[]{String.valueOf(roomId)});
     }
 
     public void deleteProject(int projectId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(ProjectTableHelper.getTableName_PROJECT(), ProjectTableHelper.getColumnProjectId() + " = ?", new String[]{String.valueOf(projectId)});
+        db.delete(ProjectTableHelper.getTableName_PROJECT(),
+                ProjectTableHelper.getColumnProjectId() + " = ?", new String[]{String.valueOf(projectId)});
     }
 
     public void deleteBuilding(int buildingId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(BuildingTableHelper.getTableName_BUILDING(), BuildingTableHelper.getColumn_BUILDING_ID() + " = ?", new String[]{String.valueOf(buildingId)});
+        db.delete(BuildingTableHelper.getTableName_BUILDING(),
+                BuildingTableHelper.getColumn_BUILDING_ID() + " = ?", new String[]{String.valueOf(buildingId)});
     }
 }

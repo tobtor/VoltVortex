@@ -9,56 +9,25 @@ import java.util.Date;
 public class InsertInitialDataHelper {
 
     public static void insertInitialData(SQLiteDatabase db) {
-        insertContactPerson(db, "Paweł Mikołajek", "Enermitel", "Pomiarowiec",
-                "pawel.mikolajek@enermitel.pl", "515170172");
-        insertContactPerson(db, "Julia Lewandowska", "Enermitel", "Specjalista ds. Marketingu",
-                "julia.lewandowska@enermitel.pl", "505802710");
-        insertContactPerson(db, "Karol Kotkowski", "Enermitel", "Kierownik zespołu elektryków",
-                "karol.kotkowski@enermitel.pl", "602782432");
-        insertContactPerson(db, "Miłosz Dąbrowski", "Enermitel", "Pomiarowiec",
-                "", "691882980");
-        insertContactPerson(db, "Błaszczyk Beata", "IBS Budownictwo", "Opiekun Klienta",
-                "b.blaszczyk@ibsbudownictwo.pl", "797382708");
-        insertContactPerson(db, "Kicler Marta", "IBS Budownictwo", "Opiekun Klienta",
-                "m.kicler@ibsbudownictwo.pl", "690508477");
-        insertContactPerson(db, "Maksimczuk Martyna", "IBS Budownictwo", "Opiekun Klienta",
-                "m.maksimczuk@ibsbudownictwo.pl", "502024050");
-        insertContactPerson(db, "Blus Olga", "IBS Budownictwo", "Opiekun Klienta",
-                "o.blus@ibsinwestycje.pl", "797514312");
-        insertContactPerson(db, "Buziński Sebastian", "IBS Budownictwo", "Opiekun Klienta",
-                "s.buzinski@ibsbudownictwo.pl", "510052231");
-        insertContactPerson(db, "Patryk Thomasi", "MCDONALD`S", "",
-                "", "664148614");
-        insertContactPerson(db, "Kinga Szumejda", "Urząd Gminy Damnica", "",
-                "", "598484442");
+        insertContactPerson(db, "Paweł Mikołajek", "Przykładowa firma", "Pomiarowiec",
+                "przykładowy.adres@email.com", "123456789");
+        insertContactPerson(db, "Julia Lewandowska", "Przykładowa firma", "Pomiarowiec",
+                "przykładowy.adres@email.com", "123456789");
+        insertContactPerson(db, "Karol Dąbrowski", "Przykładowa firma", "Pomiarowiec",
+                "przykładowy.adres@email.com", "123456789");
+        insertContactPerson(db, "Maciej Kowalski", "Przykładowa firma", "Pomiarowiec",
+                "przykładowy.adres@email.com", "123456789");
 
-        insertProject(db, "RESTAURACJA MCDONALD`S", "IBS Budownictwo",
+        insertProject(db, "Przykładowy Projekt", "Przykładowa Firma",
                 "1 BUDYNEK RESTAURACJA 350 m2\n" +
                         "\n" +
                         "ZAKRES: Przegląd roczny według normy PN-HD 60364-6:2008 zakresie:\n" +
-                        "•    oględziny instalacji elektrycznej i urządzeń elektrycznych, które są narażone na ne-gatywne wpływy atmosferyczne i inne czynniki zewnętrzne, a które występują w węzłach cieplnych, pralniach, suszarniach, garażach (pot. części mokre) \n" +
+                        "•    oględziny instalacji elektrycznej i urządzeń elektrycznych, które są " +
+                        "narażone na negatywne wpływy atmosferyczne i inne czynniki zewnętrzne, " +
+                        "a które występują w węzłach cieplnych, pralniach, suszarniach, garażach (pot. części mokre) \n" +
                         "•    przeciwpożarowy wyłącznik prądu\n" +
                         "•    oświetlenia awaryjnego/ewakuacyjnego",
                 10, true);
-
-        insertProject(db, "Urząd Gminy Damnica", "IBS Budownictwo",
-                "Urząd Gminy Damnica 76-231 Damnica\n" +
-                        "\n" +
-                        "1. Remiza strażacka ok. 400m2-\n" +
-                        "2. Stadion w Damnicy (scena, trybuny, szatnia) 381m2\n" +
-                        "\n" +
-                        "ZAKRES:\n" +
-                        "Przegląd pięcioletni w rozumieniu art. 62 ust.1 pkt. 2 Ustawy Prawo Budowlane w zakresie:\n" +
-                        "    badania instalacji elektrycznej i piorunochronnej w zakresie stanu sprawności połączeń, osprzętu, zabezpieczeń i środków ochrony od porażeń, oporności izolacji przewodów oraz uziemień instalacji i aparatów.\n" +
-                        "\n" +
-                        "Oferta obejmuje wykonanie następujących pomiarów i przeglądu:\n" +
-                        "- pomiary ochrony przeciwporażeniowej\n" +
-                        "- pomiary rezystancji izolacji\n" +
-                        "- pomiary instalacji odgromowe\n" +
-                        "- przegląd rozdzielni głównej RG\n" +
-                        "\n" +
-                        "termin: kwiecień/maj",
-                11, true);
 
         insertZSComponent(db, "Gn 1f p", "Gniazda");
         insertZSComponent(db, "Gn 1f 2p.1", "Gniazda");
