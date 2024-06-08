@@ -2,6 +2,7 @@ package com.example.voltvortex.Activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.example.voltvortex.RecyclerViewAdapters.FloorRecyclerViewAdapter;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 public class FloorAndRoomActivity extends AppCompatActivity {
 
@@ -140,5 +142,45 @@ public class FloorAndRoomActivity extends AppCompatActivity {
     private void refreshFloorList() {
         List<FloorModel> floors = myDatabaseHelper.getFloors(buildingId);
         floorAdapter.updateFloors(floors);
+    }
+
+    // Metoda do zapisu danych aktywności do SharedPreferences
+    private void saveLastActivity(String activityName, Bundle extras) {
+        SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("lastActivity", activityName);
+        for (String key : extras.keySet()) {
+            Object value = extras.get(key);
+            if (value instanceof Integer) {
+                editor.putInt(key, (Integer) value);
+            } else if (value instanceof String) {
+                editor.putString(key, (String) value);
+            }
+        }
+        editor.apply();
+    }
+
+    // Metoda do odczytu danych aktywności z SharedPreferences
+    private Bundle getLastActivityData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("ActivityCache", MODE_PRIVATE);
+        Bundle extras = new Bundle();
+        Map<String, ?> allEntries = sharedPreferences.getAll();
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            if (entry.getValue() instanceof Integer) {
+                extras.putInt(entry.getKey(), (Integer) entry.getValue());
+            } else if (entry.getValue() instanceof String) {
+                extras.putString(entry.getKey(), (String) entry.getValue());
+            }
+        }
+        return extras;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Zapisz aktualną aktywność jako ostatnią otwartą
+        Bundle extras = new Bundle();
+        extras.putInt("BUILDING_ID", buildingId);
+        saveLastActivity(FloorAndRoomActivity.class.getSimpleName(), extras);
     }
 }
