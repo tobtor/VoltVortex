@@ -432,6 +432,114 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return update != -1;
     }
 
+    public List<Integer> getFloorsById(int buildingId) {
+        List<Integer> floors = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = FloorTableHelper.getTableName_Floor(buildingId);
+
+        Cursor cursor = db.rawQuery("SELECT DISTINCT " + FloorTableHelper.getColumnFloorId() +
+                " FROM " + tableName + " ORDER BY " + FloorTableHelper.getColumnFloorId(), null);
+        if (cursor.moveToFirst()) {
+            do {
+                floors.add(cursor.getInt(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return floors;
+    }
+
+    public List<Integer> getRooms(int buildingId, int floorId) {
+        List<Integer> rooms = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = RoomTableHelper.getTableName_Room(buildingId);
+
+        Cursor cursor = db.rawQuery("SELECT " + RoomTableHelper.getColumnRoomId() +
+                " FROM " + tableName + " WHERE " + RoomTableHelper.getColumnFloorId() +
+                " = ? ORDER BY " + RoomTableHelper.getColumnRoomId(), new String[]{String.valueOf(floorId)});
+        if (cursor.moveToFirst()) {
+            do {
+                rooms.add(cursor.getInt(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return rooms;
+    }
+
+    public List<ZSModel> getZSPoints(int buildingId, int floorId, int roomId) {
+        List<ZSModel> zsPoints = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = ZsTableHelper.getTableName_ZS(buildingId);
+
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + tableName + " WHERE " +
+                    ZsTableHelper.getColumnFloorId() + " = ? AND " +
+                    ZsTableHelper.getColumnRoomId() + " = ?", new String[]{String.valueOf(floorId), String.valueOf(roomId)});
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int zsID = cursor.getInt(0);
+                    int measuredComponentID = cursor.getInt(1);
+                    int electricalProtectionID = cursor.getInt(2);
+                    int floorID = cursor.getInt(3);
+                    int roomID = cursor.getInt(4);
+                    float multiplierOfProtection = cursor.getFloat(5);
+                    float result = cursor.getFloat(6);
+                    boolean isBZ = cursor.getInt(7) == 1;
+                    boolean isBPE = cursor.getInt(8) == 1;
+                    boolean isBK = cursor.getInt(9) == 1;
+                    boolean isBKLAPKI = cursor.getInt(10) == 1;
+                    boolean isWYRW = cursor.getInt(11) == 1;
+                    boolean is2PRZEW = cursor.getInt(12) == 1;
+                    boolean wasMeasured = cursor.getInt(13) == 1;
+                    float measuredZS = cursor.getFloat(14);
+
+                    zsPoints.add(new ZSModel(zsID, measuredComponentID, electricalProtectionID, floorID, roomID,
+                            multiplierOfProtection, measuredZS, result, isBZ, isBPE, isBK,
+                            isBKLAPKI, isWYRW, is2PRZEW, wasMeasured));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("MyDatabaseHelper", "Error while trying to get ZS points from database", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return zsPoints;
+    }
+
+    public boolean addZSPoint(ZSModel zsModel, int buildingId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(ZsTableHelper.getColumnReferenceZsMesuredComponentId(), zsModel.getMeasuredComponentID());
+        cv.put(ZsTableHelper.getColumnReferenceZsElectricalProtectionId(), zsModel.getElectricalProtectionID());
+        cv.put(ZsTableHelper.getColumnFloorId(), zsModel.getFloorId());
+        cv.put(ZsTableHelper.getColumnRoomId(), zsModel.getRoomId());
+        cv.put(ZsTableHelper.getColumnMultiplierOfElectricalProtection(), zsModel.getMultiplierOfProtection());
+        cv.put(ZsTableHelper.getColumnIsBz(), zsModel.isBZ());
+        cv.put(ZsTableHelper.getColumnIsBpe(), zsModel.isBPE());
+        cv.put(ZsTableHelper.getColumnIsBK(), zsModel.isBK());
+        cv.put(ZsTableHelper.getColumnIsBKLAPKI(), zsModel.isBKLAPKI());
+        cv.put(ZsTableHelper.getColumnIsWyrw(), zsModel.isWYRW());
+        cv.put(ZsTableHelper.getColumnIs2przew(), zsModel.isIs2PRZEW());
+        cv.put(ZsTableHelper.getColumnWasMeasured(), zsModel.isWasMeasured());
+        cv.put(ZsTableHelper.getColumnZsMeasured(), zsModel.getMeasuredZS());
+        cv.put(ZsTableHelper.getColumnResult(), zsModel.getResult());
+
+        long insert = db.insert(ZsTableHelper.getTableName_ZS(buildingId), null, cv);
+
+        if (insert == -1) {
+            Toast.makeText(context, "Nie udało się dodać punktu!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            Toast.makeText(context, "Punkt dodany pomyślnie.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+    }
+
     public List<FloorModel> getFloors(int buildingId) {
         List<FloorModel> floors = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -448,26 +556,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         return floors;
-    }
-
-    public List<RoomModel> getRoomsForFloor(int buildingId, int floorId) {
-        List<RoomModel> rooms = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        String tableName = RoomTableHelper.getTableName_Room(buildingId);
-        Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " WHERE " +
-                RoomTableHelper.getColumnFloorId() + " = ?", new String[]{String.valueOf(floorId)});
-
-        if (cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(0);
-                String room = cursor.getString(1);
-                int floor = cursor.getInt(2);
-                rooms.add(new RoomModel(id, room, floor));
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        return rooms;
     }
 
     public List<String> getFloorNames(int buildingId) {
@@ -516,61 +604,24 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.insert(RoomTableHelper.getTableName_Room(buildingId), null, cv);
     }
 
-    public int getMaxFloorNumber(int buildingId) {
+    public List<RoomModel> getRoomsForFloor(int buildingId, int floorId) {
+        List<RoomModel> rooms = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String tableName = FloorTableHelper.getTableName_Floor(buildingId);
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tableName, null);
-        int count = 0;
+        String tableName = RoomTableHelper.getTableName_Room(buildingId);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " WHERE " +
+                RoomTableHelper.getColumnFloorId() + " = ?", new String[]{String.valueOf(floorId)});
+
         if (cursor.moveToFirst()) {
-            count = cursor.getInt(0);
+            do {
+                int id = cursor.getInt(0);
+                String room = cursor.getString(1);
+                int floor = cursor.getInt(2);
+                rooms.add(new RoomModel(id, room, floor));
+            } while (cursor.moveToNext());
         }
+
         cursor.close();
-        return count - 1;
-    }
-
-    public List<ZSModel> getZSPoints(int buildingId, int floorId, int roomId) {
-        List<ZSModel> zsPoints = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        String tableName = ZsTableHelper.getTableName_ZS(buildingId);
-
-        Cursor cursor = null;
-        try {
-            cursor = db.rawQuery("SELECT * FROM " + tableName + " WHERE " +
-                    ZsTableHelper.getColumnFloorId() + " = ? AND " +
-                    ZsTableHelper.getColumnRoomId() + " = ?", new String[]{String.valueOf(floorId), String.valueOf(roomId)});
-
-            if (cursor.moveToFirst()) {
-                do {
-                    int zsID = cursor.getInt(0);
-                    int measuredComponentID = cursor.getInt(1);
-                    int electricalProtectionID = cursor.getInt(2);
-                    int floorID = cursor.getInt(3);
-                    int roomID = cursor.getInt(4);
-                    float multiplierOfProtection = cursor.getFloat(5);
-                    float result = cursor.getFloat(6);
-                    boolean isBZ = cursor.getInt(7) == 1;
-                    boolean isBPE = cursor.getInt(8) == 1;
-                    boolean isBK = cursor.getInt(9) == 1;
-                    boolean isBKLAPKI = cursor.getInt(10) == 1;
-                    boolean isWYRW = cursor.getInt(11) == 1;
-                    boolean is2PRZEW = cursor.getInt(12) == 1;
-                    boolean wasMeasured = cursor.getInt(13) == 1;
-                    float measuredZS = cursor.getFloat(14);
-
-                    zsPoints.add(new ZSModel(zsID, measuredComponentID, electricalProtectionID, floorID, roomID,
-                            multiplierOfProtection, measuredZS, result, isBZ, isBPE, isBK,
-                            isBKLAPKI, isWYRW, is2PRZEW, wasMeasured));
-                } while (cursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Log.e("MyDatabaseHelper", "Error while trying to get ZS points from database", e);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        return zsPoints;
+        return rooms;
     }
 
     public String getComponentName(int measuredComponentID) {
@@ -579,8 +630,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = null;
 
         try {
-            Log.d("MyDatabaseHelper", "Querying for component name with ID: " + measuredComponentID);
-
             cursor = db.rawQuery("SELECT * FROM " + ZSComponentsTableHelper.getTableName_ZS_COMPONENT() +
                             " WHERE " + ZSComponentsTableHelper.getColumnZsComponentsId() + " = ?",
                     new String[]{String.valueOf(measuredComponentID)});
@@ -600,44 +649,42 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             componentName = "Unknown"; // Wartość domyślna w przypadku braku wyniku
         }
 
-        Log.d("MyDatabaseHelper", "Component name for ID " + measuredComponentID + ": " + componentName);
-
         return componentName;
     }
 
-
-
-    public boolean addZSPoint(ZSModel zsModel, int buildingId) {
+    public void addDummyRoom(int buildingId, int floorId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
+        cv.put(RoomTableHelper.getColumnRoom(), "Empty Room");
+        cv.put(RoomTableHelper.getColumnFloorId(), floorId);
+        db.insert(RoomTableHelper.getTableName_Room(buildingId), null, cv);
+    }
 
-        cv.put(ZsTableHelper.getColumnReferenceZsMesuredComponentId(), zsModel.getMeasuredComponentID());
-        cv.put(ZsTableHelper.getColumnReferenceZsElectricalProtectionId(), zsModel.getElectricalProtectionID());
-        cv.put(ZsTableHelper.getColumnFloorId(), zsModel.getFloorId());
-        cv.put(ZsTableHelper.getColumnRoomId(), zsModel.getRoomId());
-        cv.put(ZsTableHelper.getColumnMultiplierOfElectricalProtection(), zsModel.getMultiplierOfProtection());
-        cv.put(ZsTableHelper.getColumnIsBz(), zsModel.isBZ());
-        cv.put(ZsTableHelper.getColumnIsBpe(), zsModel.isBPE());
-        cv.put(ZsTableHelper.getColumnIsBK(), zsModel.isBK());
-        cv.put(ZsTableHelper.getColumnIsBKLAPKI(), zsModel.isBKLAPKI());
-        cv.put(ZsTableHelper.getColumnIsWyrw(), zsModel.isWYRW());
-        cv.put(ZsTableHelper.getColumnIs2przew(), zsModel.isIs2PRZEW());
-        cv.put(ZsTableHelper.getColumnWasMeasured(), zsModel.isWasMeasured());
-        cv.put(ZsTableHelper.getColumnZsMeasured(), zsModel.getMeasuredZS());
-        cv.put(ZsTableHelper.getColumnResult(), zsModel.getResult());
+    public String getFloorName(int buildingId, int floorId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = FloorTableHelper.getTableName_Floor(buildingId);
+        Cursor cursor = db.rawQuery("SELECT " + FloorTableHelper.getColumnFloor() + " FROM " + tableName + " WHERE " + FloorTableHelper.getColumnFloorId() + " = ?", new String[]{String.valueOf(floorId)});
+        String floorName = "Unknown Floor";
 
-        long insert = db.insert(ZsTableHelper.getTableName_ZS(buildingId), null, cv);
-
-        if (insert == -1) {
-            Toast.makeText(context, "Nie udało się dodać punktu!", Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            Toast.makeText(context, "Punkt dodany pomyślnie.", Toast.LENGTH_SHORT).show();
-
-            Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
-
-            cursor.close();
-            return true;
+        if (cursor.moveToFirst()) {
+            floorName = cursor.getString(0);
         }
+
+        cursor.close();
+        return floorName;
+    }
+
+    public String getRoomName(int buildingId, int roomId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = RoomTableHelper.getTableName_Room(buildingId);
+        Cursor cursor = db.rawQuery("SELECT " + RoomTableHelper.getColumnRoom() + " FROM " + tableName + " WHERE " + RoomTableHelper.getColumnRoomId() + " = ?", new String[]{String.valueOf(roomId)});
+        String roomName = "Unknown Room";
+
+        if (cursor.moveToFirst()) {
+            roomName = cursor.getString(0);
+        }
+
+        cursor.close();
+        return roomName;
     }
 }

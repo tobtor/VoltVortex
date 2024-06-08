@@ -100,6 +100,8 @@ public class InsertInitialDataHelper {
         insertZSComponent(db, "Silnik", "Inne");
         insertZSComponent(db, "Grill", "Inne");
         insertZSComponent(db, "Frytkownica", "Inne");
+        insertZSComponent(db, "Szyna Oświetleniowa", "Oświetlenie");
+        insertZSComponent(db, "O. Led", "Oświetlenie");
 
         insertZSElectricalProtection(db, "DO1 gG-2",
                 14.38F, 26.44F,

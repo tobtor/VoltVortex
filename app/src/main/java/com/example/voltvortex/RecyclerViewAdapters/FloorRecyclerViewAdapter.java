@@ -12,6 +12,7 @@ import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 import com.example.voltvortex.Models.FloorModel;
 import com.example.voltvortex.Models.RoomModel;
 import com.example.voltvortex.R;
+
 import java.util.List;
 
 public class FloorRecyclerViewAdapter extends RecyclerView.Adapter<FloorRecyclerViewAdapter.ViewHolder> {
@@ -19,7 +20,7 @@ public class FloorRecyclerViewAdapter extends RecyclerView.Adapter<FloorRecycler
     private List<FloorModel> floorData;
     private Context context;
     private int buildingId;
-    private int expandedPosition = -1; // Dodaj zmienną do śledzenia rozwiniętego elementu
+    private int expandedPosition = -1;
 
     public FloorRecyclerViewAdapter(Context context, List<FloorModel> floorData, int buildingId) {
         this.context = context;
@@ -50,9 +51,10 @@ public class FloorRecyclerViewAdapter extends RecyclerView.Adapter<FloorRecycler
         holder.itemView.setActivated(isExpanded);
 
         holder.itemView.setOnClickListener(v -> {
+            int previousExpandedPosition = expandedPosition;
             expandedPosition = isExpanded ? -1 : position;
-            notifyItemChanged(position); // Zaktualizuj obecny element
-            notifyDataSetChanged(); // Zaktualizuj całą listę, aby zwinąć inne rozwinięte elementy
+            notifyItemChanged(previousExpandedPosition);
+            notifyItemChanged(position);
         });
     }
 
