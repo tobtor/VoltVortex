@@ -1,6 +1,7 @@
 package com.example.voltvortex.Activities;
 
 import android.app.AlertDialog;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.voltvortex.DataBaseHelper.CreateTableHelpers.ZsTableHelper;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 import com.example.voltvortex.Helpers.ZSPointDialogHelper;
 import com.example.voltvortex.Models.ZSModel;
@@ -17,6 +19,7 @@ import com.example.voltvortex.R;
 import com.example.voltvortex.RecyclerViewAdapters.ZSRecyclerViewAdapter;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ZSActivity extends AppCompatActivity {
 
@@ -58,7 +61,7 @@ public class ZSActivity extends AppCompatActivity {
         rooms = myDatabaseHelper.getRooms(buildingId, floorId);
 
         List<ZSModel> zsPoints = myDatabaseHelper.getZSPoints(buildingId, floorId, roomId);
-        zsAdapter = new ZSRecyclerViewAdapter(this, zsPoints);
+        zsAdapter = new ZSRecyclerViewAdapter(this, zsPoints, buildingId);
         recyclerView.setAdapter(zsAdapter);
 
         updateFloorRoomText();
@@ -150,5 +153,92 @@ public class ZSActivity extends AppCompatActivity {
         helper.setupButtons(dialogView, dialog);
 
         dialog.show();
+    }
+
+    public void showZSPointDetails(ZSModel zsPoint) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.item_zs_faults, null);
+        builder.setView(dialogView);
+
+        Button buttonBZ = dialogView.findViewById(R.id.buttonBZ);
+        Button buttonBPE = dialogView.findViewById(R.id.buttonBPE);
+        Button buttonBK = dialogView.findViewById(R.id.buttonBK);
+        Button buttonBKlapki = dialogView.findViewById(R.id.buttonBKlapki);
+        Button buttonWyrw = dialogView.findViewById(R.id.buttonWyrw);
+        Button button2Przew = dialogView.findViewById(R.id.button2Przew);
+
+        setUpToggleButton(buttonBZ, zsPoint, ZsTableHelper.getColumnIsBz());
+        setUpToggleButton(buttonBPE, zsPoint, ZsTableHelper.getColumnIsBpe());
+        setUpToggleButton(buttonBK, zsPoint, ZsTableHelper.getColumnIsBK());
+        setUpToggleButton(buttonBKlapki, zsPoint, ZsTableHelper.getColumnIsBKLAPKI());
+        setUpToggleButton(buttonWyrw, zsPoint, ZsTableHelper.getColumnIsWyrw());
+        setUpToggleButton(button2Przew, zsPoint, ZsTableHelper.getColumnIs2przew());
+
+        builder.setPositiveButton("OK", null);
+        builder.create().show();
+    }
+
+    private void setUpToggleButton(Button button, ZSModel zsPoint, String column) {
+        AtomicBoolean currentValue = new AtomicBoolean(getCurrentParameterValue(zsPoint, column));
+        updateButtonColor(button, currentValue.get());
+
+        button.setOnClickListener(v -> {
+            boolean newValue = !currentValue.get();
+            myDatabaseHelper.updateParameter(buildingId, zsPoint.getZsID(), column, newValue);
+            updateButtonColor(button, newValue);
+            currentValue.set(newValue); // Aktualizuj currentValue dla następnych kliknięć
+
+            // Zaktualizuj wartość w modelu ZSModel
+            setNewParameterValue(zsPoint, column, newValue);
+            refreshList(); // Odświeżenie listy po zmianie stanu
+        });
+    }
+
+    private boolean getCurrentParameterValue(ZSModel zsPoint, String column) {
+        switch (column) {
+            case "IS_BZ":
+                return zsPoint.isBZ();
+            case "IS_BPE":
+                return zsPoint.isBPE();
+            case "IS_BK":
+                return zsPoint.isBK();
+            case "IS_BKLAPKI":
+                return zsPoint.isBKLAPKI();
+            case "IS_WYRW":
+                return zsPoint.isWYRW();
+            case "IS_2PRZEW":
+                return zsPoint.isIs2PRZEW();
+            default:
+                return false;
+        }
+    }
+
+    private void setNewParameterValue(ZSModel zsPoint, String column, boolean value) {
+        switch (column) {
+            case "IS_BZ":
+                zsPoint.setBZ(value);
+                break;
+            case "IS_BPE":
+                zsPoint.setBPE(value);
+                break;
+            case "IS_BK":
+                zsPoint.setBK(value);
+                break;
+            case "IS_BKLAPKI":
+                zsPoint.setBKLAPKI(value);
+                break;
+            case "IS_WYRW":
+                zsPoint.setWYRW(value);
+                break;
+            case "IS_2PRZEW":
+                zsPoint.setIs2PRZEW(value);
+                break;
+        }
+    }
+
+    private void updateButtonColor(Button button, boolean isActive) {
+        int color = isActive ? getResources().getColor(R.color.buttonNormalColor) : getResources().getColor(R.color.buttonHighLightColor);
+        button.setBackgroundTintList(ColorStateList.valueOf(color));
     }
 }

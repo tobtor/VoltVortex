@@ -687,4 +687,27 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return roomName;
     }
+
+    public void updateParameter(int buildingId, int zsID, String column, boolean newValue) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(column, newValue ? 1 : 0);
+        db.update(ZsTableHelper.getTableName_ZS(buildingId), cv,
+                ZsTableHelper.getColumnZsId() + " = ?", new String[]{String.valueOf(zsID)});
+    }
+
+    public void deleteZSPoint(int buildingId, int zsID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(ZsTableHelper.getTableName_ZS(buildingId), ZsTableHelper.getColumnZsId() + " = ?", new String[]{String.valueOf(zsID)});
+    }
+
+    public void deleteFloor(int buildingId, int floorId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(FloorTableHelper.getTableName_Floor(buildingId), FloorTableHelper.getColumnFloorId() + " = ?", new String[]{String.valueOf(floorId)});
+    }
+
+    public void deleteRoom(int buildingId, int roomId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(RoomTableHelper.getTableName_Room(buildingId), RoomTableHelper.getColumnRoomId() + " = ?", new String[]{String.valueOf(roomId)});
+    }
 }

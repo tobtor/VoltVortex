@@ -1,5 +1,6 @@
 package com.example.voltvortex.RecyclerViewAdapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,10 +52,24 @@ public class FloorRecyclerViewAdapter extends RecyclerView.Adapter<FloorRecycler
         holder.itemView.setActivated(isExpanded);
 
         holder.itemView.setOnClickListener(v -> {
-            int previousExpandedPosition = expandedPosition;
             expandedPosition = isExpanded ? -1 : position;
-            notifyItemChanged(previousExpandedPosition);
             notifyItemChanged(position);
+            notifyDataSetChanged();
+        });
+
+        holder.itemView.setOnLongClickListener(v -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Usuń piętro")
+                    .setMessage("Czy na pewno chcesz usunąć to piętro?")
+                    .setPositiveButton("Tak", (dialog, which) -> {
+                        dbHelper.deleteFloor(buildingId, floor.getFloorId());
+                        floorData.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, floorData.size());
+                    })
+                    .setNegativeButton("Nie", null)
+                    .show();
+            return true;
         });
     }
 

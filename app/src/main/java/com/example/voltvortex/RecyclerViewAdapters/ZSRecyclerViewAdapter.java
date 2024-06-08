@@ -1,7 +1,7 @@
 package com.example.voltvortex.RecyclerViewAdapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.voltvortex.DataBaseHelper.MyDatabaseHelper;
 import com.example.voltvortex.Models.ZSModel;
 import com.example.voltvortex.R;
+import com.example.voltvortex.Activities.ZSActivity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,17 +18,18 @@ import java.util.Map;
 
 public class ZSRecyclerViewAdapter extends RecyclerView.Adapter<ZSRecyclerViewAdapter.ViewHolder> {
 
-    private static final String TAG = "ZSRecyclerViewAdapter";
     private List<ZSModel> zsPoints;
     private Context context;
     private MyDatabaseHelper dbHelper;
     private Map<Integer, String> componentNamesMap;
+    private int buildingId;
 
-    public ZSRecyclerViewAdapter(Context context, List<ZSModel> zsPoints) {
+    public ZSRecyclerViewAdapter(Context context, List<ZSModel> zsPoints, int buildingId) {
         this.context = context;
         this.zsPoints = zsPoints;
         this.dbHelper = new MyDatabaseHelper(context);
         this.componentNamesMap = new HashMap<>();
+        this.buildingId = buildingId;
     }
 
     public void updateData(List<ZSModel> newPoints) {
@@ -47,20 +49,11 @@ public class ZSRecyclerViewAdapter extends RecyclerView.Adapter<ZSRecyclerViewAd
 
         // Pobierz nazwę komponentu, jeśli nie jest jeszcze pobrana
         int measuredComponentID = zsPoint.getMeasuredComponentID();
-        String componentName = componentNamesMap.get(measuredComponentID);
-
-        if (componentName == null) {
-            try {
-                componentName = dbHelper.getComponentName(measuredComponentID);
-                componentNamesMap.put(measuredComponentID, componentName);
-            } catch (Exception e) {
-                Log.e(TAG, "Error while fetching component name for ID: " + measuredComponentID, e);
-                componentName = "Unknown"; // Wartość domyślna w przypadku błędu
-            }
+        if (!componentNamesMap.containsKey(measuredComponentID)) {
+            String componentName = dbHelper.getComponentName(measuredComponentID);
+            componentNamesMap.put(measuredComponentID, componentName);
         }
-
-        Log.d(TAG, "onBindViewHolder: MeasuredComponentID=" + measuredComponentID + ", ComponentName=" + componentName);
-
+        String componentName = componentNamesMap.get(measuredComponentID);
         holder.textViewPointName.setText(componentName);
 
         // Ustaw widoczność TextView w zależności od wartości w modelu
@@ -70,6 +63,27 @@ public class ZSRecyclerViewAdapter extends RecyclerView.Adapter<ZSRecyclerViewAd
         holder.textViewBKLAPKI.setVisibility(zsPoint.isBKLAPKI() ? View.VISIBLE : View.GONE);
         holder.textViewWYRW.setVisibility(zsPoint.isWYRW() ? View.VISIBLE : View.GONE);
         holder.textView2PRZEW.setVisibility(zsPoint.isIs2PRZEW() ? View.VISIBLE : View.GONE);
+
+        holder.itemView.setOnLongClickListener(v -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Usuń punkt")
+                    .setMessage("Czy na pewno chcesz usunąć ten punkt?")
+                    .setPositiveButton("Tak", (dialog, which) -> {
+                        dbHelper.deleteZSPoint(buildingId, zsPoint.getZsID());
+                        zsPoints.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, zsPoints.size());
+                    })
+                    .setNegativeButton("Nie", null)
+                    .show();
+            return true;
+        });
+
+        holder.itemView.setOnClickListener(v -> {
+            if (context instanceof ZSActivity) {
+                ((ZSActivity) context).showZSPointDetails(zsPoint);
+            }
+        });
     }
 
     @Override
